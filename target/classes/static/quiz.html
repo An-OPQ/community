@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>提问—后山论坛</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <script src="./jquery/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="./wangEditor/wangEditor.min.css">
+    <script src="./wangEditor/wangEditor.min.js"></script>
+    <style>
+        .navbar-form {
+            margin-right: 60px;
+        }
+        body {
+            background-color: #efefef;
+        }
+        .main {
+            background-color: white;
+            margin: 30px;
+        }
+        .btn-main{
+            float: right;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">首页</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="搜索">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">技术<span class="sr-only">(current)</span></a></li>
+                <li><a href="#">学术</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">提问</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">登录 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">个人中心</a></li>
+                        <li><a href="#">我的问题</a></li>
+                        <li><a href="#">最新回复</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>提问</h2>
+            <hr>
+            <form>
+                <input type="hidden" name="id">
+                <div class="form-group">
+                    <label for="title">问题标题（简单扼要）:</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="问题标题……"
+                           autocomplete="off">
+                </div>
+                <div class="form-group" id="question-editor">
+                    <!--                    <label for="description">问题补充 (必填，请参照右侧提示):</label>-->
+                    <!--                    <textarea name="description" id="description" class="form-control"-->
+                    <!--                              cols="30" rows="10"></textarea>-->
+                    <div id="editor"></div>
+                </div>
+                <div class="form-group" >
+                    <label for="tag">添加标签:</label>
+                    <input type="text" class="form-control" id="tag" name="tag" autocomplete="off"
+                           placeholder="输入标签，以，号分隔">
+                    <div id="select-tag" class="publish-tag-tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation">
+                                <a aria-controls="home" role="tab" data-toggle="tab"></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel">
+                                    <span>
+                                        <span>
+                                            <span class="community-tag">
+                                            </span>
+                                        </span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid main ">
+                    <div class="row">
+                        <!-- <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            </div>
+                        </div> -->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit" class="btn btn-success btn-main">
+                                发布
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>问题发起指南</h3>
+            • 问题标题: 请用精简的语言描述您发布的问题，不超过25字 <br>
+            • 问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料<br>
+            • 选择标签: 选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br>
+        </div>
+    </div>
+</div>
+<script src="./bootstrap/js/bootstrap.min.js"></script>
+<script>
+    var E=window.wangEditor;
+    var editor=new E("#editor");
+
+    editor.customConfig.debug = true;
+    // 关闭粘贴内容中的样式
+    editor.customConfig.pasteFilterStyle = false;
+    // 忽略粘贴内容中的图片
+    editor.customConfig.pasteIgnoreImg = false;
+    // 使用 base64 保存图片
+    //editor.customConfig.uploadImgShowBase64 = true
+    // 上传图片到服务器
+    editor.customConfig.uploadFileName = 'editorFile'; //设置文件上传的参数名称
+    editor.customConfig.uploadImgServer = 'upload'; //设置上传文件的服务器路径
+    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+    //自定义上传图片事件
+    editor.customConfig.uploadImgHooks = {
+        before: function(xhr, editor, files) {
+
+        },
+        success: function(xhr, editor, result) {
+            console.log("上传成功");
+        },
+        fail: function(xhr, editor, result) {
+            console.log("上传失败,原因是" + result);
+        },
+        error: function(xhr, editor) {
+            console.log("上传出错");
+        },
+        timeout: function(xhr, editor) {
+            console.log("上传超时");
+        }
+    }
+    editor.create();
+
+</script>
+
+</body>
+</html>
