@@ -1,31 +1,20 @@
-HELP.md
+/.settings
+/bin
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
-!**/src/test/**
+/logs
+*/out/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+# filter config files, except .gitignore
+*.MF
+!.gitignore
 *.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-
-### VS Code ###
-.vscode/
+*.exe
+# eclipse ignore
+.project
+.classpath
+# IDEA ignore
+.idea
+.class
+*.class
+*.log
+!application.properties
