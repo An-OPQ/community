@@ -30,7 +30,7 @@ public class DruidConfig {
     @Bean
     public ServletRegistrationBean statViewServlet(){
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
-        Map<String,String> initParams = new HashMap<>();
+        Map<String,String> initParams = new HashMap<String, String>();
         initParams.put("loginUsername","admin");
         initParams.put("loginPassword","123456");
         initParams.put("allow","localhost");//默认就是允许所有访问
@@ -45,7 +45,7 @@ public class DruidConfig {
     public FilterRegistrationBean webStatFilter(){
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new WebStatFilter());
-        Map<String,String> initParams = new HashMap<>();
+        Map<String,String> initParams = new HashMap<String, String>();
         initParams.put("exclusions","*.js,*.css,/druid/*");
         bean.setInitParameters(initParams);
         bean.setUrlPatterns(Arrays.asList("/*"));
