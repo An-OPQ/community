@@ -4,7 +4,6 @@ import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.MailService;
 import edu.hniu.community.service.UserInfoService;
 import edu.hniu.community.toolkit.MD5;
-import javafx.beans.binding.ObjectExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
