@@ -12,14 +12,17 @@
         .navbar-form {
             margin-right: 60px;
         }
+
         body {
             background-color: #efefef;
         }
+
         .main {
             background-color: white;
             margin: 30px;
         }
-        .btn-main{
+
+        .btn-main {
             float: right;
             margin: 10px;
         }
@@ -80,12 +83,14 @@
                            autocomplete="off">
                 </div>
                 <div class="form-group" id="question-editor">
-                    <!--                    <label for="description">问题补充 (必填，请参照右侧提示):</label>-->
-                    <!--                    <textarea name="description" id="description" class="form-control"-->
-                    <!--                              cols="30" rows="10"></textarea>-->
-                    <div id="editor"></div>
+                    <label for="description">问题补充 (必填，请参照右侧提示):</label>
+<!--                    <div name="description" id="description"></div>-->
+                    <textarea name="description" id="description"
+                              class="form-control"
+                              cols="30"
+                              rows="10"></textarea>
                 </div>
-                <div class="form-group" >
+                <div class="form-group">
                     <label for="tag">添加标签:</label>
                     <input type="text" class="form-control" id="tag" name="tag" autocomplete="off"
                            placeholder="输入标签，以，号分隔">
@@ -110,12 +115,8 @@
 
                 <div class="container-fluid main ">
                     <div class="row">
-                        <!-- <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            </div>
-                        </div> -->
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <button type="submit" class="btn btn-success btn-main">
+                            <button type="button" class="btn btn-success btn-main" id="submit">
                                 发布
                             </button>
                         </div>
@@ -133,39 +134,62 @@
 </div>
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 <script>
-    var E=window.wangEditor;
-    var editor=new E("#editor");
-
-    editor.customConfig.debug = true;
-    // 关闭粘贴内容中的样式
-    editor.customConfig.pasteFilterStyle = false;
-    // 忽略粘贴内容中的图片
-    editor.customConfig.pasteIgnoreImg = false;
-    // 使用 base64 保存图片
-    //editor.customConfig.uploadImgShowBase64 = true
-    // 上传图片到服务器
-    editor.customConfig.uploadFileName = 'editorFile'; //设置文件上传的参数名称
-    editor.customConfig.uploadImgServer = 'upload'; //设置上传文件的服务器路径
-    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
-    //自定义上传图片事件
-    editor.customConfig.uploadImgHooks = {
-        before: function(xhr, editor, files) {
-
-        },
-        success: function(xhr, editor, result) {
-            console.log("上传成功");
-        },
-        fail: function(xhr, editor, result) {
-            console.log("上传失败,原因是" + result);
-        },
-        error: function(xhr, editor) {
-            console.log("上传出错");
-        },
-        timeout: function(xhr, editor) {
-            console.log("上传超时");
+    $("#submit").click(function () {
+        var titleVal=$("#title").val;
+        var descriptionVal=$("#description").val;
+        var json={
+            title:titleVal,
+            description:descriptionVal
         }
-    }
-    editor.create();
+        var jsonStr=JSON.stringify(json)
+        console.log(descriptionVal())
+        $.ajax({
+            url: "user/submit/"+descriptionVal,
+            type: "POST",
+            data: jsonStr,
+            contentType: "application/json;charset=utf-8",
+            success: function () {
+                console.log("success")
+            },
+            error: function () {
+                console.log("error")
+            }
+        })
+    })
+    //富文本编辑器,稍后整合
+    // {  var E = window.wangEditor;
+    //     var editor = new E("#description");
+    //
+    //     editor.customConfig.debug = true;
+    //     // 关闭粘贴内容中的样式
+    //     editor.customConfig.pasteFilterStyle = false;
+    //     // 忽略粘贴内容中的图片
+    //     editor.customConfig.pasteIgnoreImg = false;
+    //     // 使用 base64 保存图片
+    //     //editor.customConfig.uploadImgShowBase64 = true
+    //     // 上传图片到服务器
+    //     editor.customConfig.uploadFileName = 'editorFile'; //设置文件上传的参数名称
+    //     editor.customConfig.uploadImgServer = 'upload'; //设置上传文件的服务器路径
+    //     editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+    //     //自定义上传图片事件
+    //     editor.customConfig.uploadImgHooks = {
+    //         before: function (xhr, editor, files) {
+    //
+    //         },
+    //         success: function (xhr, editor, result) {
+    //             console.log("上传成功");
+    //         },
+    //         fail: function (xhr, editor, result) {
+    //             console.log("上传失败,原因是" + result);
+    //         },
+    //         error: function (xhr, editor) {
+    //             console.log("上传出错");
+    //         },
+    //         timeout: function (xhr, editor) {
+    //             console.log("上传超时");
+    //         }
+    //     }
+    //     editor.create();}
 
 </script>
 

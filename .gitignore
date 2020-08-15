@@ -1,6 +1,5 @@
 /.settings
 /bin
-target/
 /logs
 */out/
 
@@ -14,6 +13,7 @@ target/
 .classpath
 # IDEA ignore
 .idea
+target/
 .class
 *.class
 *.log
