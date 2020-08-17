@@ -5,130 +5,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>后山论坛</title>
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
-    <script src="./jquery/jquery-2.1.1.min.js"></script>
-    <!--    <link rel="stylesheet" href="./wangEditor/wangEditor.min.css">-->
-    <!--    <script src="./wangEditor/wangEditor.min.js"></script>-->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/community.css">
+
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="./js/community.js" type="application/javascript"></script>
     <style>
-        .navbar-form {
-            margin-right: 60px;
-        }
-
-        body {
-            background-color: #efefef;
-        }
-
-        .main {
-            background-color: white;
-            margin: 30px;
-        }
-
-        .red {
-            color: red;
-        }
-        .icon{
-            height: 50px;
-            width: 50px;
-            border-radius: 15px;
+        .row {
+            margin-bottom: 100px;
         }
     </style>
 </head>
-
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">首页</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="搜索">
-                </div>
-                <button type="submit" class="btn btn-default">搜索</button>
-            </form>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">技术<span class="sr-only">(current)</span></a></li>
-                <li><a href="#">学术</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="publish.html">提问</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">登录 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">个人中心</a></li>
-                        <li><a href="#">我的问题</a></li>
-                        <li><a href="#">最新回复</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">退出登录</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<script src="./js/navbar.js" type="text/javascript"></script>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 发现</h3>
             <ul class="nav nav-tabs">
                 <li role="presentation">
-                    <a>最新</a>
+                    <a href="new.html">最新</a>
                 </li>
                 <li role="presentation">
-                    <a>30天最热</a>
+                    <a href="hot30.html">30天最热</a>
                 </li>
                 <li role="presentation">
-                    <a>7天最热</a>
+                    <a href="hot7.html">7天最热</a>
                 </li>
                 <li role="presentation">
-                    <a>最热</a>
+                    <a href="hot.html">最热</a>
                 </li>
                 <li role="presentation">
-                    <a class="red">消灭零回复</a>
+                    <a href="no.html" class="red">消灭零回复</a>
                 </li>
             </ul>
-
             <div class="media">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded icon"  src="./img/logo.jpg">
+                        <img class="media-object img-rounded"
+                             src="https://avatars2.githubusercontent.com/u/68052844?v=4">
                     </a>
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a>我的世界</a>
+                        <a href="1163.html">89d</a>
                     </h4>
-                    <span class="text-desc"><span></span>1个回复 • <span></span>1次浏览 • <span>yyyy-MM-dd HH:mm</span></span>
+                    <span class="text-desc"><span>0</span> 个回复 • <span>8</span> 次浏览 • <span>2020-08-15
+                                12:09</span></span>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded"
+                             src="https://avatars3.githubusercontent.com/u/40567053?v=4">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="1155.html">d奥德赛</a>
+                    </h4>
+                    <span class="text-desc"><span>0</span> 个回复 • <span>43</span> 次浏览 • <span>2020-07-29
+                                14:54</span></span>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded"
+                             src="https://avatars2.githubusercontent.com/u/46831377?v=4">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="1154.html">测试代码</a>
+                    </h4>
+                    <span class="text-desc"><span>1</span> 个回复 • <span>83</span> 次浏览 • <span>2020-07-28
+                                14:31</span></span>
                 </div>
             </div>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li>
-                        <a aria-label="Previous">
-                            <span aria-hidden="true">&lt;&lt;</span>
-                        </a>
+                    <li class="active">
+                        <a href="1.html">1</a>
                     </li>
                     <li>
-                        <a aria-label="Previous">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
+                        <a href="2.html">2</a>
                     </li>
                     <li>
-                        <a aria-label="Previous">
+                        <a href="3.html">3</a>
+                    </li>
+                    <li>
+                        <a href="4.html">4</a>
+                    </li>
+                    <li>
+                        <a href="2.html" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li>
-                        <a aria-label="Previous">
+                        <a href="117.html" aria-label="Previous">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
@@ -136,12 +113,42 @@
             </nav>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <div></div>
-            <h4>热门标签</h4>
-            <a class="community-tag"></a>
+            <div>
+                <div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
+                        <h4>官方微信</h4>
+                        <img class="img-thumbnail question-wechat" src="./picture/official-account.png">
+                    </div>
+                </div>
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4>热门标签</h4>
+                <a href="1_java.html" class="community-tag">java</a><a href="1_javascript.html"
+                                                                       class="community-tag">javascript</a><a
+                    href="1_spring.html" class="community-tag">spring</a><a
+                    href="1_html.html" class="community-tag">html</a><a href="1_css.html"
+                                                                        class="community-tag">css</a><a
+                    href="1_php.html" class="community-tag">php</a><a
+                    href="1_mysql.html" class="community-tag">mysql</a><a href="1_html5.html"
+                                                                          class="community-tag">html5</a><a
+                    href="1_github.html" class="community-tag">github</a><a
+                    href="1_linux.html" class="community-tag">linux</a>
+            </div>
+            <div>
+                <div>
+                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
+                        <a href="261.html" onclick="" target="_blank">
+                            <img class="img-thumbnail question-wechat" src="./picture/uhost.png">
+                        </a>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<script src="./bootstrap/js/bootstrap.min.js"></script>
+<script src="./js/footer.html.js" type="text/javascript"></script>
 </body>
 </html>

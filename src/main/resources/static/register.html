@@ -86,14 +86,12 @@
                                 </button>
                             </div>
                             <div class="mt-4 text-center">
-                                已经有了账户？<a href="index.html">登录</a>
+                                已经有了账户？<a href="login.html">登录</a>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="footer">
-                    Copyright &copy; 2017 ~ 2020
-                </div>
+                <script src="./js/footer.html.js" type="text/javascript"></script>
             </div>
         </div>
     </div>
@@ -136,7 +134,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (response) {
                 if (response) {
-                    window.location.href = "index.html"
+                    window.location.href = "login.html"
                 } else {
                     $(".invalid").css("display", "block");
                 }
