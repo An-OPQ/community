@@ -22,7 +22,7 @@ document.writeln("                <li class=\'active\'><a href=\'#\'>技术<span
 document.writeln("                <li><a href=\'#\'>学术</a></li>");
 document.writeln("            </ul>");
 document.writeln("            <ul class=\'nav navbar-nav navbar-right\'>");
-document.writeln("                <li><a href=\'publish.html\'>提问</a></li>");
+document.writeln("                <li><a href=\'publish.html\'>发帖</a></li>");
 document.writeln("                <li class=\'dropdown\'>");
 document.writeln("                    <a href=\'#\' class=\'dropdown-toggle\' data-toggle=\'dropdown\' role=\'button\' aria-haspopup=\'true\'");
 document.writeln("                       aria-expanded=\'false\'>登录 <span class=\'caret\'></span></a>");
