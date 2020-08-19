@@ -6,9 +6,7 @@ public class Question {
   private long id;
   private String title;
   private String description;
-  private long gmtCreate;
-  private long gmtModified;
-  private long creator;
+  private long creatorid;
   private long commentCount;
   private long viewCount;
   private long likeCount;
@@ -42,30 +40,12 @@ public class Question {
   }
 
 
-  public long getGmtCreate() {
-    return gmtCreate;
+  public long getCreatorid() {
+    return creatorid;
   }
 
-  public void setGmtCreate(long gmtCreate) {
-    this.gmtCreate = gmtCreate;
-  }
-
-
-  public long getGmtModified() {
-    return gmtModified;
-  }
-
-  public void setGmtModified(long gmtModified) {
-    this.gmtModified = gmtModified;
-  }
-
-
-  public long getCreator() {
-    return creator;
-  }
-
-  public void setCreator(long creator) {
-    this.creator = creator;
+  public void setCreatorid(long creatorid) {
+    this.creatorid = creatorid;
   }
 
 
@@ -104,19 +84,4 @@ public class Question {
     this.tag = tag;
   }
 
-  @Override
-  public String toString() {
-    return "Question{" +
-            "id=" + id +
-            ", title='" + title + '\'' +
-            ", description='" + description + '\'' +
-            ", gmtCreate=" + gmtCreate +
-            ", gmtModified=" + gmtModified +
-            ", creator=" + creator +
-            ", commentCount=" + commentCount +
-            ", viewCount=" + viewCount +
-            ", likeCount=" + likeCount +
-            ", tag='" + tag + '\'' +
-            '}';
-  }
 }

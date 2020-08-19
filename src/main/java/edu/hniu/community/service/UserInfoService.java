@@ -2,6 +2,7 @@ package edu.hniu.community.service;
 
 import edu.hniu.community.domain.UserInfo;
 
+
 public interface UserInfoService {
 
     /**
@@ -31,4 +32,18 @@ public interface UserInfoService {
      * @return
      */
     boolean findUserByEmail(String email);
+
+
+    /**
+     * 修改个人信息
+     * @param userInfo
+     * @return
+     */
+    boolean updateMassge(UserInfo userInfo);
+
+    /**
+     *查询所有的UserInfo
+     * @return
+     */
+    UserInfo getUserConfig(String email);
 }

@@ -1,8 +1,7 @@
 package edu.hniu.community.dao;
 
+
 import edu.hniu.community.domain.UserInfo;
-
-
 
 
 public interface UserInfoDao {
@@ -35,4 +34,17 @@ public interface UserInfoDao {
      * @return
      */
     int findUserByEmail(String email);
+
+    /**
+     * 修改个人信息
+     * @param userInfo
+     * @return
+     */
+    int updateMassge(UserInfo userInfo);
+
+    /**
+     *查询UserInfo所有信息
+     * @return
+     */
+    UserInfo getUserConfig(String email);
 }

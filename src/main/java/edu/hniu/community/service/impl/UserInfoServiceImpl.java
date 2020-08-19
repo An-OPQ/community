@@ -6,6 +6,8 @@ import edu.hniu.community.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
@@ -16,7 +18,6 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userInfo
      * @return
      */
-    @Override
     public boolean loginCheck(UserInfo userInfo) {
         return userInfoDao.loginCheck(userInfo)>0;
     }
@@ -26,7 +27,6 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userInfo
      * @return
      */
-    @Override
     public boolean register(UserInfo userInfo) {
         return userInfoDao.register(userInfo)>0;
     }
@@ -36,7 +36,6 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userInfo
      * @return
      */
-    @Override
     public boolean resetPassword(UserInfo userInfo) {
         return userInfoDao.resetPassword(userInfo)>0;
     }
@@ -46,8 +45,25 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param email
      * @return
      */
-    @Override
     public boolean findUserByEmail(String email) {
         return userInfoDao.findUserByEmail(email)>0;
+    }
+
+    /**
+     *
+     * @param userInfo
+     * @return
+     */
+    public boolean updateMassge(UserInfo userInfo) {
+        return userInfoDao.updateMassge(userInfo)>0;
+    }
+
+
+    /**
+     *查询所有的UserInfo
+     * @return
+     */
+    public UserInfo getUserConfig(String email) {
+        return userInfoDao.getUserConfig(email);
     }
 }

@@ -93,7 +93,6 @@
 </section>
 
 <script src="webjars/jquery/jquery.min.js"></script>
-<script src="webjars/popper.js/popper.min.js"></script>
 <script src="webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/my-login.js"></script>
 <script type="text/javascript">
@@ -112,7 +111,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (response) {
                 if (response) {
-                    window.location.href = "main.html"
+                    window.location.href = "main.html?email="+emailVal
                 } else {
                     $(".invalid").css("display", "block");
                 }

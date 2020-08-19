@@ -76,9 +76,17 @@ public class UserController {
             response.getWriter().print("<font color='green' fontsize='80%'>您可以使用该邮箱注册</font>");
         }
     }
-    @PostMapping("/submit/{descriptionVal}")
-    public void test(@PathVariable String descriptionVal){
-        System.out.println(descriptionVal);
+
+
+
+    @PutMapping("/updateMassge")
+    public void updateMassge(@RequestBody UserInfo userInfo){
+        System.out.println(userInfo.toString());
+        userInfoService.updateMassge(userInfo);
     }
 
+    @GetMapping("/getUserConfig")
+    public Object getUserConfig(@RequestParam String email){
+        return userInfoService.getUserConfig(email);
+    }
 }

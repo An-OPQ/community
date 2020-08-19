@@ -11,101 +11,7 @@
     <script src="./js/bootstrap.min.js" type="application/javascript"></script>
     <link rel="stylesheet" href="./dropzone/css/dropzone.min.css">
     <script src="./dropzone/js/dropzone.min.js"></script>
-
-    <style>
-        body {
-            background-color: #efefef;
-            font-family: "Helvetica Neue";
-            font-size: 14px;
-        }
-
-        .main {
-            background-color: white;
-            margin: 30px;
-        }
-
-        .row {
-            margin-bottom: 100px;
-        }
-
-
-        .main-header {
-            border-bottom: 1px solid #ddd;
-        }
-
-        .side {
-            margin: 5px 0;
-        }
-
-        .community-tag:hover {
-            background-color: #339dff;
-            color: #fff;
-            text-decoration-line: none;
-        }
-
-        .community-tag {
-            text-decoration-line: none;
-            cursor: pointer;
-            display: inline-block;
-            height: 20px;
-            line-height: 16px;
-            padding: 2px 5px;
-            background-color: #99cfff;
-            font-size: 12px;
-            color: #fff;
-            border-radius: 4px;
-            margin: 4px;
-        }
-
-        .question-wechat {
-            width: 95%;
-        }
-
-        #setting_form {
-            font-size: 14px;
-            margin-left: 20px;
-        }
-
-        hr {
-            margin-bottom: 0px;
-        }
-
-        .side-bar {
-            font-size: 14px;
-            line-height: 160%;
-            color: #333;
-            box-sizing: border-box;
-            position: absolute;
-            right: 20px;
-            top: 200px;
-        }
-
-        #avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 25px;
-            background-image: url("./img/avatar-max-img.png");
-            background-size: cover;
-        }
-
-        ul {
-            padding: 0;
-            list-style: none;
-        }
-
-        label {
-            font-size: 14px;
-        }
-
-        .row input {
-            margin-bottom: 30px;
-        }
-
-        .mod-contact {
-            margin-left: 13px;
-            padding: 7px;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/config.css">
 </head>
 
 <body>
@@ -122,11 +28,12 @@
                     <h4>基本信息</h4>
                     <hr>
                     <form class="form-horizontal" id="setting_form">
+                        <input type="text" id="id" value="" hidden>
                         <div class="form-heade">
                             <dl>
                                 <dt>邮箱:</dt>
                                 <dd><input type="text" class="form-control" name="email" id="email"
-                                           value="1503021658@qq.com" disabled="true"></dd>
+                                           value="" disabled="true"></dd>
                             </dl>
                             <dl>
                                 <dt>昵称:</dt>
@@ -136,11 +43,11 @@
                                 <dt>性别:</dt>
                                 <dd id="sex">
                                     <label>
-                                        <input name="sex" value="1" type="radio"> 男 </label>
+                                        <input class="sex" name="sex" value="男" type="radio"> 男 </label>
                                     <label>
-                                        <input name="sex" value="2" type="radio"> 女 </label>
+                                        <input class="sex" name="sex" value="女" type="radio"> 女 </label>
                                     <label>
-                                        <input name="sex" value="3" type="radio" checked="checked">
+                                        <input class="sex" name="sex" value="保密" type="radio" checked="checked">
                                         保密
                                     </label>
                                 </dd>
@@ -149,7 +56,8 @@
                             <br>
                             <dl>
                                 <dt><label>个性签名:</label></dt>
-                                <dd class="introduce"><input class="form-control" name="signature" maxlength="128"
+                                <dd class="introduce"><input class="form-control" name="signature" id="sginName"
+                                                             maxlength="128"
                                                              type="text" value=""></dd>
                             </dl>
                         </div>
@@ -164,7 +72,8 @@
                                     <h5>头像设置</h5>
                                     <p>支持 jpg、gif、png 等格式的图片</p>
                                     <label for="id_avatar"><img src="./img/picture.png" alt="图像加载失败"></label>
-                                    <input type="file" id="id_avatar" name="file" style="display:none">
+                                    <input type="text" id="id_avatar" accept="image/png" name="file"
+                                           style="display:none">
                                 </dd>
                             </dl>
                         </div>
@@ -194,17 +103,10 @@
                                     <input class="form-control" type="text" id="input-mobile" name="mobile"
                                            value="">
                                 </li>
-                                <li>
-                                    <label for="input-common-email">常用邮箱:</label>
-                                    <input class="form-control" type="text" id="input-common-email"
-                                           name="common_email" value="">
-                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="mod-head">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mod-contact">
                         <div class="mod-head">
@@ -218,13 +120,18 @@
                                            value="">
                                 </li>
                                 <li>
-                                    <label for="input-weibo">微博:</label>
-                                    <input class="form-control" type="text" id="input-weibo" name="weibo" value="">
+                                    <label for="microblog">微博:</label>
+                                    <input class="form-control" type="text" id="microblog" name="microblog" value="">
                                 </li>
-
                             </ul>
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button type="button" class="btn btn-success btn-lg" style="float: right" onclick="update()"
+                            id="submit">
+                        修改
+                    </button>
                 </div>
             </div>
         </div>
@@ -256,7 +163,7 @@
                 <div>
                     <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
-                        <a href="261.html" onclick="" target="_blank">
+                        <a href="#" onclick="" target="_blank">
                             <img class="img-thumbnail question-wechat" src="./picture/uhost.png">
                         </a>
                     </div>
@@ -268,21 +175,107 @@
 </div>
 <script src="./js/footer.html.js" type="text/javascript"></script>
 <script type="text/javascript">
-    var preview = document.querySelector('#avatar');
-    var eleFile = document.querySelector('#id_avatar');
-    eleFile.addEventListener('change', function () {
-        var file = this.files[0];
-        // 确认选择的文件是图片
-        if (file.type.indexOf("image") == 0) {
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function (e) {
-                // 图片base64化
-                var newUrl = this.result;
-                preview.style.backgroundImage = 'url(' + newUrl + ')';
-            };
+    var params = window.location.search;
+    var emailVal = params.substring(params.indexOf("=") + 1, params.length);
+    $(function () {
+        $.ajax({
+            url: "user/getUserConfig?email=" + emailVal,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                $("#email").val(response['email']);
+                $("#accountname").val(response['accountName']);
+                $("#sex .sex").val(response['sex']);
+                $("#avatar").css("background-image", "url(static/upload/" + response['icon'] + ")");
+                $("#sginName").val(response['sginName']);
+                $("#input-qq").val(response['qq']);
+                $("#input-wechat").val(response['weChat']);
+                $("#input-mobile").val(response['mobile']);
+                $("#input-github").val(response['github']);
+                $("#microblog").val(response['microblog']);
+            },
+            error: function (response) {
+
+            }
+        })
+    })
+
+    Dropzone.autoDiscover = false;
+    var fileName;
+    var myDropzone = new Dropzone("#id_avatar", {
+        url: "file/upload", // 文件提交地址
+        method: "POST",  // 也可用put
+        paramName: "multipartFile", // 默认为file
+        maxFiles: 1,// 一次性上传的文件数量上限
+        maxFilesize: 2, // 文件大小，单位：MB
+        acceptedFiles: ".jpg,.gif,.png", // 上传的类型
+        addRemoveLinks: true,
+        parallelUploads: 1,// 一次上传的文件数量
+        // previewsContainer:"#avatar", // 上传图片的预览窗口
+        dictDefaultMessage: '拖动文件至此或者点击上传',
+        dictMaxFilesExceeded: "您最多只能上传1个文件！",
+        dictResponseError: '文件上传失败!',
+        dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png",
+        dictFallbackMessage: "浏览器不受支持",
+        dictFileTooBig: "文件过大上传文件最大支持.",
+        dictRemoveLinks: "删除",
+        dictCancelUpload: "取消",
+        init: function () {
+            this.on("addedfile", function (file) {
+                // 上传文件时触发的事件
+            });
+            this.on("success", function (file, data) {
+                // 上传成功触发的事件
+                fileName = data.filename;
+                $("#avatar").css("background-image", "url(static/upload/" + fileName + ")");
+            });
+            this.on("error", function (file, data) {
+                // 上传失败触发的事件
+            });
+            this.on("removedfile", function (file) {
+                // 删除文件时触发的方法
+            });
         }
     });
+
+    function update() {
+        var accountnameVal = $("#accountname").val();
+        var sexVal = $("#sex .sex").val();
+        var sginNameVal = $("#sginName").val();
+        var qqVal = $("#input-qq").val();
+        var wechatVal = $("#input-wechat").val();
+        var mobileVal = $("#input-mobile").val();
+        var githubVal = $("#input-github").val();
+        var microblogVal = $("#microblog").val();
+        var json = {
+            email: emailVal,
+            accountName: accountnameVal,
+            sex: sexVal,
+            sginName: sginNameVal,
+            icon: fileName,
+            qq: qqVal,
+            weChat: wechatVal,
+            mobile: mobileVal,
+            github: githubVal,
+            microblog: microblogVal
+        }
+        var jsonStr = JSON.stringify(json);
+        $.ajax({
+            async: false,
+            url: "user/updateMassge",
+            type: "PUT",
+            contentType: "application/json;charset=utf-8",
+            data: jsonStr,
+            success: function (response) {
+                alert("修改成功！")
+            },
+            error: function (response) {
+                alert("修改失败！")
+            }
+        })
+    }
+
 </script>
 </body>
 </html>

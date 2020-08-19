@@ -17,7 +17,7 @@
     </select>
 
     <insert id="register" parameterType="UserInfo">
-        insert userinfo(userid,
+        insert userinfo(id,
         <trim suffixOverrides=",">
             <if test="accountName !=null and accountName !=''">
                 accountName,
@@ -62,5 +62,44 @@
 
     <select id="findUserByEmail" parameterType="String" resultType="int">
         select count(*) from userinfo where email=#{email}
+    </select>
+
+    
+    <update id="updateMassge" parameterType="UserInfo">
+        update userinfo
+        <set>
+            <if test="accountName!=null and accountName!=''">
+                accountName=#{accountName},
+            </if>
+            <if test="sex!=null and sex!=''">
+                sex=#{sex},
+            </if>
+            <if test="sginName!=null and sginName!=''">
+                sginName=#{sginName},
+            </if>
+            <if test="icon!=null and icon!=''">
+                icon=#{icon},
+            </if>
+            <if test="qq!=null and qq!=''">
+                qq=#{qq},
+            </if>
+            <if test="weChat!=null and weChat!=''">
+                weChat=#{weChat},
+            </if>
+            <if test="mobile!=null and mobile!=''">
+                mobile=#{mobile},
+            </if>
+            <if test="github!=null and github!=''">
+                github=#{github},
+            </if>
+            <if test="microblog!=null and microblog!=''">
+                microblog=#{microblog},
+            </if>
+        </set>
+        where email=#{email}
+    </update>
+
+    <select id="getUserConfig" parameterType="String" resultType="UserInfo">
+        SELECT  u.id,u.email,u.accountName,u.sex,u.icon,u.sginName,u.qq,u.WeChat,u.mobile,u.github,u.microblog FROM userinfo u WHERE email=#{email}
     </select>
 </mapper>
