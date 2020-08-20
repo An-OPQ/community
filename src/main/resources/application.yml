@@ -1,14 +1,14 @@
 server:
   port: 8080
-  servlet:
-    context-path: /community
+#  servlet:
+#    context-path: /community
 
 spring:
   mvc:
     static-path-pattern: /**
   application:
     name: community
-# 如果配置了：/static/**，则url的访问地址必须带static
+  # 如果配置了：/static/**，则url的访问地址必须带static(静态资源，html样式)
 
   datasource:
     username: Jerry
@@ -49,12 +49,15 @@ spring:
 mybatis:
   config-location: classpath:mybatis/Mybatis-Config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
-#  配置包别名
+  #  配置包别名
   type-aliases-package: edu.hniu.community.domain
 #日志
 logging:
   level:
     edu.hniu.community.dao: debug
-#配置邮箱
 
+#配置图片访问的虚拟路径
+preread:
+  uploadPath: file:/tmp/community/static/upload/
+  mappingPath: /static/upload/**
 

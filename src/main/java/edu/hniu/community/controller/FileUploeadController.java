@@ -21,7 +21,9 @@ public class FileUploeadController {
     public Map<String, Object> fileUpload(MultipartFile multipartFile, HttpServletRequest request) {
         HashMap<String, Object> result = new HashMap<String, Object>();
         //获取工程目录，此时获取不到。因为没有该目录
-        String filePath = request.getSession().getServletContext().getRealPath("static/upload");
+        String filePath = request.getSession().getServletContext().getRealPath("/");
+        filePath=filePath.substring(0,filePath.indexOf("tomcat"));
+        filePath=filePath+"community/static/upload";
         File file = new File(filePath);
         //目录不存在，则创建目录
         if (!file.exists()) {
@@ -33,7 +35,6 @@ public class FileUploeadController {
         String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
         //创建新的文件，使用随机数创建文件名
         file = new File(filePath, UUID.randomUUID() + fileSuffix);
-        System.out.println(file);
         if (!file.exists()) {
             try {
                 file.createNewFile();

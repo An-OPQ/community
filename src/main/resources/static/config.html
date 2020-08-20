@@ -228,7 +228,8 @@
             this.on("success", function (file, data) {
                 // 上传成功触发的事件
                 fileName = data.filename;
-                $("#avatar").css("background-image", "url(static/upload/" + fileName + ")");
+                console.log(fileName)
+                $("#avatar").css("background-image", "url(static/upload/" +fileName+ ")");
             });
             this.on("error", function (file, data) {
                 // 上传失败触发的事件
