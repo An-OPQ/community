@@ -69,8 +69,8 @@
                                     </div>
                                 </dt>
                                 <dd class="pull-left">
-                                    <h5>头像设置</h5>
-                                    <p>支持 jpg、gif、png 等格式的图片</p>
+w                                    <p>支持 jpg、gif、png 等格式的图片</p>
+                                    <p>大小为5MB</p>
                                     <label for="id_avatar"><img src="./img/picture.png" alt="图像加载失败"></label>
                                     <input type="text" id="id_avatar" accept="image/png" name="file"
                                            style="display:none">
@@ -196,7 +196,6 @@
                 $("#microblog").val(response['microblog']);
             },
             error: function (response) {
-
             }
         })
     })
@@ -208,7 +207,7 @@
         method: "POST",  // 也可用put
         paramName: "multipartFile", // 默认为file
         maxFiles: 1,// 一次性上传的文件数量上限
-        maxFilesize: 2, // 文件大小，单位：MB
+        maxFilesize: 5, // 文件大小，单位：MB
         acceptedFiles: ".jpg,.gif,.png", // 上传的类型
         addRemoveLinks: true,
         parallelUploads: 1,// 一次上传的文件数量
@@ -228,7 +227,6 @@
             this.on("success", function (file, data) {
                 // 上传成功触发的事件
                 fileName = data.filename;
-                console.log(fileName)
                 $("#avatar").css("background-image", "url(static/upload/" +fileName+ ")");
             });
             this.on("error", function (file, data) {
@@ -236,6 +234,7 @@
             });
             this.on("removedfile", function (file) {
                 // 删除文件时触发的方法
+
             });
         }
     });

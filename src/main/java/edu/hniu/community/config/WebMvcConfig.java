@@ -15,7 +15,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private String mappingPath;
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(uploadPath).addResourceLocations(mappingPath);
-        System.out.println();
+        registry.addResourceHandler(mappingPath).addResourceLocations(uploadPath);
     }
 }
