@@ -7,6 +7,7 @@ public interface UserInfoService {
 
     /**
      * 登录验证
+     *
      * @param userInfo
      * @return
      */
@@ -14,6 +15,7 @@ public interface UserInfoService {
 
     /**
      * 注册
+     *
      * @param userInfo
      * @return
      */
@@ -21,6 +23,7 @@ public interface UserInfoService {
 
     /**
      * 重置密码
+     *
      * @param userInfo
      * @return
      */
@@ -28,6 +31,7 @@ public interface UserInfoService {
 
     /**
      * 异步查询
+     *
      * @param email
      * @return
      */
@@ -36,13 +40,15 @@ public interface UserInfoService {
 
     /**
      * 修改个人信息
+     *
      * @param userInfo
      * @return
      */
     boolean updateMassge(UserInfo userInfo);
 
     /**
-     *查询所有的UserInfo
+     * 查询所有的UserInfo
+     *
      * @return
      */
     UserInfo getUserConfig(String email);

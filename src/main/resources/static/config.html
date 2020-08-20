@@ -69,7 +69,7 @@
                                     </div>
                                 </dt>
                                 <dd class="pull-left">
-w                                    <p>支持 jpg、gif、png 等格式的图片</p>
+                                    <p>支持 jpg、gif、png 等格式的图片</p>
                                     <p>大小为5MB</p>
                                     <label for="id_avatar"><img src="./img/picture.png" alt="图像加载失败"></label>
                                     <input type="text" id="id_avatar" accept="image/png" name="file"
@@ -227,7 +227,8 @@ w                                    <p>支持 jpg、gif、png 等格式的图�
             this.on("success", function (file, data) {
                 // 上传成功触发的事件
                 fileName = data.filename;
-                $("#avatar").css("background-image", "url(static/upload/" +fileName+ ")");
+                $("#avatar").css("background-image", "url(static/upload/" + fileName + ")");
+                updateIcon();
             });
             this.on("error", function (file, data) {
                 // 上传失败触发的事件
@@ -238,6 +239,27 @@ w                                    <p>支持 jpg、gif、png 等格式的图�
             });
         }
     });
+
+    function updateIcon() {
+        var json = {
+            email: emailVal,
+            icon: fileName
+        }
+        var jsonStr = JSON.stringify(json);
+        $.ajax({
+            url: "file/updateIcon/",
+            type: "PUT",
+            contentType: "application/json;charset=utf-8",
+            data: jsonStr,
+            success: function (response) {
+                console.log(response)
+            },
+            error: function (response) {
+                console.error(response)
+            }
+
+        })
+    }
 
     function update() {
         var accountnameVal = $("#accountname").val();

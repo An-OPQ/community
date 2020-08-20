@@ -1,8 +1,9 @@
 package edu.hniu.community.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import edu.hniu.community.service.FileUploadService;
+import edu.hniu.community.vo.FileUploadVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,14 +17,16 @@ import java.util.UUID;
 @RequestMapping("/file")
 public class FileUploeadController {
 
+    @Autowired
+    FileUploadService fileUploadService;
 
     @PostMapping("/upload")
     public Map<String, Object> fileUpload(MultipartFile multipartFile, HttpServletRequest request) {
         HashMap<String, Object> result = new HashMap<String, Object>();
         //获取工程目录，此时获取不到。因为没有该目录
         String filePath = request.getSession().getServletContext().getRealPath("/");
-        filePath=filePath.substring(0,filePath.indexOf("tomcat"));
-        filePath=filePath+"community/static/upload";
+        filePath = filePath.substring(0, filePath.indexOf("tomcat"));
+        filePath = filePath + "community/static/upload";
         File file = new File(filePath);
         //目录不存在，则创建目录
         if (!file.exists()) {
@@ -47,7 +50,12 @@ public class FileUploeadController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        result.put("filename",file.getName());
+        result.put("filename", file.getName());
         return result;
+    }
+
+    @PutMapping("/updateIcon")
+    public Object updateIcon(@RequestBody FileUploadVo fileUploadVo) {
+        return fileUploadService.updateIcon(fileUploadVo);
     }
 }
