@@ -1,5 +1,5 @@
 body {
-    background-color: #efefef;
+    background-color: #F7F9FB;
 }
 
 .main {
@@ -17,22 +17,8 @@ body {
 
 .community-tag:hover {
     background-color: #339dff;
-    color: #fff !important;
+    color: #fff ;
     text-decoration-line: none;
-}
-
-.community-tag {
-    text-decoration-line: none;
-    cursor: pointer;
-    display: inline-block;
-    height: 20px;
-    line-height: 16px;
-    padding: 2px 5px;
-    background-color: #99cfff;
-    font-size: 12px;
-    color: #fff !important;
-    border-radius: 4px;
-    margin: 4px;
 }
 
 .btn-publish {
@@ -168,5 +154,5 @@ body {
 }
 
 .red {
-    color: red !important;
+    color: red ;
 }

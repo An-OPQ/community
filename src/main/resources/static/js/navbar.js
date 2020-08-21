@@ -26,7 +26,7 @@ document.writeln("                <li><a href=\'publish.html\'>发帖</a></li>")
 document.writeln("                <li class=\'dropdown\'>");
 document.writeln("                    <a href=\'#\' class=\'dropdown-toggle\' data-toggle=\'dropdown\' role=\'button\' aria-haspopup=\'true\' aria-expanded=\'false\'>登录 <span class=\'caret\'></span></a>");
 document.writeln("                    <ul class=\'dropdown-menu\'>");
-document.writeln("                        <li><a  id=\'config\' href=\'\'>个人中心</a></li>");
+document.writeln("                        <li><a  id=\'config.html\' href=\'\'>个人中心</a></li>");
 document.writeln("                        <li><a href=\'#\'>我的问题</a></li>");
 document.writeln("                        <li><a href=\'#\'>最新回复</a></li>");
 document.writeln("                        <li role=\'separator\' class=\'divider\'></li>");

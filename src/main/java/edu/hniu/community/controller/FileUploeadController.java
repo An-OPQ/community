@@ -3,10 +3,10 @@ package edu.hniu.community.controller;
 import edu.hniu.community.service.FileUploadService;
 import edu.hniu.community.vo.FileUploadVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,13 +20,15 @@ public class FileUploeadController {
     @Autowired
     FileUploadService fileUploadService;
 
+    @Value("${preread.uploadPath}")
+    String fileUploadPath;
+
     @PostMapping("/upload")
-    public Map<String, Object> fileUpload(MultipartFile multipartFile, HttpServletRequest request) {
+    public Map<String, Object> fileUpload(MultipartFile multipartFile) {
         HashMap<String, Object> result = new HashMap<String, Object>();
         //获取工程目录，此时获取不到。因为没有该目录
-        String filePath = request.getSession().getServletContext().getRealPath("/");
-        filePath = filePath.substring(0, filePath.indexOf("tomcat"));
-        filePath = filePath + "community/static/upload";
+        String filePath =fileUploadPath.substring(fileUploadPath.indexOf(":")+1);
+        System.out.println(filePath);
         File file = new File(filePath);
         //目录不存在，则创建目录
         if (!file.exists()) {

@@ -11,7 +11,7 @@ spring:
   # 如果配置了：/static/**，则url的访问地址必须带static(静态资源，html样式)
 
   datasource:
-    username: Jerry
+    username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
@@ -58,6 +58,6 @@ logging:
 
 #配置图片访问的虚拟路径
 preread:
-  uploadPath: file:/tmp/community/static/upload/
+  uploadPath: file:/home/jerry/communityFileUploadPath/static/upload/
   mappingPath: /static/upload/**
 

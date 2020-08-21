@@ -106,7 +106,7 @@
                 <version>5.2.4</version>
                 <configuration>
                     <url>jdbc:mysql://localhost:3306/community?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false</url>
-                    <user>Jerry</user>
+                    <user>root</user>
                     <password>123456</password>
                 </configuration>
             </plugin>
