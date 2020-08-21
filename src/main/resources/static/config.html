@@ -69,7 +69,7 @@
                                 </dt>
                                 <dd class="pull-left">
                                     <p>支持 jpg、gif、png 等格式的图片</p>
-                                    <p>大小为5MB</p>
+                                    <p>不超过为3MB</p>
                                     <label for="id_avatar"><img src="./img/picture.png" alt="图像加载失败"></label>
                                     <input type="text" id="id_avatar" accept="image/png" name="file"
                                            style="display:none">
@@ -185,7 +185,7 @@
             success: function (response) {
                 $("#email").val(response['email']);
                 $("#accountname").val(response['accountName']);
-                $("#sex .sex").val(response['sex']);
+                $("#status option[value='" + response['sex'] + "']").attr("selected", true);
                 $("#avatar").css("background-image", "url(static/upload/" + response['icon'] + ")");
                 $("#sginName").val(response['sginName']);
                 $("#input-qq").val(response['qq']);
@@ -206,7 +206,7 @@
         method: "POST",  // 也可用put
         paramName: "multipartFile", // 默认为file
         maxFiles: 1,// 一次性上传的文件数量上限
-        maxFilesize: 5, // 文件大小，单位：MB
+        maxFilesize: 3, // 文件大小，单位：MB
         acceptedFiles: ".jpg,.gif,.png", // 上传的类型
         addRemoveLinks: true,
         parallelUploads: 1,// 一次上传的文件数量
@@ -268,6 +268,7 @@
         var mobileVal = $("#input-mobile").val();
         var githubVal = $("#input-github").val();
         var microblogVal = $("#microblog").val();
+        console.log(sexVal)
         var json = {
             email: emailVal,
             accountName: accountnameVal,
