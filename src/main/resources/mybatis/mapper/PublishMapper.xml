@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hniu.community.dao.PublishDao">
+    <insert id="publishMessage" parameterType="edu.hniu.community.vo.PublishSubmitVo">
+        insert into question(id,
+        <trim suffixOverrides=",">
+            <if test="title!='' and title!=null">
+                title,
+            </if>
+            <if test="description!='' and description!=null">
+                description,
+            </if>
+            <if test="creatorid!='' and creatorid!=null">
+                creatorid,
+            </if>
+            <if test="createDate!='' and createDate!=null">
+                createDate,
+            </if>
+            <if test="tag!='' and tag!=null">
+                tag
+            </if>
+        </trim>
+        ) values (default ,
+        <trim suffixOverrides=",">
+            <if test="title!='' and title!=null">
+                #{title},
+            </if>
+            <if test="description!='' and description!=null">
+                #{description},
+            </if>
+            <if test="creatorid!='' and creatorid!=null">
+                #{creatorid},
+            </if>
+            <if test="createDate!='' and createDate!=null">
+                #{createDate},
+            </if>
+            <if test="tag!='' and tag!=null">
+                #{tag}
+            </if>
+        </trim>
+        )
+    </insert>
+</mapper>

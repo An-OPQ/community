@@ -66,4 +66,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     public UserInfo getUserConfig(String email) {
         return userInfoDao.getUserConfig(email);
     }
+
+    /**
+     * 根据用户email查询id的值
+     * @param email
+     * @return
+     */
+    @Override
+    public long getIdByEmail(String email) {
+        return userInfoDao.getIdByEmail(email);
+    }
 }

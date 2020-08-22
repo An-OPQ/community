@@ -102,4 +102,8 @@
     <select id="getUserConfig" parameterType="String" resultType="UserInfo">
         SELECT  u.id,u.email,u.accountName,u.sex,u.icon,u.sginName,u.qq,u.WeChat,u.mobile,u.github,u.microblog FROM userinfo u WHERE email=#{email}
     </select>
+
+    <select id="getIdByEmail" parameterType="String" resultType="long">
+        select id from userinfo where email=#{email}
+    </select>
 </mapper>

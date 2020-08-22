@@ -47,4 +47,11 @@ public interface UserInfoDao {
      * @return
      */
     UserInfo getUserConfig(String email);
+
+    /**
+     * 根据email查询对应用户的id
+     * @param email
+     * @return
+     */
+    long getIdByEmail(String email);
 }

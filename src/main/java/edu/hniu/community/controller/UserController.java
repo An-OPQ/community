@@ -7,6 +7,7 @@ import edu.hniu.community.toolkit.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -23,15 +24,23 @@ public class UserController {
     MailService mailService;
 
     @PostMapping("/login")
-    public Object loginController(@RequestBody UserInfo userInfo) {
+    public Object loginController(@RequestBody UserInfo userInfo,HttpSession session) {
         userInfo = MD5.encode(userInfo);
-        return userInfoService.loginCheck(userInfo);
+        boolean falg = userInfoService.loginCheck(userInfo);
+        if (falg){
+            session.setAttribute("email",userInfo.getEmail());
+        }
+        return falg;
     }
 
     @PostMapping("/register")
-    public Object register(@RequestBody UserInfo userInfo) {
+    public Object register(@RequestBody UserInfo userInfo,HttpSession session) {
         userInfo = MD5.encode(userInfo);
-        return userInfoService.register(userInfo);
+        boolean falg = userInfoService.loginCheck(userInfo);
+        if (falg){
+            session.setAttribute("email",userInfo.getEmail());
+        }
+        return falg;
     }
 
     @PostMapping("/mailVerify")
@@ -78,15 +87,23 @@ public class UserController {
     }
 
 
-
     @PutMapping("/updateMassge")
-    public void updateMassge(@RequestBody UserInfo userInfo){
-        System.out.println(userInfo.toString());
+    public void updateMassge(@RequestBody UserInfo userInfo) {
         userInfoService.updateMassge(userInfo);
     }
 
     @GetMapping("/getUserConfig")
-    public Object getUserConfig(@RequestParam String email){
+    public Object getUserConfig(@RequestParam String email) {
         return userInfoService.getUserConfig(email);
+    }
+
+    /**
+     * 获取Session中的email的值，为了在所有页面中共享登录用户的信息。
+     * @param session
+     * @return
+     */
+    @GetMapping("/getSession")
+    public Object getSession(HttpSession session){
+        return session.getAttribute("email");
     }
 }
