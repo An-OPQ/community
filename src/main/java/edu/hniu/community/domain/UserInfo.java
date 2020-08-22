@@ -3,130 +3,141 @@ package edu.hniu.community.domain;
 
 public class UserInfo {
 
-  private long id;
-  private String email;
-  private String password;
-  private String accountName;
-  private String sex;
-  private String icon;
-  private String sginName;
-  private String qq;
-  private String weChat;
-  private String mobile;
-  private String github;
-  private String microblog;
+    private long id;
+    private String email;
+    private String password;
+    private String accountName;
+    private String sex;
+    private String icon;
+    private String sginName;
+    private String qq;
+    private String weChat;
+    private String mobile;
+    private String github;
+    private String microblog;
 
-  public long getId() {
-    return id;
-  }
+    private Question question;
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    public Question getQuestion() {
+        return question;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public long getId() {
+        return id;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public String getAccountName() {
-    return accountName;
-  }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  public void setAccountName(String accountName) {
-    this.accountName = accountName;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public String getSex() {
-    return sex;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public void setSex(String sex) {
-    this.sex = sex;
-  }
+    public String getAccountName() {
+        return accountName;
+    }
 
-  public String getIcon() {
-    return icon;
-  }
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
 
-  public void setIcon(String icon) {
-    this.icon = icon;
-  }
+    public String getSex() {
+        return sex;
+    }
 
-  public String getSginName() {
-    return sginName;
-  }
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
-  public void setSginName(String sginName) {
-    this.sginName = sginName;
-  }
+    public String getIcon() {
+        return icon;
+    }
 
-  public String getQq() {
-    return qq;
-  }
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
-  public void setQq(String qq) {
-    this.qq = qq;
-  }
+    public String getSginName() {
+        return sginName;
+    }
 
-  public String getWeChat() {
-    return weChat;
-  }
+    public void setSginName(String sginName) {
+        this.sginName = sginName;
+    }
 
-  public void setWeChat(String weChat) {
-    this.weChat = weChat;
-  }
+    public String getQq() {
+        return qq;
+    }
 
-  public String getMobile() {
-    return mobile;
-  }
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
 
-  public void setMobile(String mobile) {
-    this.mobile = mobile;
-  }
+    public String getWeChat() {
+        return weChat;
+    }
 
-  public String getGithub() {
-    return github;
-  }
+    public void setWeChat(String weChat) {
+        this.weChat = weChat;
+    }
 
-  public void setGithub(String github) {
-    this.github = github;
-  }
+    public String getMobile() {
+        return mobile;
+    }
 
-  public String getMicroblog() {
-    return microblog;
-  }
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-  public void setMicroblog(String microblog) {
-    this.microblog = microblog;
-  }
+    public String getGithub() {
+        return github;
+    }
 
-  @Override
-  public String toString() {
-    return "UserInfo{" +
-            "id=" + id +
-            ", email='" + email + '\'' +
-            ", password='" + password + '\'' +
-            ", accountName='" + accountName + '\'' +
-            ", sex='" + sex + '\'' +
-            ", icon='" + icon + '\'' +
-            ", sginName='" + sginName + '\'' +
-            ", qq='" + qq + '\'' +
-            ", weChat='" + weChat + '\'' +
-            ", mobile='" + mobile + '\'' +
-            ", github='" + github + '\'' +
-            ", microblog='" + microblog + '\'' +
-            '}';
-  }
+    public void setGithub(String github) {
+        this.github = github;
+    }
+
+    public String getMicroblog() {
+        return microblog;
+    }
+
+    public void setMicroblog(String microblog) {
+        this.microblog = microblog;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", sex='" + sex + '\'' +
+                ", icon='" + icon + '\'' +
+                ", sginName='" + sginName + '\'' +
+                ", qq='" + qq + '\'' +
+                ", weChat='" + weChat + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", github='" + github + '\'' +
+                ", microblog='" + microblog + '\'' +
+                ", question=" + question +
+                '}';
+    }
 }

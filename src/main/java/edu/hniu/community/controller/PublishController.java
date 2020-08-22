@@ -4,10 +4,7 @@ import edu.hniu.community.service.PublishService;
 import edu.hniu.community.service.UserInfoService;
 import edu.hniu.community.vo.PublishSubmitVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/publish")
@@ -25,5 +22,14 @@ public class PublishController {
         long userId = userInfoService.getIdByEmail(publishSubmitVo.getEmail());
         publishSubmitVo.setCreatorid(userId);
         return publishService.publishMessage(publishSubmitVo);
+    }
+
+    /**
+     * 查询所有的帖子
+     * @return
+     */
+    @GetMapping("/getPublishMessage")
+    public Object getPublishMessage() {
+        return publishService.getPublishMessage();
     }
 }
