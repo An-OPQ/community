@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hniu.community.dao.CommentDao">
+
+    <resultMap id="questionList" type="UserInfo">
+        <id property="id" column="uid"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="accountName" column="accountName"/>
+        <result property="sex" column="sex"/>
+        <result property="icon" column="icon"/>
+        <result property="sginName" column="sginName"/>
+        <result property="qq" column="qq"/>
+        <result property="weChat" column="weChat"/>
+        <result property="mobile" column="mobile"/>
+        <result property="github" column="github"/>
+        <result property="microblog" column="microblog"/>
+        <collection property="question" ofType="Question">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="description" column="description"/>
+            <result property="creatorid" column="creatorid"/>
+            <result property="createDate" column="createDate"/>
+            <result property="commentCount" column="commentCount"/>
+            <result property="viewCount" column="viewCount"/>
+            <result property="likeCount" column="likeCount"/>
+            <result property="tag" column="tag"/>
+        </collection>
+    </resultMap>
+
+    <select id="getAllComment" resultMap="questionList" parameterType="long">
+        select q.*,u.id uid,u.accountName,u.icon from question q left join userinfo u  on q.creatorid=u.id where q.id=#{id}
+    </select>
+
+
+    <insert id="publishComment" parameterType="Comment">
+        INSERT into comment (id,
+        <trim suffixOverrides=",">
+            <if test="creatorId != null and creatorId != ''">
+                creatorId,
+            </if>
+            <if test="questionId != null and questionId != ''">
+                questionId,
+            </if>
+            <if test="commentDescription != null and commentDescription != ''">
+                commentDescription,
+            </if>
+            <if test="commentDate != null and commentDate != ''">
+                commentDate,
+            </if>
+            <if test="likeCount != null and likeCount != ''">
+                likeCount,
+            </if>
+            <if test="commentCount != null and commentCount != ''">
+                commentCount,
+            </if>
+        </trim>
+        )VALUES(DEFAULT,
+        <trim suffixOverrides=",">
+            <if test="creatorId != null and creatorId != ''">
+                #{creatorId},
+            </if>
+            <if test="questionId != null and questionId != ''">
+                #{questionId},
+            </if>
+            <if test="commentDescription != null and commentDescription != ''">
+                #{commentDescription},
+            </if>
+            <if test="commentDate != null and commentDate != ''">
+                #{commentDate},
+            </if>
+            <if test="likeCount != null and likeCount != ''">
+                #{likeCount},
+            </if>
+            <if test="commentCount != null and commentCount != ''">
+                #{commentCount},
+            </if>
+        </trim>
+        )
+    </insert>
+</mapper>

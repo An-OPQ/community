@@ -12,7 +12,8 @@ body {
 }
 
 .top-header {
-    padding-left: 20px;
+    /*padding-left: 20px;*/
+    margin-bottom: 20px;
 }
 
 .community-tag:hover {
