@@ -41,7 +41,7 @@
                 <!--内容-->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 top-header">
-                        <a href="#   " target="_blank" style="color: #A00;font-weight: bold;">星光培训你值得拥有</a>
+                        <a href="#" target="_blank" style="color: #A00;font-weight: bold;">星光培训你值得拥有</a>
                         <img src="./img/hot.png">
                     </div>
                     <div id="description"></div>
@@ -131,7 +131,7 @@
                                      id="comment-3314">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <input type="text" class="form-control" placeholder="评论一下……" id="input-3314">
-                                        <button type="button" class="btn btn-success pull-right" onclick="comment(this)"
+                                        <button type="button" class="btn btn-success pull-right"
                                                 data-id="3314">评论
                                         </button>
                                     </div>
@@ -164,6 +164,7 @@
                     <input type="hidden" id="question_id" value="">
                     <textarea class="form-control comment" rows="6" id="comment_content" value=""></textarea>
                     <button type="button" class="btn btn-success btn-comment" id="publishComment">回复</button>
+                    <button type="button" class="btn btn-success btn-comment" onclick="getAllCommentByQuestion()">test</button>
                 </div>
             </div>
         </div>
@@ -264,6 +265,9 @@
         })
     }
 
+    /**
+     * 查询登录的用户为？
+     */
     function uploadUserInfo() {
         $.ajax({
             url: "user/getUserConfig?email=" + email,
@@ -279,6 +283,9 @@
         })
     }
 
+    /**
+     * 发布评论
+     */
     $("#publishComment").click(function () {
         var creatorId = $("#author_id").val();
         var questionId = $("#question_id").val();
@@ -286,7 +293,6 @@
         var date = new Date();
         var Month = date.getMonth() + 1;
         var commentDate = date.getFullYear() + "-" + Month + "-" + date.getDate();
-
         var json = {
             creatorId: creatorId,
             questionId: questionId,
@@ -294,22 +300,20 @@
             commentDate: commentDate
         }
         var jsonStr = JSON.stringify(json)
-        console.log(jsonStr)
         $.ajax({
             url: "comment/publishComment",
             type: "POST",
             data: jsonStr,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
-            success:function (response) {
+            success: function (response) {
                 alert("回复成功！")
             },
-            error:function (response) {
-                console.log(response)
+            error: function (response) {
+                console.error(response)
             }
         })
     })
-
 
 </script>
 </body>

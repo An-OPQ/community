@@ -21,4 +21,11 @@ public interface CommentService {
      * @return
      */
     boolean publishComment(Comment comment);
+
+    /**
+     * 查询所有的评论
+     * @param questionId
+     * @return
+     */
+    List<Comment> getAllCommentByQuestion(long questionId);
 }

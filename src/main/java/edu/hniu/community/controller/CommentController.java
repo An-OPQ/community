@@ -18,8 +18,12 @@ public class CommentController {
     }
 
     @PostMapping("/publishComment")
-    public Object publishComment(@RequestBody Comment comment){
-        System.out.println(comment.toString());
+    public Object publishComment(@RequestBody Comment comment) {
         return commentService.publishComment(comment);
+    }
+
+    @GetMapping("/getAllCommentByQuestion")
+    public Object getAllCommentByQuestion(@RequestParam long questionId ) {
+        return commentService.getAllCommentByQuestion(questionId);
     }
 }

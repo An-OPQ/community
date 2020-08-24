@@ -54,7 +54,7 @@
                 likeCount,
             </if>
             <if test="commentCount != null and commentCount != ''">
-                commentCount,
+                commentCount
             </if>
         </trim>
         )VALUES(DEFAULT,
@@ -75,9 +75,13 @@
                 #{likeCount},
             </if>
             <if test="commentCount != null and commentCount != ''">
-                #{commentCount},
+                #{commentCount}
             </if>
         </trim>
         )
     </insert>
+
+    <select id="getAllCommentByQuestion" parameterType="long" resultType="Comment">
+            select * from comment where questionId=#{questionId}
+    </select>
 </mapper>
