@@ -9,6 +9,7 @@ public interface CommentDao {
 
     /**
      * 查询question
+     *
      * @param id
      * @return
      */
@@ -16,7 +17,15 @@ public interface CommentDao {
 
     /**
      * 发布评论
+     *
      * @return
      */
     int publishComment(Comment comment);
+
+    /**
+     * 查询所有的评论
+     * @param questionId
+     * @return
+     */
+    List<Comment> getAllCommentByQuestion(long questionId);
 }

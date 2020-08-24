@@ -39,45 +39,49 @@
         INSERT into comment (id,
         <trim suffixOverrides=",">
             <if test="creatorId != null and creatorId != ''">
-                creatorId,
+                creatorId
             </if>
             <if test="questionId != null and questionId != ''">
-                questionId,
+                questionId
             </if>
             <if test="commentDescription != null and commentDescription != ''">
-                commentDescription,
+                commentDescription
             </if>
             <if test="commentDate != null and commentDate != ''">
-                commentDate,
+                commentDate
             </if>
             <if test="likeCount != null and likeCount != ''">
-                likeCount,
+                likeCount
             </if>
             <if test="commentCount != null and commentCount != ''">
-                commentCount,
+                commentCount
             </if>
         </trim>
         )VALUES(DEFAULT,
         <trim suffixOverrides=",">
             <if test="creatorId != null and creatorId != ''">
-                #{creatorId},
+                #{creatorId}
             </if>
             <if test="questionId != null and questionId != ''">
-                #{questionId},
+                #{questionId}
             </if>
             <if test="commentDescription != null and commentDescription != ''">
-                #{commentDescription},
+                #{commentDescription}
             </if>
             <if test="commentDate != null and commentDate != ''">
-                #{commentDate},
+                #{commentDate}
             </if>
             <if test="likeCount != null and likeCount != ''">
-                #{likeCount},
+                #{likeCount}
             </if>
             <if test="commentCount != null and commentCount != ''">
-                #{commentCount},
+                #{commentCount}
             </if>
         </trim>
         )
     </insert>
+
+    <select id="getAllCommentByQuestion" parameterType="long" resultType="Comment">
+            select * from comment where questionId=#{questionId}
+    </select>
 </mapper>

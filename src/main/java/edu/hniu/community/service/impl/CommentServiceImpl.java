@@ -25,4 +25,9 @@ public class CommentServiceImpl implements CommentService {
     public boolean publishComment(Comment comment) {
         return commentDao.publishComment(comment)>0;
     }
+
+    @Override
+    public List<Comment> getAllCommentByQuestion(long questionId) {
+        return commentDao.getAllCommentByQuestion(questionId);
+    }
 }
