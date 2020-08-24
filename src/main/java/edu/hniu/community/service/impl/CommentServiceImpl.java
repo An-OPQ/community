@@ -27,7 +27,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getAllCommentByQuestion(long questionId) {
+    public List<UserInfo> getAllCommentByQuestion(long questionId) {
         return commentDao.getAllCommentByQuestion(questionId);
     }
 }

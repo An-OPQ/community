@@ -27,5 +27,5 @@ public interface CommentDao {
      * @param questionId
      * @return
      */
-    List<Comment> getAllCommentByQuestion(long questionId);
+    List<UserInfo> getAllCommentByQuestion(long questionId);
 }

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.hniu.community.dao.CommentDao">
-
+    <!--一对多-->
     <resultMap id="questionList" type="UserInfo">
         <id property="id" column="uid"/>
         <result property="email" column="email"/>
@@ -30,6 +30,31 @@
         </collection>
     </resultMap>
 
+    <!--一对多-->
+    <resultMap id="commentList" type="UserInfo">
+        <id property="id" column="uid"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="accountName" column="accountName"/>
+        <result property="sex" column="sex"/>
+        <result property="icon" column="icon"/>
+        <result property="sginName" column="sginName"/>
+        <result property="qq" column="qq"/>
+        <result property="weChat" column="weChat"/>
+        <result property="mobile" column="mobile"/>
+        <result property="github" column="github"/>
+        <result property="microblog" column="microblog"/>
+        <collection property="comment" ofType="Comment">
+            <id property="id" column="id"/>
+            <result property="creatorId" column="creatorId"/>
+            <result property="questionId" column="questionId"/>
+            <result property="commentDescription" column="commentDescription"/>
+            <result property="commentDate" column="commentDate"/>
+            <result property="commentCount" column="commentCount"/>
+            <result property="likeCount" column="likeCount"/>
+            <result property="commentCount" column="commentCount"/>
+        </collection>
+    </resultMap>
     <select id="getAllComment" resultMap="questionList" parameterType="long">
         select q.*,u.id uid,u.accountName,u.icon from question q left join userinfo u  on q.creatorid=u.id where q.id=#{id}
     </select>
@@ -81,7 +106,7 @@
         )
     </insert>
 
-    <select id="getAllCommentByQuestion" parameterType="long" resultType="Comment">
-            select * from comment where questionId=#{questionId}
+    <select id="getAllCommentByQuestion" parameterType="long" resultMap="commentList">
+            select c.*,u.accountName,u.icon from comment c left join userinfo u on c.creatorId=u.id where questionId=#{questionId}
     </select>
 </mapper>

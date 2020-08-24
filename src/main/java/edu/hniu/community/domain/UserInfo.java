@@ -18,6 +18,16 @@ public class UserInfo {
 
     private Question question;
 
+    private Comment comment;
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
     public Question getQuestion() {
         return question;
     }
@@ -138,6 +148,7 @@ public class UserInfo {
                 ", github='" + github + '\'' +
                 ", microblog='" + microblog + '\'' +
                 ", question=" + question +
+                ", comment=" + comment +
                 '}';
     }
 }

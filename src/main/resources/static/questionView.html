@@ -62,9 +62,9 @@
             </div>
 
             <!--回复-->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="Reply">
                 <h4>
-                    <span>2</span> 个回复
+                    <span></span> 个回复
                 </h4>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
                 <div id="commentDescription">
@@ -96,43 +96,10 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments"
                                      id="comment-3315">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" class="form-control" placeholder="评论一下……" id="input-3315">
+                                        <input type="text" class="form-control" placeholder="评论一下……"
+                                               id="input-3315">
                                         <button type="button" class="btn btn-success pull-right"
                                                 data-id="3315">评论
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments">
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object img-rounded"
-                                         src="#">
-                                </a>
-                            </div>
-                            <div class="media-body" id="comment-body-3314">
-                                <h5 class="media-heading">
-                                    <span>skyline</span>
-                                </h5>
-                                <div>不明所以</div>
-                                <div class="menu">
-                                    <span class="glyphicon glyphicon-thumbs-up icon"></span>
-                                    <span data-id="3314" class="comment-icon">
-                                        <span class="glyphicon glyphicon-comment"></span>
-                                        <span>0</span>
-                                    </span>
-                                    <span class="pull-right">2020-08-13</span>
-                                </div>
-                                <!--二级评论-->
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments"
-                                     id="comment-3314">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" class="form-control" placeholder="评论一下……" id="input-3314">
-                                        <button type="button" class="btn btn-success pull-right"
-                                                data-id="3314">评论
                                         </button>
                                     </div>
                                 </div>
@@ -161,10 +128,11 @@
                             </h5>
                         </div>
                     </div>
+                    <input type="hidden" id="user_id" value="">
                     <input type="hidden" id="question_id" value="">
                     <textarea class="form-control comment" rows="6" id="comment_content" value=""></textarea>
                     <button type="button" class="btn btn-success btn-comment" id="publishComment">回复</button>
-                    <button type="button" class="btn btn-success btn-comment" onclick="getAllCommentByQuestion()">test</button>
+                    </button>
                 </div>
             </div>
         </div>
@@ -236,6 +204,9 @@
                 email = response;
                 refresh();
                 uploadUserInfo();
+
+                $('#commentDescription').animate({scrollTop: 1000}, 'slow');
+
             }
         })
     });
@@ -258,6 +229,7 @@
                 $("#createDate").empty().text(response[0].question.createDate);
                 $("#view_count").empty().text(response[0].question.viewCount);
                 $("#tag").empty().text(response[0].question.tag);
+                getAllCommentByQuestion();
             },
             error: function (response) {
                 console.error(response)
@@ -275,6 +247,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
+                $("#user_id").val(response.id)
                 $("#UserInfo_Icon").attr("src", "static/upload/" + response.icon);
                 $("#UserInfo_accountName").text(response['accountName']);
             },
@@ -287,7 +260,7 @@
      * 发布评论
      */
     $("#publishComment").click(function () {
-        var creatorId = $("#author_id").val();
+        var creatorId = $("#user_id").val();
         var questionId = $("#question_id").val();
         var commentDescription = $("#comment_content").val();
         var date = new Date();
@@ -307,13 +280,72 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
-                alert("回复成功！")
+                window.location.reload()
             },
             error: function (response) {
                 console.error(response)
             }
         })
     })
+
+
+    function getAllCommentByQuestion() {
+        var Id = $("#question_id").val();
+        $.ajax({
+            url: "comment/getAllCommentByQuestion?questionId=" + Id,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var commentDescription = $("#commentDescription")
+                commentDescription.empty();
+                $("#Reply span").text(response.length)
+                for (let i = 0; i < response.length; i++) {
+                    var comment = response[i];
+                    var bodyStr = "";
+                    bodyStr += "<div id=\"commentDescription\">\n" +
+                        "   <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 comments\">\n" +
+                        "       <div class=\"media\">\n" +
+                        "           <div class=\"media-left\">\n";
+                    if (comment.icon != null && comment.icon != undefined) {
+                        bodyStr += "<a href=\"#\">\n" +
+                            "      <img class=\"media-object img-rounded\"\n" +
+                            "         src=\"static/upload/" + comment.icon + "\">\n" +
+                            "   </a>\n";
+                    } else {
+                        bodyStr += "<a href=\"#\">\n" +
+                            "   <img class=\"media-object img-rounded\"\n" +
+                            "     src=\"./img/25213266.png\">\n" +
+                            " </a>\n";
+                    }
+                    bodyStr += "</div>\n" +
+                        "           <div class=\"media-body\" id=\"comment-body-3315\">\n" +
+                        "               <h5 class=\"media-heading\">\n" +
+                        "                   <span>" + comment.accountName + "</span>\n" +
+                        "               </h5>\n" +
+                        "               <div>" + comment.comment.commentDescription + "</div>\n" +
+                        "               <div class=\"menu\">\n" +
+                        "                   <span class=\"glyphicon glyphicon-thumbs-up icon\">" +
+                        "                   <span>" + comment.comment.likeCount + "</span>\n" +
+                        "                   </span>\n" +
+                        "                   <span data-id=\"3315\" class=\"comment-icon\">\n" +
+                        "                       <span class=\"glyphicon glyphicon-comment\"></span>\n" +
+                        "                       <span>" + comment.comment.commentCount + "</span>\n" +
+                        "                   </span>\n" +
+                        "                   <span class=\"pull-right\">" + comment.comment.commentDate + "</span>\n" +
+                        "               </div>\n" +
+                        "           </div>\n" +
+                        "         </div>\n" +
+                        "     </div>\n" +
+                        " </div>"
+                    commentDescription.append(bodyStr);
+                }
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+    }
 
 </script>
 </body>
