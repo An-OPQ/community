@@ -18,4 +18,34 @@ public interface PublishService {
      * @return
      */
     List<Question> getPublishMessage();
+
+    /**
+     * 更新阅读数
+     * @param id
+     * @return
+     */
+    boolean updateViewCount(Integer id);
+
+    /**
+     * 更新回复数
+     *
+     * @param id
+     * @return
+     */
+    boolean updateCommentCount(Integer id);
+
+    /**
+     * 更新点赞数
+     *
+     * @param id
+     * @return
+     */
+    boolean addLikeCount(Integer id);
+
+    /**
+     * less点赞数
+     * @param id
+     * @return
+     */
+    boolean lessLikeCount(Integer id);
 }

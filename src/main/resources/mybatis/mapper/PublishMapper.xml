@@ -74,4 +74,19 @@
     <select id="getPublishMessage" resultMap="questionList">
         SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid
     </select>
+
+    <update id="updateViewCount" parameterType="Integer">
+        UPDATE question	set viewCount=viewCount+1 WHERE id=#{id}
+    </update>
+
+    <update id="updateCommentCount" parameterType="Integer">
+        UPDATE question	set commentCount=commentCount+1 WHERE id=#{id}
+    </update>
+
+    <update id="addLikeCount" parameterType="Integer">
+        UPDATE comment	set likeCount=likeCount+1 WHERE id=#{id}
+    </update>
+    <update id="lessLikeCount" parameterType="Integer">
+        UPDATE comment	set likeCount=likeCount-1 WHERE id=#{id}
+    </update>
 </mapper>

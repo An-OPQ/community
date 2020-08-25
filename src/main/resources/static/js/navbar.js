@@ -30,10 +30,25 @@ document.writeln("                        <li><a id=\'config\' href=\'config.htm
 document.writeln("                        <li><a >我的问题</a></li>");
 document.writeln("                        <li><a >最新回复</a></li>");
 document.writeln("                        <li role=\'separator\' class=\'divider\'></li>");
-document.writeln("                        <li><a>退出登录</a></li>");
+document.writeln("                        <li><a id=\'logout\'>退出登录</a></li>");
 document.writeln("                    </ul>");
 document.writeln("                </li>");
 document.writeln("            </ul>");
 document.writeln("        </div>");
 document.writeln("    </div>");
 document.writeln("</nav>");
+
+$("#logout").click(function () {
+    $.ajax({
+        url:"user/logout",
+        type:"GET",
+        contentType:"application/json;charset=utf-8",
+        success:function (response) {
+            window.location.href="login.html"
+        },
+        error:function (response) {
+
+        }
+    })
+
+})

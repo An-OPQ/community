@@ -18,7 +18,7 @@ body {
 
 .community-tag:hover {
     background-color: #339dff;
-    color: #fff ;
+    color: #fff;
     text-decoration-line: none;
 }
 
@@ -135,17 +135,11 @@ body {
     cursor: pointer;
 }
 
-.menu .comment-icon :hover {
-    color: #499ef3;
-}
 
 .menu .active {
     color: #499ef3;
 }
 
-.menu .icon:hover {
-    color: #499ef3;
-}
 
 .footer {
     text-align: center;
@@ -155,5 +149,5 @@ body {
 }
 
 .red {
-    color: red ;
+    color: red;
 }

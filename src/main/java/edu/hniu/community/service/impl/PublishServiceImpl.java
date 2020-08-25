@@ -24,4 +24,24 @@ public class PublishServiceImpl implements PublishService {
     public List<Question> getPublishMessage() {
         return publishDao.getPublishMessage();
     }
+
+    @Override
+    public boolean updateViewCount(Integer id) {
+        return publishDao.updateViewCount(id)>0;
+    }
+
+    @Override
+    public boolean updateCommentCount(Integer id) {
+        return publishDao.updateCommentCount(id)>0;
+    }
+
+    @Override
+    public boolean addLikeCount(Integer id) {
+        return publishDao.addLikeCount(id)>0;
+    }
+
+    @Override
+    public boolean lessLikeCount(Integer id) {
+        return publishDao.lessLikeCount(id)>0;
+    }
 }

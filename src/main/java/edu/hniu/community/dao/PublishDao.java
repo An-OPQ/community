@@ -9,6 +9,7 @@ public interface PublishDao {
 
     /**
      * 帖子发布
+     *
      * @param publishSubmitVo
      * @return
      */
@@ -17,7 +18,39 @@ public interface PublishDao {
 
     /**
      * 查询所有帖子
+     *
      * @return
      */
     List<Question> getPublishMessage();
+
+    /**
+     * 更新阅读数
+     *
+     * @param id
+     * @return
+     */
+    int updateViewCount(Integer id);
+
+    /**
+     * 更新回复数
+     *
+     * @param id
+     * @return
+     */
+    int updateCommentCount(Integer id);
+
+    /**
+     * add点赞数
+     *
+     * @param id
+     * @return
+     */
+    int addLikeCount(Integer id);
+
+    /**
+     * less点赞数
+     * @param id
+     * @return
+     */
+    int lessLikeCount(Integer id);
 }

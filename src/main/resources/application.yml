@@ -61,3 +61,7 @@ preread:
   uploadPath: file:/home/jerry/communityFileUploadPath/static/upload/
   mappingPath: /static/upload/**
 
+# 配置分页查询每页数量
+PageHelper:
+  pageSize: 10
+

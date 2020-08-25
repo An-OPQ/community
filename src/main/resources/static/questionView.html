@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="./css/community.css">
     <link rel="stylesheet" href="./css/config.css">
-
     <script src="./js/jquery-3.4.1.min.js"></script>
     <script src="./js/bootstrap.min.js" type="application/javascript"></script>
     <script src="./js/community.js" type="application/javascript"></script>
@@ -67,7 +66,7 @@
                     <span></span> 个回复
                 </h4>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
-                <div id="commentDescription">
+                <div id="commentDescriptions">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments">
                         <div class="media">
                             <div class="media-left">
@@ -204,9 +203,6 @@
                 email = response;
                 refresh();
                 uploadUserInfo();
-
-                $('#commentDescription').animate({scrollTop: 1000}, 'slow');
-
             }
         })
     });
@@ -230,6 +226,7 @@
                 $("#view_count").empty().text(response[0].question.viewCount);
                 $("#tag").empty().text(response[0].question.tag);
                 getAllCommentByQuestion();
+                updateViewCount();
             },
             error: function (response) {
                 console.error(response)
@@ -280,6 +277,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
+                updateCommentCount();
                 window.location.reload()
             },
             error: function (response) {
@@ -297,8 +295,8 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
-                var commentDescription = $("#commentDescription")
-                commentDescription.empty();
+                var commentDescriptions = $("#commentDescriptions")
+                commentDescriptions.empty();
                 $("#Reply span").text(response.length)
                 for (let i = 0; i < response.length; i++) {
                     var comment = response[i];
@@ -325,9 +323,10 @@
                         "               </h5>\n" +
                         "               <div>" + comment.comment.commentDescription + "</div>\n" +
                         "               <div class=\"menu\">\n" +
-                        "                   <span class=\"glyphicon glyphicon-thumbs-up icon\">" +
-                        "                   <span>" + comment.comment.likeCount + "</span>\n" +
-                        "                   </span>\n" +
+                        "                   <span data-id=\"3316\" class=\"comment-icon\" onclick='LikeCount(this)'>\n" +
+                        "                    <input type=\"hidden\" class=\"commentId\" value=\"" + comment.comment.id + "\">\n" +
+                        "                       <span class=\"glyphicon glyphicon-thumbs-up icon\"></span>\n" +
+                        "                       <span id=\'cLikeCount\' >" + comment.comment.likeCount + "</span>\n" +
                         "                   <span data-id=\"3315\" class=\"comment-icon\">\n" +
                         "                       <span class=\"glyphicon glyphicon-comment\"></span>\n" +
                         "                       <span>" + comment.comment.commentCount + "</span>\n" +
@@ -338,7 +337,7 @@
                         "         </div>\n" +
                         "     </div>\n" +
                         " </div>"
-                    commentDescription.append(bodyStr);
+                    commentDescriptions.append(bodyStr);
                 }
             },
             error: function (response) {
@@ -346,6 +345,82 @@
             }
         })
     }
+
+    function updateViewCount() {
+        var id = $("#question_id").val();
+        $.ajax({
+            url: "publish/updateViewCount?id=" + id,
+            type: "PUT",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                if (response) {
+                    var viewCount = $("#view_count").html();
+                    var count = parseInt(viewCount) + 1;
+                    $("#view_count").html(count);
+                }
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+    }
+
+    function updateCommentCount() {
+        var id = $("#question_id").val();
+        $.ajax({
+            url: "publish/updateCommentCount?id=" + id,
+            type: "PUT",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+    }
+
+
+    function LikeCount(obj) {
+        var id = $(obj).find("input").val();
+        if ($(obj).find(".icon").css("color") == 'rgb(153, 153, 153)') {
+            $.ajax({
+                url: "publish/addLikeCount?id=" + id,
+                type: "PUT",
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (response) {
+                        var cLikeCount = $(obj).find("#cLikeCount").html();
+                        var count = parseInt(cLikeCount) + 1;
+                        $(obj).find("#cLikeCount").html(count);
+                        $(obj).find(".icon").css("color", 'rgb(255, 0, 0)')
+                    }
+
+                },
+                error: function (response) {
+                    console.error(response)
+                }
+            })
+        } else if ($(obj).find(".icon").css("color") == 'rgb(255, 0, 0)') {
+            $.ajax({
+                url: "publish/lessLikeCount?id=" + id,
+                type: "PUT",
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (response) {
+                        var cLikeCount = $(obj).find("#cLikeCount").html();
+                        var count = parseInt(cLikeCount) - 1;
+                        $(obj).find("#cLikeCount").html(count);
+                        $(obj).find(".icon").css("color", 'rgb(153, 153, 153)')
+                    }
+
+                },
+                error: function (response) {
+                    console.error(response)
+                }
+            })
+        }
+    }
+
 
 </script>
 </body>

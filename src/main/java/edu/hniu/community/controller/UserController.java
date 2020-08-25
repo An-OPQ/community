@@ -23,21 +23,21 @@ public class UserController {
     MailService mailService;
 
     @PostMapping("/login")
-    public Object loginController(@RequestBody UserInfo userInfo,HttpSession session) {
+    public Object loginController(@RequestBody UserInfo userInfo, HttpSession session) {
         userInfo = MD5.encode(userInfo);
         boolean falg = userInfoService.loginCheck(userInfo);
-        if (falg){
-            session.setAttribute("email",userInfo.getEmail());
+        if (falg) {
+            session.setAttribute("email", userInfo.getEmail());
         }
         return falg;
     }
 
     @PostMapping("/register")
-    public Object register(@RequestBody UserInfo userInfo,HttpSession session) {
+    public Object register(@RequestBody UserInfo userInfo, HttpSession session) {
         userInfo = MD5.encode(userInfo);
-        boolean falg = userInfoService.loginCheck(userInfo);
-        if (falg){
-            session.setAttribute("email",userInfo.getEmail());
+        boolean falg = userInfoService.register(userInfo);
+        if (falg) {
+            session.setAttribute("email", userInfo.getEmail());
         }
         return falg;
     }
@@ -98,11 +98,18 @@ public class UserController {
 
     /**
      * 获取Session中的email的值，为了在所有页面中共享登录用户的信息。
+     *
      * @param session
      * @return
      */
     @GetMapping("/getSession")
-    public Object getSession(HttpSession session){
+    public Object getSession(HttpSession session) {
         return session.getAttribute("email");
+    }
+
+    @GetMapping("/logout")
+    public void logout(HttpSession session) {
+        session.removeAttribute("email");
+        session.invalidate();
     }
 }

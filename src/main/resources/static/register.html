@@ -140,7 +140,7 @@
                 }
             },
             error: function (response) {
-                console.error(response);
+                alert("注册失败!用户名可能重复")
             }
         })
     }
@@ -171,7 +171,6 @@
             url: "user/getCaptcha?mail=" + emailVal,
             contentType: "application/json;charset=utf-8",
             success: function (response) {
-                console.log(response)
                 if (response) {
                     setTime($("#send"));
                 } else {
