@@ -1,0 +1,31 @@
+#main .col-md-12 {
+	margin:20px 15px;
+}
+
+#Lr .list-group{
+	margin:20px 15px;
+}
+#Lr  .table{
+border-left: 1px solid #D3D9DF;
+border-right: 1px solid #D3D9DF;
+border-bottom:1px solid #D3D9DF;
+}
+ 
+#content .list-group{
+	margin:20px 15px;
+}
+#content .tbody{
+	border-left: 1px solid #D3D9DF;
+	border-right: 1px solid #D3D9DF;
+	border-bottom:1px solid #D3D9DF;
+	padding: 16px;
+}
+.tab-list  .pull-left{
+	margin: 15px;
+}
+
+
+
+.footer{
+	margin-top:70px;
+}

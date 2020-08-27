@@ -1,6 +1,7 @@
 package edu.hniu.community.service;
 
 import edu.hniu.community.domain.UserInfo;
+import org.apache.ibatis.annotations.Param;
 
 
 public interface UserInfoService {
@@ -20,6 +21,29 @@ public interface UserInfoService {
      * @return
      */
     boolean register(UserInfo userInfo);
+
+    /**
+     * cookie的value保存到数据库中
+     *
+     * @param token
+     * @return
+     */
+    boolean updateToken(@Param("token") String token, @Param("email") String email);
+
+    /**
+     * 根据cookie的值去查询数据库的token
+     *
+     * @param token
+     * @return
+     */
+    String getToken(String token);
+
+    /**
+     * 根据email去查询到accountName的值
+     * @param email
+     * @return
+     */
+    String getAccountName(String email);
 
     /**
      * 重置密码
@@ -55,6 +79,7 @@ public interface UserInfoService {
 
     /**
      * 根据email查询对应用户的id
+     *
      * @param email
      * @return
      */

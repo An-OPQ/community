@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,7 +25,6 @@ public class taskApplicationTests {
 
     @Test
     public void contextLoads3() {
-        System.out.println(fromMail);
     }
 
     @Test

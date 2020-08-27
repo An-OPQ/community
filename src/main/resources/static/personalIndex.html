@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>求知论坛</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/bootstrap.min.js" type="application/javascript"></script>
+    <style>
+        #picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50px;
+            background-size: cover;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <script src="./js/navbar.js"></script>
+    <div class="container-fluid main">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 main-header">
+                <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 用户设置</h3>
+            </div>
+            <!-- 基本信息 -->
+            <div class="mod-body">
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                    <div class="mod-head">
+                        <h4>基本信息</h4>
+                        <hr>
+                        <form class="form-horizontal" id="setting_form">
+                            <!-- 上传头像 -->
+                            <div class="side-bar">
+                                <div class="pull-left">
+                                    <div id="picture">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end 上传头像 -->
+                            <div class="side-bar">
+                                <div class="pull-right">
+                                    <dl>
+                                        <dt>邮箱:</dt>
+                                        <dd><input type="text" class="form-control" name="email" id="email"
+                                                   value="" disabled="true"></dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>昵称:</dt>
+                                        <dd><input type="text" class="form-control" name="accountname" id="accountname"></dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end 基本信息 -->
+                    <!-- 联系方式 -->
+                    <div class="mod-head">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mod-contact">
+                            <div class="mod-head">
+                                <h4>联系方式</h4>
+                            </div>
+                            <div class="mod-body clearfix">
+                                <ul>
+                                    <li>
+                                        <label for="input-qq">QQ:</label>
+                                        <input class="form-control" type="text" id="input-qq" name="qq" value="">
+                                    </li>
+                                    <li>
+                                        <label for="input-wechat">微信:</label>
+                                        <input class="form-control" type="text" id="input-wechat" name="wechat"
+                                            value="">
+                                    </li>
+                                    <li>
+                                        <label for="input-mobile">手机号码:</label>
+                                        <input class="form-control" type="text" id="input-mobile" name="mobile"
+                                            value="">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mod-head">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mod-contact">
+                            <div class="mod-head">
+                                <h4>公开的联系方式</h4>
+                            </div>
+                            <div class="mod-body clearfix">
+                                <ul>
+                                    <li>
+                                        <label for="input-github">Github:</label>
+                                        <input class="form-control" type="text" id="input-github" name="github"
+                                            value="">
+                                    </li>
+                                    <li>
+                                        <label for="microblog">微博:</label>
+                                        <input class="form-control" type="text" id="microblog" name="microblog"
+                                            value="">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="button" class="btn btn-success btn-lg" style="float: right" onclick="update()"
+                            id="submit">
+                            修改
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- 广告部分 -->
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                <div>
+                    <div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
+                            <h4>广告</h4>
+                            <img class="img-thumbnail question-wechat" src="./picture/official-account.png">
+                        </div>
+                    </div>
+                </div>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h4>赞助商家</h4>
+                    <a href="#" class="community-tag">阿里巴巴</a>
+                    <a href="#" class="community-tag">javascript</a>
+                    <a href="#" class="community-tag">爱美食</a>
+                    <a href="#" class="community-tag">好丽友</a>
+                    <a href="#" class="community-tag">css</a>
+                    <a href="#" class="community-tag">XXX</a>
+                    <a href="#" class="community-tag">XXX</a>
+                    <a href="#" class="community-tag">html5</a>
+                    <a href="#" class="community-tag">XXX</a>
+                    <a href="#" class="community-tag">XXX</a>
+                </div>
+                <div>
+                    <div>
+                        <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
+                            <a href="#" onclick="" target="_blank">
+                                <img class="img-thumbnail question-wechat" src="./picture/uhost.png">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>l

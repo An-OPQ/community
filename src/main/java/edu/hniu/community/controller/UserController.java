@@ -3,10 +3,14 @@ package edu.hniu.community.controller;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.MailService;
 import edu.hniu.community.service.UserInfoService;
+import edu.hniu.community.toolkit.GetSessionValue;
 import edu.hniu.community.toolkit.MD5;
+import edu.hniu.community.toolkit.UpdateTokenByCookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -22,23 +26,25 @@ public class UserController {
     @Autowired
     MailService mailService;
 
+    @Autowired
+    UpdateTokenByCookie updateTokenByCookie;
+
+    @Autowired
+    GetSessionValue getSessionValue;
+
     @PostMapping("/login")
-    public Object loginController(@RequestBody UserInfo userInfo, HttpSession session) {
+    public Object loginController(@RequestBody UserInfo userInfo, HttpServletResponse response, HttpServletRequest request) {
         userInfo = MD5.encode(userInfo);
         boolean falg = userInfoService.loginCheck(userInfo);
-        if (falg) {
-            session.setAttribute("email", userInfo.getEmail());
-        }
+        updateTokenByCookie.updateTokenByCookie(falg, userInfo, response, request);
         return falg;
     }
 
     @PostMapping("/register")
-    public Object register(@RequestBody UserInfo userInfo, HttpSession session) {
+    public Object register(@RequestBody UserInfo userInfo, HttpServletResponse response, HttpServletRequest request) {
         userInfo = MD5.encode(userInfo);
         boolean falg = userInfoService.register(userInfo);
-        if (falg) {
-            session.setAttribute("email", userInfo.getEmail());
-        }
+        updateTokenByCookie.updateTokenByCookie(falg, userInfo, response, request);
         return falg;
     }
 
@@ -96,6 +102,7 @@ public class UserController {
         return userInfoService.getUserConfig(email);
     }
 
+
     /**
      * 获取Session中的email的值，为了在所有页面中共享登录用户的信息。
      *
@@ -103,13 +110,34 @@ public class UserController {
      * @return
      */
     @GetMapping("/getSession")
-    public Object getSession(HttpSession session) {
-        return session.getAttribute("email");
+    public Object getSession(HttpSession session, HttpServletRequest request) {
+        return getSessionValue.getSessionValue(session, request);
     }
 
+    /**
+     * 登出
+     * session.invalidate();为清除Session中的所有对象，而不清楚本身
+     *
+     * @param session
+     */
     @GetMapping("/logout")
-    public void logout(HttpSession session) {
-        session.removeAttribute("email");
+    public void logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        //清理cookie
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null && cookies.length != 0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+        }
         session.invalidate();
+    }
+
+    @GetMapping("/getAccountName")
+    public Object getAccountName(HttpSession session, HttpServletRequest request) {
+        String email =getSessionValue.getSessionValue(session, request);
+        return userInfoService.getAccountName(email);
     }
 }

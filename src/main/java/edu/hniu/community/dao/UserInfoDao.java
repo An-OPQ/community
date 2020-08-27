@@ -2,12 +2,14 @@ package edu.hniu.community.dao;
 
 
 import edu.hniu.community.domain.UserInfo;
+import org.apache.ibatis.annotations.Param;
 
 
 public interface UserInfoDao {
 
     /**
      * 登录验证
+     *
      * @param userInfo
      * @return
      */
@@ -16,13 +18,38 @@ public interface UserInfoDao {
 
     /**
      * 注册
+     *
      * @param userInfo
      * @return
      */
     int register(UserInfo userInfo);
 
     /**
+     * cookie的value保存到数据库中
+     *
+     * @param token
+     * @return
+     */
+    int updateToken(@Param("token") String token, @Param("email") String email);
+
+    /**
+     * 根据cookie的值去查询数据库的token
+     *
+     * @param token
+     * @return
+     */
+    String getToken(String token);
+
+    /**
+     * 根据email去查询到accountName的值
+     * @param email
+     * @return
+     */
+    String getAccountName(String email);
+
+    /**
      * 重置密码
+     *
      * @param userInfo
      * @return
      */
@@ -30,6 +57,7 @@ public interface UserInfoDao {
 
     /**
      * 异步查询
+     *
      * @param email
      * @return
      */
@@ -37,19 +65,22 @@ public interface UserInfoDao {
 
     /**
      * 修改个人信息
+     *
      * @param userInfo
      * @return
      */
     int updateMassge(UserInfo userInfo);
 
     /**
-     *查询UserInfo所有信息
+     * 查询UserInfo所有信息
+     *
      * @return
      */
     UserInfo getUserConfig(String email);
 
     /**
      * 根据email查询对应用户的id
+     *
      * @param email
      * @return
      */

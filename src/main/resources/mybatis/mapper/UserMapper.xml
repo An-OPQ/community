@@ -50,6 +50,25 @@
         )
     </insert>
 
+    <update id="updateToken">
+        update userinfo
+        <set>
+            <if test="token !=null and token !=''">
+                token=#{token}
+            </if>
+        </set>
+        where email=#{email}
+
+    </update>
+
+    <select id="getToken" parameterType="String" resultType="String">
+        select email from userinfo where token=#{token}
+     </select>
+
+    <select id="getAccountName" parameterType="String" resultType="String">
+        select accountName from userinfo where email=#{email}
+    </select>
+
     <update id="resetPassword" parameterType="UserInfo">
         update userinfo
         <set>
@@ -64,7 +83,7 @@
         select count(*) from userinfo where email=#{email}
     </select>
 
-    
+
     <update id="updateMassge" parameterType="UserInfo">
         update userinfo
         <set>

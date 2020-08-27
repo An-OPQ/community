@@ -2,7 +2,7 @@
 /bin
 /logs
 */out/
-
+personnalIndex.html
 # filter config files, except .gitignore
 *.MF
 !.gitignore
