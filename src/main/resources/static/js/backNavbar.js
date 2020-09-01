@@ -11,7 +11,7 @@ document.writeln("				</button>");
 document.writeln("				<a class=\'navbar-brand\' href=\'backIndex.html\' >求知论坛管理</a>");
 document.writeln("			</div>");
 document.writeln("			<div class=\'collapse navbar-collapse\'>");
-document.writeln("				<ul class=\'nav navbar-nav navbar-left text-center \'>");
+document.writeln("				<ul class=\'nav navbar-nav navbar-left text-center\' id=\'navbarObj\'>");
 document.writeln("					<li>");
 document.writeln("						<a href=\'backIndex.html\'>");
 document.writeln("							<span class=\'glyphicon glyphicon-home\'></span>&nbsp;&nbsp;后台首页</a>");
@@ -74,7 +74,6 @@ $(function () {
         type: 'GET',
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
-            console.log(response)
             $("#dLabel").html(response+'<span class=\'caret\'></span>');
         },
         error: function (response) {
@@ -93,5 +92,15 @@ $('#logout').click(function () {
         error: function (response) {
         }
     })
-
 })
+let liObj =$("#navbarObj li")
+for(let i=0;i<liObj.length;i++){
+    liObj[i].addEventListener('click',function(){
+        liObj[i].addClass('active')
+        for(let j=0;j<liObj.length;j++){
+            if(i!==j){
+                liObj[j].removeClass('active')
+            }
+        }
+    })
+}

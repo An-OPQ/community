@@ -63,5 +63,5 @@ preread:
 
 # 配置分页查询每页数量
 PageHelper:
-  pageSize: 10
+  pageSize: 5
 

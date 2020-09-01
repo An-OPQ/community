@@ -120,10 +120,10 @@
 
     function initTable(response) {
         var tbodyObj = $("#tbody")
+        var bodyStr = "";
         tbodyObj.empty();
         for (let i = 0; i < response.length; i++) {
             var questions = response[i];
-            var bodyStr = "";
             bodyStr += "<div class=\"media\">\n" +
                 "<div class=\"media-left\">\n";
             if (questions.icon != null && questions.icon != undefined) {
@@ -146,8 +146,8 @@
                 "<span>" + questions.question.createDate + "</span></span>\n" +
                 "</div>\n" +
                 "</div>\n"
-            tbodyObj.append(bodyStr);
         }
+        tbodyObj.append(bodyStr);
     }
 
     function sreachAllQuestion(pageNum) {
@@ -201,7 +201,6 @@
                         "</li>";
                 }
                 $(".pagination").append(spliteStr);
-
             },
             error: function (response) {
                 console.error(response)

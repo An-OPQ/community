@@ -1,11 +1,13 @@
 package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.ManagementDao;
-import edu.hniu.community.domain.Roleinfo;
+import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -19,16 +21,24 @@ public class ManagementServiceImpl implements ManagementService {
 
     /**
      * 登录验证
-     *
+     * 其返回值为Object or null。所有判断它是否为空。
      * @param userInfo
      * @return
      */
     public boolean loginCheck(UserInfo userInfo) {
-        Roleinfo roleinfo=managementDao.loginCheck(userInfo);
+        RoleInfo roleinfo=managementDao.loginCheck(userInfo);
         boolean falg=false;
         if (roleinfo !=null){
             falg=true;
         }
         return falg;
+    }
+
+    /**
+     * 查询所有用户
+     * @return
+     */
+    public List<UserInfo> getAllUserinfo() {
+        return managementDao.getAllUserinfo();
     }
 }

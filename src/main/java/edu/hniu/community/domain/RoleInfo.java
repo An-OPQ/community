@@ -4,11 +4,20 @@ package edu.hniu.community.domain;
 /**
  * @author jerry
  */
-public class Roleinfo {
+public class RoleInfo {
 
   private long roleid;
   private String rolename;
 
+  private UserInfo userInfo;
+
+  public UserInfo getUserInfo() {
+    return userInfo;
+  }
+
+  public void setUserInfo(UserInfo userInfo) {
+    this.userInfo = userInfo;
+  }
 
   public long getRoleid() {
     return roleid;
@@ -33,6 +42,7 @@ public class Roleinfo {
     return "Roleinfo{" +
             "roleid=" + roleid +
             ", rolename='" + rolename + '\'' +
+            ", userInfo=" + userInfo +
             '}';
   }
 }

@@ -35,7 +35,6 @@ public class PublishController {
 
     /**
      * 查询所有的帖子
-     *
      * @return
      */
     @GetMapping("/getPublishMessage")

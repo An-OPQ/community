@@ -2,6 +2,8 @@ package edu.hniu.community.service;
 
 import edu.hniu.community.domain.UserInfo;
 
+import java.util.List;
+
 /**
  * @author jerry
  */
@@ -14,4 +16,10 @@ public interface ManagementService {
      * @return
      */
     boolean loginCheck(UserInfo userInfo);
+
+    /**
+     * 查询所有的用户
+     * @return
+     */
+    List<UserInfo> getAllUserinfo();
 }

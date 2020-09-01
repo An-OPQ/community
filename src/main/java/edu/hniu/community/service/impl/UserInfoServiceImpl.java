@@ -1,7 +1,6 @@
 package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.UserInfoDao;
-import edu.hniu.community.domain.Roleinfo;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
