@@ -1,4 +1,4 @@
-CREATE TABLE `community`.`Untitled`  (
+CREATE TABLE `community`.`comment`  (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `creatorId` bigint(11) NOT NULL,
   `questionId` bigint(11) NOT NULL,

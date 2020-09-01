@@ -5,7 +5,7 @@
 <mapper namespace="edu.hniu.community.dao.UserInfoDao">
 
     <select id="loginCheck" resultType="int">
-        select count(*) from userinfo
+        select count(1) from userinfo
         <where>
             <if test="email !=null and email !=''">
                 and email=#{email}

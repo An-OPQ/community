@@ -1,6 +1,7 @@
 package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.UserInfoDao;
+import edu.hniu.community.domain.Roleinfo;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @return
      */
     public boolean loginCheck(UserInfo userInfo) {
-        return userInfoDao.loginCheck(userInfo) > 0;
+        return userInfoDao.loginCheck(userInfo)>0;
     }
 
     /**
@@ -39,7 +40,6 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param token
      * @return
      */
-    @Override
     public boolean updateToken(String token, String email) {
         return userInfoDao.updateToken(token, email) > 0;
     }
@@ -50,7 +50,6 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param email
      * @return
      */
-    @Override
     public String getAccountName(String email) {
         return userInfoDao.getAccountName(email);
     }
@@ -61,7 +60,6 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param token
      * @return
      */
-    @Override
     public String getToken(String token) {
         return userInfoDao.getToken(token);
     }
@@ -110,7 +108,6 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param email
      * @return
      */
-    @Override
     public long getIdByEmail(String email) {
         return userInfoDao.getIdByEmail(email);
     }

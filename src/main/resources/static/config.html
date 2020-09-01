@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="./js/jquery-3.4.1.min.js"></script>
     <script src="./js/bootstrap.min.js" type="application/javascript"></script>
-    <link rel="stylesheet" href="./dropzone/css/dropzone.min.css">
-    <script src="./dropzone/js/dropzone.min.js"></script>
+    <link rel="stylesheet" href="dropzone/css/dropzone.min.css">
+    <script src="dropzone/js/dropzone.min.js"></script>
     <link rel="stylesheet" href="./css/config.css">
 </head>
 
@@ -68,10 +68,10 @@
                                     </div>
                                 </dt>
                                 <dd class="pull-left">
-                                    <p>支持 jpg、gif、png 等格式的图片</p>
+                                    <p>支持 jpg、gif、png、jpeg 等格式的图片</p>
                                     <p>不超过为3MB</p>
                                     <label for="id_avatar"><img src="./img/picture.png" alt="图像加载失败"></label>
-                                    <input type="text" id="id_avatar" accept="image/png" name="file"
+                                    <input type="text" id="id_avatar" name="file"
                                            style="display:none">
                                 </dd>
                             </dl>
@@ -140,7 +140,7 @@
                 <div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
                         <h4>广告</h4>
-                        <img class="img-thumbnail question-wechat" src="./picture/official-account.png">
+                        <img class="img-thumbnail question-wechat" src="./picture/official-account.png" alt="图片藏起来了">
                     </div>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                     <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
                         <a href="#" onclick="" target="_blank">
-                            <img class="img-thumbnail question-wechat" src="./picture/uhost.png">
+                            <img class="img-thumbnail question-wechat" src="./picture/uhost.png" alt="图片藏起来了">
                         </a>
                     </div>
 
@@ -189,6 +189,7 @@
 
     function refresh() {
         $.ajax({
+            async:false,
             url: "user/getUserConfig?email=" + email,
             type: "GET",
             contentType: "application/json;charset=utf-8",
@@ -197,7 +198,9 @@
                 $("#email").val(response['email']);
                 $("#accountname").val(response['accountName']);
                 $("#status option[value='" + response['sex'] + "']").attr("selected", true);
-                $("#avatar").css("background-image", "url(static/upload/" + response['icon'] + ")");
+                if (response['icon']!=null){
+                    $("#avatar").css("background-image", "url(static/upload/" + response['icon'] + ")");
+                }
                 $("#sginName").val(response['sginName']);
                 $("#input-qq").val(response['qq']);
                 $("#input-wechat").val(response['weChat']);
@@ -214,18 +217,18 @@
     var fileName;
     var myDropzone = new Dropzone("#id_avatar", {
         url: "file/upload", // 文件提交地址
-        method: "POST",  // 也可用put
+        method: "PUT",  // 也可用put
         paramName: "multipartFile", // 默认为file
         maxFiles: 1,// 一次性上传的文件数量上限
         maxFilesize: 3, // 文件大小，单位：MB
-        acceptedFiles: ".jpg,.gif,.png", // 上传的类型
-        addRemoveLinks: true,
+        acceptedFiles: ".jpg,.gif,.png,.jpeg", // 上传的类型
+        addRemoveLinks: false,
         parallelUploads: 1,// 一次上传的文件数量
         // previewsContainer:"#avatar", // 上传图片的预览窗口
         dictDefaultMessage: '拖动文件至此或者点击上传',
         dictMaxFilesExceeded: "您最多只能上传1个文件！",
         dictResponseError: '文件上传失败!',
-        dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png",
+        dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg",
         dictFallbackMessage: "浏览器不受支持",
         dictFileTooBig: "文件过大上传文件最大支持.",
         dictRemoveLinks: "删除",
@@ -233,23 +236,30 @@
         init: function () {
             this.on("addedfile", function (file) {
                 // 上传文件时触发的事件
+                console.log("上传文件时触发的事件")
             });
             this.on("success", function (file, data) {
                 // 上传成功触发的事件
                 fileName = data.filename;
+                console.log(fileName)
                 $("#avatar").css("background-image", "url(static/upload/" + fileName + ")");
                 updateIcon();
             });
             this.on("error", function (file, data) {
                 // 上传失败触发的事件
+                alert("请查看文件格式是否不支持！")
             });
             this.on("removedfile", function (file) {
                 // 删除文件时触发的方法
+                console.log("上传失败触发的事件")
 
             });
         }
     });
 
+    /**
+     *插入图标名至数据库，图标保存至本地
+     */
     function updateIcon() {
         var json = {
             email: email,
@@ -257,7 +267,7 @@
         }
         var jsonStr = JSON.stringify(json);
         $.ajax({
-            url: "file/updateIcon/",
+            url: "file/updateIcon",
             type: "PUT",
             contentType: "application/json;charset=utf-8",
             data: jsonStr,

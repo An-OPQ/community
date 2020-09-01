@@ -1,5 +1,6 @@
 package edu.hniu.community.service;
 
+import edu.hniu.community.domain.Roleinfo;
 import edu.hniu.community.domain.UserInfo;
 import org.apache.ibatis.annotations.Param;
 

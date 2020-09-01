@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * @author jerry
+ */
 @RestController
 @RequestMapping("/file")
 public class FileUploeadController {
@@ -23,12 +26,11 @@ public class FileUploeadController {
     @Value("${preread.uploadPath}")
     String fileUploadPath;
 
-    @PostMapping("/upload")
+    @PutMapping("/upload")
     public Map<String, Object> fileUpload(MultipartFile multipartFile) {
         HashMap<String, Object> result = new HashMap<String, Object>();
         //获取工程目录，此时获取不到。因为没有该目录
         String filePath =fileUploadPath.substring(fileUploadPath.indexOf(":")+1);
-        System.out.println(filePath);
         File file = new File(filePath);
         //目录不存在，则创建目录
         if (!file.exists()) {
@@ -58,6 +60,7 @@ public class FileUploeadController {
 
     @PutMapping("/updateIcon")
     public Object updateIcon(@RequestBody FileUploadVo fileUploadVo) {
+        System.out.println(fileUploadVo.toString());
         return fileUploadService.updateIcon(fileUploadVo);
     }
 }

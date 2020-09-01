@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hniu.community.dao.ManagementDao">
+
+    <select id="loginCheck" resultType="Roleinfo">
+    select  r.*  from user_role ur  right join roleinfo r on ur.roleid=r.roleid  WHERE userid=
+        (SELECT  id FROM userinfo WHERE email=#{email} and password=#{password})
+    </select>
+</mapper>

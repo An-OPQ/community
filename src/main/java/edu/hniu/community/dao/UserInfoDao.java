@@ -42,6 +42,7 @@ public interface UserInfoDao {
 
     /**
      * 根据email去查询到accountName的值
+     *
      * @param email
      * @return
      */

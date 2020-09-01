@@ -58,7 +58,6 @@ $(function () {
         type: 'GET',
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
-            console.log(response)
             $("#dLabel").html(response+'<span class=\'caret\'></span>');
         },
         error: function (response) {
