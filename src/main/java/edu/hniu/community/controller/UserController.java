@@ -110,7 +110,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/getSession")
-    public Object getSession(HttpSession session, HttpServletRequest request) {
+    public String getSession(HttpSession session, HttpServletRequest request) {
         return getSessionValue.getSessionValue(session, request);
     }
 

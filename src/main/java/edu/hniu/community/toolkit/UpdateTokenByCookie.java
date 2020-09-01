@@ -28,12 +28,13 @@ public class UpdateTokenByCookie {
     public void updateTokenByCookie(boolean falg, UserInfo userInfo, HttpServletResponse response, HttpServletRequest request) {
         if (falg) {
             String token = UUID.randomUUID().toString();
+            String email = userInfo.getEmail();
             //把cookie的值(token)保存在数据库中
-            userInfoService.updateToken(token, userInfo.getEmail());
+            userInfoService.updateToken(token, email);
             Cookie cookie = new Cookie("token", token);
             cookie.setMaxAge(24 * 60 * 60);
+            cookie.setPath("/");
             response.addCookie(cookie);
-            String email = userInfoService.getToken(token);
             if (email != null) {
                 request.getSession().setAttribute(token, email);
             }

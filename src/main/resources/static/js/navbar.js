@@ -52,7 +52,6 @@ document.writeln("    </div>");
 document.writeln("</nav>");
 
 $(function () {
-
     $.ajax({
         url: 'user/getAccountName',
         type: 'GET',
