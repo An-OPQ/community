@@ -2,12 +2,8 @@ package edu.hniu.community.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import edu.hniu.community.dao.ManagementDao;
 import edu.hniu.community.domain.UserInfo;
-import edu.hniu.community.service.MailService;
 import edu.hniu.community.service.ManagementService;
-import edu.hniu.community.service.UserInfoService;
-import edu.hniu.community.toolkit.GetSessionValue;
 import edu.hniu.community.toolkit.MD5;
 import edu.hniu.community.toolkit.UpdateTokenByCookie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +48,10 @@ public class ManagementController {
         List<UserInfo> userInfoList=managementService.getAllUserinfo();
         PageInfo<UserInfo> userInfoPageInfo=new PageInfo<UserInfo>(userInfoList);
         return userInfoPageInfo;
+    }
+
+    @DeleteMapping("/deleteUser")
+    public  Object deleteUser(@RequestParam Integer id){
+        return managementService.deleteUser(id);
     }
 }

@@ -22,4 +22,11 @@ public interface ManagementService {
      * @return
      */
     List<UserInfo> getAllUserinfo();
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    boolean deleteUser(Integer id);
 }

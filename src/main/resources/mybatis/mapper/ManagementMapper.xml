@@ -23,4 +23,8 @@
     <select id="getAllUserinfo" resultMap="userAndRoleList">
     select  u.id,u.email,u.accountName,r.*  from  roleinfo r right join  user_role ur  on ur.roleid=r.roleid  RIGHT join  userinfo u on ur.userid=u.id
     </select>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from userinfo where  id=#{id}
+    </delete>
 </mapper>

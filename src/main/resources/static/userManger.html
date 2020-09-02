@@ -179,10 +179,9 @@
                 "              操作 <span class=\"caret\"></span>\n" +
                 "          </button>\n" +
                 "          <ul class=\"dropdown-menu\">\n" +
-                "              <li><a href=\"#\">编辑</a></li>\n" +
-                "              <li><a href=\"#\">删除</a></li>\n" +
-                "              <li><a href=\"#\">锁定</a></li>\n" +
-                "              <li><a href=\"#\">修改密码</a></li>\n" +
+                "              <li><a href=\"userEdite.html?email="+userinfo.userInfo.email+"\">编辑</a></li>\n" +
+                "              <li><a href=\"#\" onclick=\'deleteUser("+userinfo.userInfo.id+",this)\'>删除</a></li>\n" +
+                "              <li><a href=\"#\">修改密码</a></li>\n"+
                 "          </ul>\n" +
                 "      </div>\n" +
                 "  </td>\n" +
@@ -250,7 +249,25 @@
 
             }
         })
-
+    }
+    
+    function deleteUser(id,srcEle) {
+        $.ajax({
+            url: "management/deleteUser?id=" + id,
+            type: "DELETE",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response) {
+                    $(srcEle).parent().parent().parent().parent().parent().remove()
+                } else {
+                    alert("删除失败");
+                }
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
     }
 </script>
 </body>

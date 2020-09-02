@@ -236,12 +236,10 @@
         init: function () {
             this.on("addedfile", function (file) {
                 // 上传文件时触发的事件
-                console.log("上传文件时触发的事件")
             });
             this.on("success", function (file, data) {
                 // 上传成功触发的事件
                 fileName = data.filename;
-                console.log(fileName)
                 $("#avatar").css("background-image", "url(static/upload/" + fileName + ")");
                 updateIcon();
             });
@@ -251,8 +249,6 @@
             });
             this.on("removedfile", function (file) {
                 // 删除文件时触发的方法
-                console.log("上传失败触发的事件")
-
             });
         }
     });

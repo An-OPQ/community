@@ -22,4 +22,11 @@ public interface ManagementDao {
      * @return
      */
     List<UserInfo> getAllUserinfo();
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    int deleteUser(Integer id);
 }
