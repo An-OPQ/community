@@ -8,6 +8,7 @@ document.writeln("                <h4 class=\"modal-title\" id=\"myModalLabel\">
 document.writeln("            </div>");
 document.writeln("            <div class=\"modal-body\">");
 document.writeln("                <form>");
+document.writeln("                    <input type=\"hidden\" id=\'userId\' name=\"id\" value=\'\'>");
 document.writeln("                    <div class=\"form-group\">");
 document.writeln("                        <label for=\"addname\">用户名</label>");
 document.writeln("                        <input type=\"text\" name='addname' id=\"addname\" class=\"form-control\" placeholder=\"请输入用户名\" value=\"\"/>");
@@ -27,8 +28,8 @@ document.writeln("                    </div>");
 document.writeln("                    <div class=\"form-group\">");
 document.writeln("                        <label for=\"addzu\">管理权限</label>");
 document.writeln("                        <select id=\"addzu\" name='addzu' class=\"form-control\">");
-document.writeln("                            <option value=\"普通用户\" value=\"\">普通用户</option>");
-document.writeln("                            <option value=\"管理员\" value=\"\">管理员</option>");
+document.writeln("                            <option value=\"普通用户\">普通用户</option>");
+// document.writeln("                            <option value=\"管理员\">管理员</option>");
 document.writeln("                        </select>");
 document.writeln("                    </div>");
 document.writeln("                </form>");
@@ -50,8 +51,8 @@ $(function () {
         size: 'lg',
         position: 'top-center',
     });
+    getAddzuId();
 })
-
 $("#btn_submit1").click(function () {
     var addname = $("#addname").val()
     var email = $("#email").val()
@@ -63,7 +64,7 @@ $("#btn_submit1").click(function () {
         email: email,
         password: addpsw,
         mobile: addmobile,
-        role: addzu
+        roleid: addzu
     }
     var jsonStr = JSON.stringify(json)
     $.ajax({
@@ -83,3 +84,26 @@ $("#btn_submit1").click(function () {
         }
     })
 })
+
+/**
+ * 因为数据的数据顺序不友好，所以采用倒顺输出。
+ */
+function getAddzuId() {
+    $.ajax({
+        url: "management/getAddzuId",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        success: function (response) {
+            var addzuObj = $("#addzu");
+            addzuObj.empty();
+            var optionStr = "";
+            for (let i = response.length-1; i >= 0; i--) {
+                var optionVal = response[i];
+                optionStr += "<option value=\"" + optionVal.roleid + "\">" + optionVal.rolename + "</option>";
+            }
+            addzuObj.append(optionStr);
+        },
+        error: function () {
+        }
+    })
+}

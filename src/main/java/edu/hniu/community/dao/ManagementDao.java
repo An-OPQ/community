@@ -2,6 +2,7 @@ package edu.hniu.community.dao;
 
 import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
+import edu.hniu.community.vo.UserRoleVo;
 
 import java.util.List;
 
@@ -37,4 +38,25 @@ public interface ManagementDao {
      * @return
      */
     int resetPassword(UserInfo userInfo);
+
+
+    /**
+     * 查询所有的role
+     * @return
+     */
+    List<RoleInfo> getAddzuId();
+
+    /**
+     * 管理员插入数据并指名权限角色(插入！role信息)
+     * @param userRoleVo
+     * @return
+     */
+    int addUserInfo(UserRoleVo userRoleVo);
+
+    /**
+     * 管理员插入数据并指名权限角色(插入role信息)
+     * @param userRoleVo
+     * @return
+     */
+    int addUserInfoByRole(UserRoleVo userRoleVo);
 }

@@ -37,4 +37,67 @@
         </set>
         where accountName=#{accountName}
     </update>
+
+    <select id="getAddzuId" resultType="Roleinfo">
+        select * from roleinfo
+    </select>
+
+    <insert id="addUserInfo"  parameterType="edu.hniu.community.vo.UserRoleVo">
+        <selectKey order="AFTER" keyProperty="userid" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into userinfo(id,
+        <trim suffixOverrides=",">
+            <if test="accountName!=null and accountName!=''">
+                accountName,
+            </if>
+            <if test="password!=null and password!=''">
+                password,
+            </if>
+            <if test="email!=null and email!=''">
+                email,
+            </if>
+            <if test="mobile!=null and mobile!=''">
+                mobile
+            </if>
+        </trim>
+        ) VALUES (default,
+        <trim suffixOverrides=",">
+            <if test="accountName!=null and accountName!=''">
+                #{accountName},
+            </if>
+            <if test="password!=null and password!=''">
+                #{password},
+            </if>
+            <if test="email!=null and email!=''">
+                #{email},
+            </if>
+            <if test="mobile!=null and mobile!=''">
+                #{mobile}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <insert id="addUserInfoByRole" parameterType="edu.hniu.community.vo.UserRoleVo">
+        insert into user_role(urid,
+        <trim suffixOverrides=",">
+            <if test="userid !=null and userid !=''">
+                userid,
+            </if>
+            <if test="roleid !=null and roleid !=''">
+                roleid
+            </if>
+        </trim>
+        ) values(default,
+        <trim suffixOverrides=",">
+            <if test="userid !=null and userid !=''">
+                #{userid},
+            </if>
+            <if test="roleid !=null and roleid !=''">
+                #{roleid}
+            </if>
+        </trim>
+        )
+    </insert>
 </mapper>

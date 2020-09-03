@@ -6,6 +6,7 @@ import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
 import edu.hniu.community.toolkit.MD5;
 import edu.hniu.community.toolkit.UpdateTokenByCookie;
+import edu.hniu.community.vo.UserRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -69,11 +70,22 @@ public class ManagementController {
 
     /**
      * 管理员权限下添加账户
-     * @param userInfo
+     *
+     * @param userRoleVo
      * @return
      */
     @PostMapping("/addUserInfo")
-    public Object addUserInfo(@RequestBody UserInfo userInfo) {
-        return false;
+    public Object addUserInfo(@RequestBody UserRoleVo userRoleVo) {
+        return managementService.addUserInfo(userRoleVo);
+    }
+
+    /**
+     * 查询所有的role表格
+     *
+     * @return
+     */
+    @GetMapping("/getAddzuId")
+    public Object getAddzuId() {
+        return managementService.getAddzuId();
     }
 }
