@@ -40,18 +40,40 @@ public class ManagementController {
 
     /**
      * 涉及多个用户的权限，service层统一查询所有。controller分类
+     *
      * @return
      */
     @GetMapping("getAllUserinfo")
-    public Object getAllUserinfo(@RequestParam Integer pageNo){
-        PageHelper.startPage(pageNo,pageSize);
-        List<UserInfo> userInfoList=managementService.getAllUserinfo();
-        PageInfo<UserInfo> userInfoPageInfo=new PageInfo<UserInfo>(userInfoList);
+    public Object getAllUserinfo(@RequestParam Integer pageNo) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<UserInfo> userInfoList = managementService.getAllUserinfo();
+        PageInfo<UserInfo> userInfoPageInfo = new PageInfo<UserInfo>(userInfoList);
         return userInfoPageInfo;
     }
 
     @DeleteMapping("/deleteUser")
-    public  Object deleteUser(@RequestParam Integer id){
+    public Object deleteUser(@RequestParam Integer id) {
         return managementService.deleteUser(id);
+    }
+
+    /**
+     * 管理员权限下修改用户密码
+     *
+     * @param userInfo
+     * @return
+     */
+    @PutMapping("/resetPassword")
+    public Object resetPassword(@RequestBody UserInfo userInfo) {
+        return managementService.resetPassword(userInfo);
+    }
+
+    /**
+     * 管理员权限下添加账户
+     * @param userInfo
+     * @return
+     */
+    @PostMapping("/addUserInfo")
+    public Object addUserInfo(@RequestBody UserInfo userInfo) {
+        return false;
     }
 }

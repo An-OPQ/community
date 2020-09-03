@@ -27,4 +27,14 @@
     <delete id="deleteUser" parameterType="int">
         delete from userinfo where  id=#{id}
     </delete>
+
+    <update id="resetPassword" parameterType="UserInfo">
+        update userinfo
+        <set>
+            <if test="password!='' and password!=null">
+                password=#{password}
+            </if>
+        </set>
+        where accountName=#{accountName}
+    </update>
 </mapper>

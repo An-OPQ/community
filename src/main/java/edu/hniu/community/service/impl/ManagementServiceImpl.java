@@ -52,4 +52,8 @@ public class ManagementServiceImpl implements ManagementService {
     public boolean deleteUser(Integer id) {
         return managementDao.deleteUser(id) > 0;
     }
+
+    public boolean resetPassword(UserInfo userInfo) {
+        return managementDao.resetPassword(userInfo)>0;
+    }
 }

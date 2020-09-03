@@ -12,7 +12,11 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/Chart.min.js"></script>
-    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="./toastr/toastr.min.css">
+    <script src="./toastr/toastr.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.5.0/css/bootstrapValidator.min.css"
+          rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.5.0/js/bootstrapValidator.min.js"></script>
 </head>
 <body>
 <script src="./js/backNavbar.js"></script>
@@ -38,8 +42,6 @@
                     <li role="presentation"><a href="#" role="button" data-toggle="modal"
                                                data-target="#myModal">添加用户</a></li>
                 </ul>
-
-
                 <!-- Table -->
                 <table class="table">
                     <thead>
@@ -102,47 +104,37 @@
     </div>
 </section>
 <!-- 添加用户弹出框 -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<script src="./js/addUserModer.js" type="application/javascript"></script>
+<!--添加用户弹出框-->
+<div class="modal fade" id="myEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myEditModalLabel">修改</h4>
             </div>
             <div class="modal-body">
-                <form action="#">
-                    <div class="form-group">
-                        <label for="addname">用户名</label>
-                        <input type="text" id="addname" class="form-control" placeholder="请输入用户名"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="addpsw">密码</label>
-                        <input type="text" id="addpsw" class="form-control" placeholder="请输入密码"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="addpsw1">确认密码</label>
-                        <input type="text" id="addpsw1" class="form-control" placeholder="请输入确认密码"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="addemail">邮箱</label>
-                        <input type="text" id="addemail" class="form-control" placeholder="请输入邮箱"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="addzu">所属用户组</label>
-                        <select id="addzu" class="form-control">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                            <option value="">5</option>
-                        </select>
-                    </div>
-                </form>
+                <div class="form-group">
+                    <label for="accountName">用户名</label>
+                    <input type="text" name="accountName" class="form-control" id="accountName" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <label for="password1">密码</label>
+                    <input type="password" name="password1" class="form-control" id="password1" placeholder="输入密码">
+                </div>
+                <div class="form-group">
+                    <label for="password2">确认密码</label>
+                    <input type="password" name="password2" class="form-control" id="password2" placeholder="确认密码">
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+                </button>
+                <button type="button" id="btn_submit2" class="btn btn-primary" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存
+                </button>
             </div>
         </div>
     </div>
@@ -155,10 +147,9 @@
         </div>
     </div>
 </section>
-
-<script>
+<script type="text/javascript">
     $(function () {
-        $(".text-center li").eq(1).addClass("active")
+        $(".text-center li").eq(1).addClass("active");
         getAllUserinfo(1);
     })
 
@@ -179,9 +170,9 @@
                 "              操作 <span class=\"caret\"></span>\n" +
                 "          </button>\n" +
                 "          <ul class=\"dropdown-menu\">\n" +
-                "              <li><a href=\"userEdite.html?email="+userinfo.userInfo.email+"\">编辑</a></li>\n" +
-                "              <li><a href=\"#\" onclick=\'deleteUser("+userinfo.userInfo.id+",this)\'>删除</a></li>\n" +
-                "              <li><a href=\"#\">修改密码</a></li>\n"+
+                "              <li><a href=\"userEdite.html?email=" + userinfo.userInfo.email + "\">编辑</a></li>\n" +
+                "              <li><a href=\"#\" onclick=\'deleteUser(" + userinfo.userInfo.id + ",this)\'>删除</a></li>\n" +
+                "              <li><a href=\"#\" onclick='edit(\"" + userinfo.userInfo.accountName + "\")'>修改密码</a></li>\n" +
                 "          </ul>\n" +
                 "      </div>\n" +
                 "  </td>\n" +
@@ -250,8 +241,8 @@
             }
         })
     }
-    
-    function deleteUser(id,srcEle) {
+
+    function deleteUser(id, srcEle) {
         $.ajax({
             url: "management/deleteUser?id=" + id,
             type: "DELETE",
@@ -269,6 +260,43 @@
             }
         })
     }
+
+    function edit(accountName) {
+        $('#myEditModal').modal();
+        var $accountName = $("#accountName");
+        $accountName.val(accountName);
+        $accountName.attr("disabled", true)
+    }
+
+    $("#btn_submit2").click(function () {
+        var accountName = $("#accountName").val()
+        var password1 = $("#password1").val();
+        var password2 = $("#password2").val();
+        if (password1 === password2) {
+            var json = {
+                accountName: accountName,
+                password: password1
+            }
+            var jsonStr = JSON.stringify(json)
+            $.ajax({
+                url: "management/resetPassword",
+                type: "PUT",
+                contentType: "application/json;charset=utf-8",
+                data: jsonStr,
+                success: function () {
+                    $.toastr.success('修改成功', {
+                        position: 'top-center'
+                    });
+                },
+                error: function () {
+                }
+            })
+        } else {
+            $.toastr.warning('密码不一致', {
+                position: 'top-center'
+            });
+        }
+    })
 </script>
 </body>
 </html>

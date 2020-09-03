@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="dropzone/css/dropzone.min.css">
     <script src="dropzone/js/dropzone.min.js"></script>
     <link rel="stylesheet" href="./css/config.css">
+    <link rel="stylesheet" href="./sweetalert2/sweetalert2.min.css">
+    <script src="./sweetalert2/sweetalert2.min.js" ></script>
 </head>
 
 <body>
@@ -32,12 +34,13 @@
                         <div class="form-heade">
                             <dl>
                                 <dt>邮箱:</dt>
-                                <dd><input type="text" class="form-control" name="email" id="email"
-                                           value="" disabled="true"></dd>
+                                <dd><input type="text" class="form-control" name="email" id="email" value=""
+                                           disabled="true"></dd>
                             </dl>
                             <dl>
                                 <dt>昵称:</dt>
-                                <dd><input type="text" class="form-control" name="accountname" id="accountname"></dd>
+                                <dd><input type="text" class="form-control" name="accountname" id="accountname">
+                                </dd>
                             </dl>
                             <dl>
                                 <dt>性别:</dt>
@@ -56,8 +59,7 @@
                             <dl>
                                 <dt><label>个性签名:</label></dt>
                                 <dd class="introduce"><input class="form-control" name="signature" id="sginName"
-                                                             maxlength="128"
-                                                             type="text" value=""></dd>
+                                                             maxlength="128" type="text" value=""></dd>
                             </dl>
                         </div>
                         <!-- 上传头像 -->
@@ -71,8 +73,7 @@
                                     <p>支持 jpg、gif、png、jpeg 等格式的图片</p>
                                     <p>不超过为3MB</p>
                                     <label for="id_avatar"><img src="./img/picture.png" alt="图像加载失败"></label>
-                                    <input type="text" id="id_avatar" name="file"
-                                           style="display:none">
+                                    <input type="text" id="id_avatar" name="file" style="display:none">
                                 </dd>
                             </dl>
                         </div>
@@ -120,7 +121,8 @@
                                 </li>
                                 <li>
                                     <label for="microblog">微博:</label>
-                                    <input class="form-control" type="text" id="microblog" name="microblog" value="">
+                                    <input class="form-control" type="text" id="microblog" name="microblog"
+                                           value="">
                                 </li>
                             </ul>
                         </div>
@@ -140,7 +142,8 @@
                 <div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
                         <h4>广告</h4>
-                        <img class="img-thumbnail question-wechat" src="./picture/official-account.png" alt="图片藏起来了">
+                        <img class="img-thumbnail question-wechat" src="./picture/official-account.png"
+                             alt="图片藏起来了">
                     </div>
                 </div>
             </div>
@@ -189,7 +192,7 @@
 
     function refresh() {
         $.ajax({
-            async:false,
+            async: false,
             url: "user/getUserConfig?email=" + email,
             type: "GET",
             contentType: "application/json;charset=utf-8",
@@ -198,7 +201,7 @@
                 $("#email").val(response['email']);
                 $("#accountname").val(response['accountName']);
                 $("#status option[value='" + response['sex'] + "']").attr("selected", true);
-                if (response['icon']!=null){
+                if (response['icon'] != null) {
                     $("#avatar").css("background-image", "url(static/upload/" + response['icon'] + ")");
                 }
                 $("#sginName").val(response['sginName']);
@@ -224,7 +227,6 @@
         acceptedFiles: ".jpg,.gif,.png,.jpeg", // 上传的类型
         addRemoveLinks: false,
         parallelUploads: 1,// 一次上传的文件数量
-        // previewsContainer:"#avatar", // 上传图片的预览窗口
         dictDefaultMessage: '拖动文件至此或者点击上传',
         dictMaxFilesExceeded: "您最多只能上传1个文件！",
         dictResponseError: '文件上传失败!',
@@ -267,7 +269,10 @@
             type: "PUT",
             contentType: "application/json;charset=utf-8",
             data: jsonStr,
-            success: function (response) {
+            success: function () {
+                Swal.fire({
+                    text: "头像提交成功",
+                });
             },
             error: function (response) {
                 console.error(response)
@@ -298,21 +303,46 @@
             microblog: microblogVal
         }
         var jsonStr = JSON.stringify(json);
-        $.ajax({
-            async: false,
-            url: "user/updateMassge",
-            type: "PUT",
-            contentType: "application/json;charset=utf-8",
-            data: jsonStr,
-            success: function (response) {
-                alert("修改成功！")
-            },
-            error: function (response) {
-                alert("修改失败！")
+
+        Swal.fire({
+            title: '确定修改吗？',
+            text: '你将无法恢复它！',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#8dc945',
+            cancelButtonColor: '#ecf0f1',
+            confirmButtonText: '确认',
+            cancelButton: "取消",
+        }).then((result)=>{
+            if (result.isConfirmed) {
+                $.ajax({
+                    async: false,
+                    url: "user/updateMassge",
+                    type: "PUT",
+                    contentType: "application/json;charset=utf-8",
+                    data: jsonStr,
+                    success: function () {
+                        Swal.fire({
+                            title: "个人信息",
+                            text: "修改成功",
+                            icon: "success"
+                        })
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: "个人信息",
+                            text: "修改成功",
+                            icon: "warning"
+                        })
+                    }
+                })
+            } else {
+                Swal.fire('已取消！', '', 'error')
             }
-        })
+        });
     }
 
 </script>
 </body>
+
 </html>

@@ -12,7 +12,8 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/Chart.min.js"></script>
-    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="./toastr/toastr.min.css">
+    <script src="./toastr/toastr.min.js"></script>
 </head>
 <body>
 <!-- 头部 -->
@@ -74,52 +75,7 @@
 </section>
 
 <!-- 添加用户弹出框 -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <form action="#">
-                    <div class="form-group">
-                        <label for="addname">用户名</label>
-                        <input type="text" id="addname" class="form-control" placeholder="请输入用户名"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="addpsw">密码</label>
-                        <input type="text" id="addpsw" class="form-control" placeholder="请输入密码"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="addpsw1">确认密码</label>
-                        <input type="text" id="addpsw1" class="form-control" placeholder="请输入确认密码"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="addemail">邮箱</label>
-                        <input type="text" id="addemail" class="form-control" placeholder="请输入邮箱"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="addzu">所属用户组</label>
-                        <select id="addzu" class="form-control">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                            <option value="">5</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+<script src="./js/addUserModer.js" type="application/javascript"></script>
 <section class="footer">
     <div class="row  text-center">
         <div class="col-md-12">

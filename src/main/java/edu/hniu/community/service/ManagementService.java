@@ -29,4 +29,12 @@ public interface ManagementService {
      * @return
      */
     boolean deleteUser(Integer id);
+
+    /**
+     * 管理员权限重置密码
+     *
+     * @param userInfo
+     * @return
+     */
+    boolean resetPassword(UserInfo userInfo);
 }

@@ -29,4 +29,12 @@ public interface ManagementDao {
      * @return
      */
     int deleteUser(Integer id);
+
+    /**
+     * 重置密码
+     *
+     * @param userInfo
+     * @return
+     */
+    int resetPassword(UserInfo userInfo);
 }
