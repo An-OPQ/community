@@ -74,7 +74,7 @@ public interface UserInfoDao {
 
     /**
      * 查询UserInfo所有信息
-     *
+     * @param email
      * @return
      */
     UserInfo getUserConfig(String email);

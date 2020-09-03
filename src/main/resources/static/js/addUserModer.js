@@ -47,7 +47,7 @@ document.writeln("    </div>");
 document.writeln("</div>");
 $(function () {
     $.toastr.config({
-        time: 3000,
+        time: 2000,
         size: 'lg',
         position: 'top-center',
     });

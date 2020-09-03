@@ -148,6 +148,11 @@
     $(function () {
         $(".text-center li").eq(1).addClass("active");
         getAllUserinfo(1);
+        $.toastr.config({
+            time: 2000,
+            size: 'lg',
+            position: 'top-center',
+        });
     })
 
     function initTable(response) {
@@ -248,8 +253,13 @@
             success: function (response) {
                 if (response) {
                     $(srcEle).parent().parent().parent().parent().parent().remove()
+                    $.toastr.success("删除成功", {
+                        position: 'top-center'
+                    })
                 } else {
-                    alert("删除失败");
+                    $.toastr.success("删除失败", {
+                        position: 'top-center'
+                    })
                 }
             },
             error: function (response) {

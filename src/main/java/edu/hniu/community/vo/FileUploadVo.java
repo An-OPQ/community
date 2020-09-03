@@ -1,5 +1,8 @@
 package edu.hniu.community.vo;
 
+/**
+ * @author jerry
+ */
 public class FileUploadVo {
     private String email;
     private String icon;

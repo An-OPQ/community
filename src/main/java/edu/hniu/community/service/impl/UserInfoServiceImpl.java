@@ -18,6 +18,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userInfo
      * @return
      */
+    @Override
     public boolean loginCheck(UserInfo userInfo) {
         return userInfoDao.loginCheck(userInfo)>0;
     }
@@ -28,6 +29,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userInfo
      * @return
      */
+    @Override
     public boolean register(UserInfo userInfo) {
         return userInfoDao.register(userInfo) > 0;
     }
@@ -39,6 +41,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param token
      * @return
      */
+    @Override
     public boolean updateToken(String token, String email) {
         return userInfoDao.updateToken(token, email) > 0;
     }
@@ -49,6 +52,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param email
      * @return
      */
+    @Override
     public String getAccountName(String email) {
         return userInfoDao.getAccountName(email);
     }
@@ -59,6 +63,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param token
      * @return
      */
+    @Override
     public String getToken(String token) {
         return userInfoDao.getToken(token);
     }
@@ -69,6 +74,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userInfo
      * @return
      */
+    @Override
     public boolean resetPassword(UserInfo userInfo) {
         return userInfoDao.resetPassword(userInfo) > 0;
     }
@@ -79,6 +85,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param email
      * @return
      */
+    @Override
     public boolean findUserByEmail(String email) {
         return userInfoDao.findUserByEmail(email) > 0;
     }
@@ -87,6 +94,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param userInfo
      * @return
      */
+    @Override
     public boolean updateMassge(UserInfo userInfo) {
         return userInfoDao.updateMassge(userInfo) > 0;
     }
@@ -97,6 +105,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      *
      * @return
      */
+    @Override
     public UserInfo getUserConfig(String email) {
         return userInfoDao.getUserConfig(email);
     }
@@ -107,6 +116,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @param email
      * @return
      */
+    @Override
     public long getIdByEmail(String email) {
         return userInfoDao.getIdByEmail(email);
     }

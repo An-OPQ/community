@@ -14,8 +14,10 @@
     <script src="dropzone/js/dropzone.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/Chart.min.js"></script>
+    <link rel="stylesheet" href="./toastr/toastr.min.css">
+    <script src="./toastr/toastr.min.js"></script>
     <style>
-        #content .tbody{
+        #content .tbody {
             border: 0px;
         }
     </style>
@@ -47,8 +49,8 @@
                             <form class="form-horizontal" id="setting_form">
                                 <input type="text" id="id" value="" hidden>
                                 <div class="form-group">
-                                    <label for="email">邮箱:</label>
-                                    <input type="text" class="form-control" id="email"  value=""/>
+                                    <label for="email1">邮箱:</label>
+                                    <input type="text" class="form-control" id="email1" value=""/>
                                 </div>
                                 <div class="form-group">
                                     <label for="accountname">昵称:</label>
@@ -102,11 +104,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="input-mobile">手机号码:</label>
-                                    <input type="text" class="form-control" id="input-mobile" />
+                                    <input type="text" class="form-control" id="input-mobile"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-github">Github:</label>
-                                    <input type="text" class="form-control" id="input-github" />
+                                    <input type="text" class="form-control" id="input-github"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="microblog">微博:</label>
@@ -141,16 +143,20 @@
 
 </section>
 <script>
-    var params=window.location.search;
-    var email=params.substr(params.indexOf("=")+1);
+    var params = window.location.search;
+    var email = params.substr(params.indexOf("=") + 1);
     $(function () {
         $(".text-center li").eq(1).addClass("active")
         refresh();
+        $.toastr.config({
+            time: 2000,
+            position: 'top-center'
+        });
     })
 
     function refresh() {
         $.ajax({
-            async:false,
+            async: false,
             url: "user/getUserConfig?email=" + email,
             type: "GET",
             contentType: "application/json;charset=utf-8",
@@ -159,7 +165,7 @@
                 $("#email").val(response['email']);
                 $("#accountname").val(response['accountName']);
                 $("#status option[value='" + response['sex'] + "']").attr("selected", true);
-                if (response['icon']!=null){
+                if (response['icon'] != null) {
                     $("#avatar").css("background-image", "url(static/upload/" + response['icon'] + ")");
                 }
                 $("#sginName").val(response['sginName']);
@@ -173,6 +179,7 @@
             }
         })
     }
+
     Dropzone.autoDiscover = false;
     var fileName;
     var myDropzone = new Dropzone("#id_avatar", {
@@ -202,6 +209,7 @@
                 fileName = data.filename;
                 $("#avatar").css("background-image", "url(static/upload/" + fileName + ")");
                 updateIcon();
+                $.toastr.success("头像修改成功！")
             });
             this.on("error", function (file, data) {
                 // 上传失败触发的事件
@@ -264,11 +272,11 @@
             type: "PUT",
             contentType: "application/json;charset=utf-8",
             data: jsonStr,
-            success: function (response) {
-                alert("修改成功！")
+            success: function () {
+                $.toastr.success("修改成功！")
             },
-            error: function (response) {
-                alert("修改失败！")
+            error: function () {
+                $.toastr.success("修改失败！")
             }
         })
     }
