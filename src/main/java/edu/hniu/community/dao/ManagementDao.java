@@ -2,6 +2,7 @@ package edu.hniu.community.dao;
 
 import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
+import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.UserRoleVo;
 
 import java.util.List;
@@ -59,4 +60,19 @@ public interface ManagementDao {
      * @return
      */
     int addUserInfoByRole(UserRoleVo userRoleVo);
+
+    /**
+     * 管理员查询所有的question列表
+     * @return
+     */
+    List<QuestionListVo> getAllQusetion();
+
+//    /**
+//     * 删除帖子以及帖子的回复
+//     * @param id
+//     * @return
+//     */
+//    int deleteQuestion(Integer id);
+//
+//    int deleteComment(Integer id);
 }

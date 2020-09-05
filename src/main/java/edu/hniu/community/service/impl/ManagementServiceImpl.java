@@ -4,6 +4,7 @@ import edu.hniu.community.dao.ManagementDao;
 import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
+import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.UserRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,11 +31,11 @@ public class ManagementServiceImpl implements ManagementService {
     @Override
     public boolean loginCheck(UserInfo userInfo) {
         RoleInfo roleinfo = managementDao.loginCheck(userInfo);
-        boolean falg = false;
+        boolean flag = false;
         if (roleinfo != null) {
-            falg = true;
+            flag = true;
         }
-        return falg;
+        return flag;
     }
 
     /**
@@ -82,12 +83,24 @@ public class ManagementServiceImpl implements ManagementService {
      */
     @Override
     public boolean addUserInfo(UserRoleVo userRoleVo) {
-        boolean falg = false;
+        boolean flag = false;
         boolean addUserInfo = managementDao.addUserInfo(userRoleVo)>0;
         boolean addUserInfoByRole = managementDao.addUserInfoByRole(userRoleVo)>0;
         if (addUserInfo && addUserInfoByRole){
-            falg=true;
+            flag=true;
         }
-        return falg;
+        return flag;
     }
+
+    @Override
+    public List<QuestionListVo> getAllQusetion() {
+        return managementDao.getAllQusetion();
+    }
+
+//    @Override
+//    public boolean deleteQuestion(Integer id) {
+//        boolean flag=false;
+//        managementDao.deleteQuestion(id)
+//        return  flag;
+//    }
 }

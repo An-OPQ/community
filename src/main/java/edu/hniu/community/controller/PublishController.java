@@ -22,8 +22,8 @@ public class PublishController {
     @Autowired
     UserInfoService userInfoService;
 
-    @Value("${PageHelper.pageSize}")
-    private int pageSize;
+    @Value("${PageHelper.questionPageSize}")
+    private int  questionPageSize;
 
     @PostMapping("/submit")
     public Object publishMessage(@RequestBody PublishSubmitVo publishSubmitVo) {
@@ -39,7 +39,7 @@ public class PublishController {
      */
     @GetMapping("/getPublishMessage")
     public Object getPublishMessage(@RequestParam Integer pageNo) {
-        PageHelper.startPage(pageNo, pageSize);
+        PageHelper.startPage(pageNo,  questionPageSize);
         List<Question> questionList = publishService.getPublishMessage();
         PageInfo<Question> pageInfo = new PageInfo<Question>(questionList);
         return pageInfo;

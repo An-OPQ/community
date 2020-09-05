@@ -6,6 +6,7 @@ import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
 import edu.hniu.community.toolkit.MD5;
 import edu.hniu.community.toolkit.UpdateTokenByCookie;
+import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.UserRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +26,9 @@ public class ManagementController {
     @Autowired
     ManagementService managementService;
 
-    @Value("${PageHelper.pageSize}")
-    private int pageSize;
+    @Value("${PageHelper.usermangerPageSize}")
+    private int usermangerPageSize;
+
 
     @Autowired
     UpdateTokenByCookie updateTokenByCookie;
@@ -46,7 +48,7 @@ public class ManagementController {
      */
     @GetMapping("getAllUserinfo")
     public Object getAllUserinfo(@RequestParam Integer pageNo) {
-        PageHelper.startPage(pageNo, pageSize);
+        PageHelper.startPage(pageNo, usermangerPageSize);
         List<UserInfo> userInfoList = managementService.getAllUserinfo();
         PageInfo<UserInfo> userInfoPageInfo = new PageInfo<UserInfo>(userInfoList);
         return userInfoPageInfo;
@@ -88,4 +90,21 @@ public class ManagementController {
     public Object getAddzuId() {
         return managementService.getAddzuId();
     }
+
+    /**
+     * 查询所有的questione
+     * @return
+     */
+    @GetMapping("/getAllQusetion")
+    public Object getAllQusetion(@RequestParam Integer pageNo) {
+        PageHelper.startPage(pageNo, usermangerPageSize);
+        List<QuestionListVo> questionListVos = managementService.getAllQusetion();
+        PageInfo<QuestionListVo> questionListVoPageInfo = new PageInfo<QuestionListVo>(questionListVos);
+        return questionListVoPageInfo;
+    }
+
+//    @DeleteMapping("/deleteQuestion")
+//    public Object deleteQuestion(@RequestParam Integer id){
+//        return  null;
+//    }
 }

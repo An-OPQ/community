@@ -100,4 +100,16 @@
         </trim>
         )
     </insert>
+
+    <select id="getAllQusetion"  resultType="edu.hniu.community.vo.QuestionListVo">
+       select q.id,q.title,q.creatorid,q.createDate,q.tag,u.email from question q left join userinfo u on q.creatorid=u.id
+    </select>
+
+<!--    <delete id="deleteQuestion" parameterType="int">-->
+<!--        DELETE FROM question WHERE id=#{id}-->
+<!--    </delete>-->
+
+<!--    <delete id="deleteComment" parameterType="int">-->
+<!--        -->
+<!--    </delete>-->
 </mapper>

@@ -29,12 +29,8 @@ document.writeln("						<a href=\'tagManager.html\'>");
 document.writeln("							<span class=\'glyphicon glyphicon-tag\'></span>&nbsp;&nbsp;板块管理</a>");
 document.writeln("					</li>");
 document.writeln("					<li>");
-document.writeln("						<a href=\'#\'>");
-document.writeln("							<span class=\'glyphicon glyphicon-tag\'></span>&nbsp;&nbsp;公告管理</a>");
-document.writeln("					</li>");
-document.writeln("					<li>");
-document.writeln("						<a href=\'#\'>");
-document.writeln("							<span class=\'glyphicon glyphicon-tag\'></span>&nbsp;&nbsp;广告管理</a>");
+document.writeln("						<a href=\'advertmanager.html\'>");
+document.writeln("							<span class=\'glyphicon glyphicon glyphicon-bullhorn\'></span>&nbsp;&nbsp;广告管理</a>");
 document.writeln("					</li>");
 document.writeln("				</ul>");
 document.writeln("				<ul class=\"nav navbar-nav navbar-right text-center\">");
@@ -93,14 +89,4 @@ $('#logout').click(function () {
         }
     })
 })
-let liObj =$("#navbarObj li")
-for(let i=0;i<liObj.length;i++){
-    liObj[i].addEventListener('click',function(){
-        liObj[i].addClass('active')
-        for(let j=0;j<liObj.length;j++){
-            if(i!==j){
-                liObj[j].removeClass('active')
-            }
-        }
-    })
-}
+

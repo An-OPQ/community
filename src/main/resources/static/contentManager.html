@@ -2,298 +2,223 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<!-- 视窗配置 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- 开启ie8的标准渲染模式 -->
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>求知论坛管理</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/htgl.css">
+    <meta charset="UTF-8">
+    <!-- 视窗配置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 开启ie8的标准渲染模式 -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>求知论坛管理</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/htgl.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <link rel="stylesheet" href="./toastr/toastr.min.css">
+    <script src="./toastr/toastr.min.js"></script>
+    <style>
+        table {
+            table-layout: fixed;
+        }
+
+        .wrap {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    </style>
 </head>
 
 <body>
-	<nav class='navbar navbar-default'>
-		<div class='container-fluid'>
-			<div class='navbar-header'>
-				<button type='button' class='navbar-toggle collapsed' data-toggle='collapse'
-					data-target='#bs-example-navbar-collapse-1' aria-expanded='false'>
-					<span class='sr-only'>Toggle navigation</span>
-					<span class='icon-bar'></span>
-					<span class='icon-bar'></span>
-					<span class='icon-bar'></span>
-				</button>
-				<a class='navbar-brand' href='backIndex.html' >求知贴吧管理</a>
-			</div>
-			<div class='collapse navbar-collapse'>
-				<ul class='nav navbar-nav navbar-left text-center '>
-					<li>
-						<a href='backIndex.html'>
-							<span class='glyphicon glyphicon-home'></span>&nbsp;&nbsp;后台首页</a>
-					</li>
-					<li>
-						<a href='userManger.html'>
-							<span class='glyphicon glyphicon-user'></span>&nbsp;&nbsp;用户管理</a>
-					</li>
-					<li class='active'>
-						<a href='contentManager.html'>
-							<span class='glyphicon glyphicon-folder-open'></span>&nbsp;&nbsp;内容管理</a>
-					</li>
-					<li>
-						<a href='tagManager.html'>
-							<span class='glyphicon glyphicon-tag'></span>&nbsp;&nbsp;板块管理</a>
-					</li>
-					<li>
-						<a href='#'>
-							<span class='glyphicon glyphicon-tag'></span>&nbsp;&nbsp;公告管理</a>
-					</li>
-					<li>
-						<a href='#'>
-							<span class='glyphicon glyphicon-tag'></span>&nbsp;&nbsp;广告管理</a>
-					</li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right text-center">
-					<li class="dropdown">
-						<a id="dLabel" href="#" type="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false">
-							admin
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="dLabel">
-							<li>
-								<a href="login.html">
-									<span class="glyphicon glyphicon-asterisk"></span>&nbsp;&nbsp;前台首页</a>
-							</li>
-							<li>
-								<a href="personalIndex.html">
-									<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;个人主页</a>
-							</li>
-							<li>
-								<a href="personalSet.html">
-									<span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;个人设置</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="#BBS">
-							<span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;退出</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<section id="Lr">
-		<div class="container">
-			<div class="row">
-				<!--左列表 -->
-				<div class="col-md-3">
-					<div class="list-group">
-						<a href="userManger.html" class="list-group-item active"> 文章管理</a>
-						<a href="addContent.html" class="list-group-item">添加文章</a>
+<script src="./js/backNavbar.js"></script>
+<section id="Lr">
+    <div class="container-fluid">
+        <div class="col-lg-2">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">文章管理</a>
+                <a href="userManger.html" class="list-group-item"> 用户管理</a>
+            </div>
+        </div>
+        <div class="col-lg-9  col-md-10 ">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 文章管理</h3>
+                </div>
+                <div class="panel-body">
+                    <button type="button" class="btn btn-primary" style="float:left;">
+                        <i class="glyphicon glyphicon-plus"></i> 批量删除
+                    </button>
 
-					</div>
-				</div>
-				<!-- 右列表 -->
-				<div class="col-md-9">
-					<div class="page-header">
-						<h4>文章管理</h4>
-					</div>
-					<ul class="nav nav-tabs">
-						<li role="presentation" class="active"><a href="userManger.html">文章列表</a></li>
-						<li role="presentation"><a href="addContent.html">添加文章</a></li>
-					</ul>
-
-
-					<!-- Table -->
-					<table class="table">
-						<thead>
-							<tr>
-								<th>文章标题</th>
-								<th>作者</th>
-								<th>发布时间</th>
-								<th>操作</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th>1</th>
-								<td>张三</td>
-								<td>11474787554523@qq.com</td>
-								<td>
-									<div class="btn-group" role="group">
-										<button type="button" class="btn btn-default dropdown-toggle"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											操作 <span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a href="#">编辑</a></li>
-											<li><a href="#">删除</a></li>
-											<li><a href="#">锁定</a></li>
-											<li><a href="#">修改密码</a></li>
-										</ul>
-									</div>
-								</td>
-							</tr>
-
-
-							<tr>
-								<th>2</th>
-								<td>张三</td>
-								<td>11476327462734624787554523@qq.com</td>
-								<td>
-									<div class="btn-group" role="group">
-										<button type="button" class="btn btn-default dropdown-toggle"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											操作 <span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a href="#">编辑</a></li>
-											<li><a href="#">删除</a></li>
-											<li><a href="#">锁定</a></li>
-											<li><a href="#">修改密码</a></li>
-										</ul>
-									</div>
-								</td>
-							</tr>
-
-							<tr>
-								<th>3</th>
-								<td>李四</td>
-								<td>3284782347@qq.com</td>
-								<td>
-									<div class="btn-group" role="group">
-										<button type="button" class="btn btn-default  dropdown-toggle"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											操作 <span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a href="#">编辑</a></li>
-											<li><a href="#">删除</a></li>
-											<li><a href="#">锁定</a></li>
-											<li><a href="#">修改密码</a></li>
-										</ul>
-									</div>
-								</td>
-							</tr>
-
-							<tr>
-								<th>4</th>
-								<td>王二</td>
-								<td>83748234345@qq.com</td>
-								<td>
-									<div class="btn-group" role="group">
-										<button type="button" class="btn btn-default dropdown-toggle"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											操作 <span class="caret"></span></button>
-										<ul class="dropdown-menu">
-											<li><a href="#">编辑</a></li>
-											<li><a href="#">删除</a></li>
-											<li><a href="#">锁定</a></li>
-											<li><a href="#">修改密码</a></li>
-										</ul>
-									</div>
-								</td>
-							</tr>
-
-							<tr>
-								<th>5</th>
-								<td>麻子</td>
-								<td>83274824@qq.com</td>
-								<td>
-									<div class="btn-group" role="group">
-										<button type="button" class="btn btn-default dropdown-toggle"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											操作 <span class="caret"></span></button>
-										<ul class="dropdown-menu">
-											<li><a href="#">编辑</a></li>
-											<li><a href="#">删除</a></li>
-											<li><a href="#">锁定</a></li>
-											<li><a href="#">修改密码</a></li>
-										</ul>
-									</div>
-								</td>
-							</tr>
-
-							<tr>
-								<th>6</th>
-								<td>麻子</td>
-								<td>83274824@qq.com</td>
-								<td>
-									<div class="btn-group" role="group">
-										<button type="button" class="btn btn-default dropdown-toggle"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											操作 <span class="caret"></span></button>
-										<ul class="dropdown-menu">
-											<li><a href="#">编辑</a></li>
-											<li><a href="#">删除</a></li>
-											<li><a href="#">锁定</a></li>
-											<li><a href="#">修改密码</a></li>
-										</ul>
-									</div>
-								</td>
-							</tr>
-
-							<tr>
-								<th>7</th>
-								<td>麻子</td>
-								<td>83274824@qq.com</td>
-								<td>
-									<div class="btn-group" role="group">
-										<button type="button" class="btn btn-default dropdown-toggle"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											操作 <span class="caret"></span></button>
-										<ul class="dropdown-menu">
-											<li><a href="#">编辑</a></li>
-											<li><a href="#">删除</a></li>
-											<li><a href="#">锁定</a></li>
-											<li><a href="#">修改密码</a></li>
-										</ul>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-
-				</div>
-
-				<div class="col-md-12  text-right">
-					<nav aria-label="...">
-						<ul class="pagination">
-							<li class="disabled">
-								<span>
-									<span aria-hidden="true">&laquo;</span>
-								</span>
-							</li>
-							<li class="active">
-								<span>1 <span class="sr-only">(current)</span></span>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							</li>
-							<li>
-								<span href="#" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
-								</span>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- footer -->
-	<section id="footer">
-		<div class="row  text-center">
-			<div class="col-md-12">
-				<strong>Copyright @ 求知论坛管理</strong>
-			</div>
-		</div>
-	</section>
-
+                    <form class="form-inline" role="form" style="float:right;">
+                        <div class="form-group has-feedback">
+                            <div class="input-group">
+                                <div class="input-group-addon">发布日期</div>
+                                <input class="form-control has-success" id="email" type="text">
+                                <div class="input-group-addon">所属板块</div>
+                                <select class="form-control" id="status">
+                                    <option value="">所有</option>
+                                    <option value="">科学技术</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" onclick="searchUserInfo()" class="btn btn-warning"><i
+                                class="glyphicon glyphicon-search"></i>查询
+                        </button>
+                    </form>
+                    <br>
+                    <hr style="clear:both;">
+                    <div class="table-responsive">
+                        <table class="table  table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="30">#</th>
+                                <th width="30"><input type="checkbox" onclick="return false;" checked="checked"></th>
+                                <th align="center">ID</th>
+                                <th class="wrap" width="35%">文章标题</th>
+                                <th class="wrap" width="180">作者账号</th>
+                                <th width="150">发布时间</th>
+                                <th width="150">所属板块</th>
+                                <th width="180">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="dataTable">
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="8" align="right">
+                                    <ul class="pagination">
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- footer -->
+<section id="footer">
+    <div class="row  text-center">
+        <div class="col-md-12">
+            <strong>Copyright @ 求知论坛管理</strong>
+        </div>
+    </div>
+</section>
 </body>
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/Chart.min.js"></script>
+
+<script>
+    $(function () {
+        $(".text-center li").eq(2).addClass("active");
+        getAllQuestion(1);
+    })
+
+    function initTable(response) {
+        var tbodyObj = $(".table tbody");
+        tbodyObj.empty();
+        var tbodyStr = "";
+        for (let i = 0; i < response.length; i++) {
+            var question = response[i]
+            tbodyStr += "<tr>\n" +
+                "         <td class=\"tbody_id\"></td>\n" +
+                "         <td><input type=\"checkbox\" value=" + question.id + "></td>\n" +
+                "         <td class=\"tbody_id\">" + question.id + "</td>\n" +
+                "         <td class=\"wrap\" title=\"" + question.title + "\">" + question.title + "</td>\n" +
+                "         <td class=\"wrap\" title=\"" + question.email + "\">" + question.email + "</td>\n" +
+                "         <td>" + question.createDate + "</td>\n" +
+                "         <td>" + question.tag + "</td>\n" +
+                "         <td>\n" +
+                "             <div class=\"btn-group\" role=\"group\">\n" +
+                "                 <button type=\"button\" class=\"btn btn-default dropdown-toggle\"\n" +
+                "                         data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+                "                     操作 <span class=\"caret\"></span>\n" +
+                "                 </button>\n" +
+                "                <ul class=\"dropdown-menu\">\n" +
+                "                       <li><a href=\"questionView.html?id=" + question.id + "\">查看</a></li>\n" +
+                "                       <li><a href=\"#\" >删除</a></li>\n" +
+                "                     </ul>\n" +
+                "             </div>\n" +
+                "         </td>\n" +
+                "  </tr>"
+        }
+        tbodyObj.append(tbodyStr);
+    }
+
+    function getAllQuestion(pageNum) {
+        var pageNo = 1;
+        if (pageNum != undefined) {
+            pageNo = pageNum
+        }
+        $.ajax({
+            url: "management/getAllQusetion?pageNo=" + pageNo,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                initTable(response.list)
+                var pageObj = $(".pagination");
+                pageObj.empty();
+                var spliteStr = "";
+                //判断是否为首页
+                if (response.isFirstPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='getAllQuestion(" + (response.pageNum - 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+
+                for (let i = 1; i <= response.pages; i++) {
+                    if (response.pageNum == i) {
+                        spliteStr += "<li class=\"active\">\n" +
+                            "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
+                            " </li>";
+
+                    } else {
+                        spliteStr += "<li onclick='getAllQuestion(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
+                    }
+                }
+                if (response.isLastPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='getAllUserinfo(" + (response.pageNum + 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+                pageObj.append(spliteStr);
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+    }
+
+    function deleteQuestion(id) {
+        $.ajax({
+            url: "management/deleteQuestion?id=" + id,
+            type: "DELETE",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+
+    }
+</script>
 </html>

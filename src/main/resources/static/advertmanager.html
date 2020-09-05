@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 视窗配置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 开启ie8的标准渲染模式 -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>求知论坛管理</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/htgl.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <link rel="stylesheet" href="./toastr/toastr.min.css">
+    <script src="./toastr/toastr.min.js"></script>
+</head>
+
+<body>
+<script src="./js/backNavbar.js"></script>
+<section id="Lr">
+    <div class="container">
+        <div class="row">
+            <!--左列表 -->
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="contentSearch.html" class="list-group-item  active">添加文章</a>
+                    <a href="#" class="list-group-item "> 添加广告图片</a>
+                </div>
+            </div>
+            <!-- 右列表 -->
+            <div class="col-md-9">
+                <div class="page-header">
+                    <h4>广告管理</h4>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#">添加广告文章</a></li>
+                    <li role="presentation"><a href="#">添加广告图片</a></li>
+                </ul>
+                <form class="tab">
+                    <div class="form-group">
+                        <label for="biaoti">广告标题</label>
+                        <input id="biaoti" class="form-control" placeholder="请输入标题名字" />
+                    </div>
+                    <div class="form-group">
+                        <label for="content">广告内容</label>
+                        <textarea id="content" class="form-control" rows="10" placeholder="文章内容"></textarea>
+                    </div>
+                    <div class="checkbox">
+                        <button type="submit" class="btn btn-default  pull-right">发布广告</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- footer -->
+<section id="footer">
+    <div class="row  text-center">
+        <div class="col-md-12">
+            <strong>Copyright @ 求知论坛管理</strong>
+        </div>
+    </div>
+</section>
+
+</body>
+<script>
+    $(function () {
+        $(".text-center li").eq(4).addClass("active");
+    })
+</script>
+</html>
