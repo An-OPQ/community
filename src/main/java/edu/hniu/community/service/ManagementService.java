@@ -4,6 +4,7 @@ import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.UserRoleVo;
+import edu.hniu.community.vo.userAndRoleListVo;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface ManagementService {
      * 查询所有的用户
      * @return
      */
-    List<UserInfo> getAllUserinfo();
+    List<userAndRoleListVo> getAllUserinfo();
 
     /**
      * 删除用户

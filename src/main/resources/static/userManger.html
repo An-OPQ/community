@@ -162,9 +162,9 @@
         for (let i = 0; i < response.length; i++) {
             var userinfo = response[i];
             dataStr += "<tr>\n" +
-                "  <th>" + userinfo.userInfo.id + "</th>\n" +
-                "  <td>" + userinfo.userInfo.accountName + "</td>\n" +
-                "  <td>" + userinfo.userInfo.email + "</td>\n" +
+                "  <th>" + userinfo.id + "</th>\n" +
+                "  <td>" + userinfo.accountName + "</td>\n" +
+                "  <td>" + userinfo.email + "</td>\n" +
                 "  <td>\n" +
                 "      <div class=\"btn-group\" role=\"group\">\n" +
                 "          <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\"\n" +
@@ -172,9 +172,9 @@
                 "              操作 <span class=\"caret\"></span>\n" +
                 "          </button>\n" +
                 "          <ul class=\"dropdown-menu\">\n" +
-                "              <li><a href=\"userEdite.html?email=" + userinfo.userInfo.email + "\">编辑</a></li>\n" +
-                "              <li><a href=\"#\" onclick=\'deleteUser(" + userinfo.userInfo.id + ",this)\'>删除</a></li>\n" +
-                "              <li><a href=\"#\" onclick='edit(\"" + userinfo.userInfo.accountName + "\")'>修改密码</a></li>\n" +
+                "              <li><a href=\"userEdite.html?email=" + userinfo.email + "\">编辑</a></li>\n" +
+                "              <li><a href=\"#\" onclick=\'deleteUser(" + userinfo.id + ",this)\'>删除</a></li>\n" +
+                "              <li><a href=\"#\" onclick='edit(\"" + userinfo.accountName + "\")'>修改密码</a></li>\n" +
                 "          </ul>\n" +
                 "      </div>\n" +
                 "  </td>\n" +

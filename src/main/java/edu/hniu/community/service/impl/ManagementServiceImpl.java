@@ -6,6 +6,7 @@ import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
 import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.UserRoleVo;
+import edu.hniu.community.vo.userAndRoleListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,7 @@ public class ManagementServiceImpl implements ManagementService {
      * @return
      */
     @Override
-    public List<UserInfo> getAllUserinfo() {
+    public List<userAndRoleListVo> getAllUserinfo() {
         return managementDao.getAllUserinfo();
     }
 

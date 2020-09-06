@@ -2,7 +2,6 @@ package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.CommentDao;
 import edu.hniu.community.domain.Comment;
-import edu.hniu.community.domain.Question;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;

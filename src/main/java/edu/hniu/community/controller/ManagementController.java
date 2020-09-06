@@ -8,6 +8,7 @@ import edu.hniu.community.toolkit.MD5;
 import edu.hniu.community.toolkit.UpdateTokenByCookie;
 import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.UserRoleVo;
+import edu.hniu.community.vo.userAndRoleListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +50,9 @@ public class ManagementController {
     @GetMapping("getAllUserinfo")
     public Object getAllUserinfo(@RequestParam Integer pageNo) {
         PageHelper.startPage(pageNo, usermangerPageSize);
-        List<UserInfo> userInfoList = managementService.getAllUserinfo();
-        PageInfo<UserInfo> userInfoPageInfo = new PageInfo<UserInfo>(userInfoList);
-        return userInfoPageInfo;
+        List<userAndRoleListVo> userAndRoleListVoList = managementService.getAllUserinfo();
+        PageInfo<userAndRoleListVo> userAndRoleListVoPageInfo = new PageInfo<userAndRoleListVo>(userAndRoleListVoList);
+        return userAndRoleListVoPageInfo;
     }
 
     @DeleteMapping("/deleteUser")
@@ -67,6 +68,7 @@ public class ManagementController {
      */
     @PutMapping("/resetPassword")
     public Object resetPassword(@RequestBody UserInfo userInfo) {
+        userInfo = MD5.encode(userInfo);
         return managementService.resetPassword(userInfo);
     }
 
@@ -78,6 +80,7 @@ public class ManagementController {
      */
     @PostMapping("/addUserInfo")
     public Object addUserInfo(@RequestBody UserRoleVo userRoleVo) {
+//        MD5加密
         return managementService.addUserInfo(userRoleVo);
     }
 
@@ -93,6 +96,7 @@ public class ManagementController {
 
     /**
      * 查询所有的questione
+     *
      * @return
      */
     @GetMapping("/getAllQusetion")
