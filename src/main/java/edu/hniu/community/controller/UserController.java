@@ -125,6 +125,7 @@ public class UserController {
     /**
      * 登出
      * session.invalidate();为清除Session中的所有对象，而不清楚本身
+     *
      * @param session
      */
     @GetMapping("/logout")
@@ -151,8 +152,13 @@ public class UserController {
     @PostMapping("/getQuestionByEmail/{email}/{pageNo}")
     public Object getQuestionByEmail(@PathVariable(name = "email") String email, @PathVariable(name = "pageNo") Integer pageNo) {
         PageHelper.startPage(pageNo, usermangerPageSize);
-        List<Question> questionByEmail=userInfoService.getQuestionByEmail(email);
-        PageInfo<Question> questionPageInfo=new PageInfo<Question>(questionByEmail);
+        List<Question> questionByEmail = userInfoService.getQuestionByEmail(email);
+        PageInfo<Question> questionPageInfo = new PageInfo<Question>(questionByEmail);
         return questionPageInfo;
+    }
+
+    @GetMapping("/getAllCommentByEmail")
+    public Object getAllCommentByEmail(@RequestParam String email) {
+        return  userInfoService.getAllCommentByEmail(email);
     }
 }

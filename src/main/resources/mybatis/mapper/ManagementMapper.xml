@@ -72,7 +72,7 @@
 
 
     <select id="getAllQusetion" resultType="edu.hniu.community.vo.QuestionListVo">
-       select q.id,q.title,q.creatorid,q.createDate,qt.type_name,u.email from question q left join userinfo u on q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
+       select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
     </select>
 
     <delete id="deleteQuestion" parameterType="int">

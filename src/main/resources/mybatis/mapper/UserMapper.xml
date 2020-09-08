@@ -31,6 +31,31 @@
         </collection>
     </resultMap>
 
+    <resultMap id="commentList" type="UserInfo">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="accountName" column="accountName"/>
+        <result property="sex" column="sex"/>
+        <result property="icon" column="icon"/>
+        <result property="sginName" column="sginName"/>
+        <result property="qq" column="qq"/>
+        <result property="weChat" column="weChat"/>
+        <result property="mobile" column="mobile"/>
+        <result property="github" column="github"/>
+        <result property="microblog" column="microblog"/>
+        <collection property="comment" ofType="Comment">
+            <id property="id" column="id"/>
+            <result property="creatorId" column="creatorId"/>
+            <result property="questionId" column="questionId"/>
+            <result property="commentDescription" column="commentDescription"/>
+            <result property="commentDate" column="commentDate"/>
+            <result property="likeCount" column="likeCount"/>
+            <result property="commentCount" column="commentCount"/>
+        </collection>
+    </resultMap>
+
+
     <select id="loginCheck" resultType="int">
         select count(1) from userinfo
         <where>
@@ -155,5 +180,10 @@
 
     <select id="getQuestionByEmail" parameterType="String" resultMap="questionList">
         select  u.id as uid ,u.icon, q.* from userinfo u right join  question q  on u.id=q.creatorid   where email=#{email}
+    </select>
+
+    <select id="getAllCommentByEmail" parameterType="String" resultMap="commentList">
+       select c.*,u.accountName,u.icon from question q LEFT JOIN  comment c   on q.id=c.questionId  left join userinfo u on c.creatorId=u.id
+            where questionId=ANY(select  q.id from userinfo u right join  question q  on u.id=q.creatorid   where email=#{email})
     </select>
 </mapper>

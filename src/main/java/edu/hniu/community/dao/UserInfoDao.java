@@ -98,4 +98,11 @@ public interface UserInfoDao {
      */
     List<Question> getQuestionByEmail(String email);
 
+    /**
+     * 根据email查询起
+     * @param email
+     * @return
+     */
+    List<UserInfo> getAllCommentByEmail(String email);
+
 }

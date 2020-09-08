@@ -128,4 +128,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<Question> getQuestionByEmail(String email) {
         return userInfoDao.getQuestionByEmail(email);
     }
+
+    @Override
+    public List<UserInfo> getAllCommentByEmail(String email) {
+        return userInfoDao.getAllCommentByEmail(email);
+    }
 }

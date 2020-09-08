@@ -82,13 +82,14 @@
             }
         })
     })
-
+    var commentCountVal=0;
     function initTable(response) {
         var mediaObj = $(".media");
         mediaObj.empty();
         var mediaStr = "";
         for (let i = 0; i < response.length; i++) {
             var question = response[i];
+            commentCountVal += question.question.commentCount;
             mediaStr += "<div class=\"media\">\n" +
                 "    <div class=\"media-left\">\n" +
                 "        <a href=\"#\">\n" +
@@ -110,6 +111,8 @@
                 "</div>"
         }
         mediaObj.append(mediaStr);
+        console.log(commentCountVal)
+        $(".badge").html(commentCountVal)
     }
 
     function refresh(pageNum) {
