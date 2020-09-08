@@ -6,9 +6,9 @@ public class PublishSubmitVo {
     private String email;
     private String title;
     private long creatorid;
+    private long typeid;
     private String description;
     private String createDate;
-    private String tag;
 
     public long getId() {
         return id;
@@ -42,6 +42,14 @@ public class PublishSubmitVo {
         this.creatorid = creatorid;
     }
 
+    public long getTypeid() {
+        return typeid;
+    }
+
+    public void setTypeid(long typeid) {
+        this.typeid = typeid;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -58,24 +66,16 @@ public class PublishSubmitVo {
         this.createDate = createDate;
     }
 
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
     @Override
     public String toString() {
         return "PublishSubmitVo{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", title='" + title + '\'' +
-                ", creatorid='" + creatorid + '\'' +
+                ", creatorid=" + creatorid +
+                ", typeid=" + typeid +
                 ", description='" + description + '\'' +
                 ", createDate='" + createDate + '\'' +
-                ", tag='" + tag + '\'' +
                 '}';
     }
 }

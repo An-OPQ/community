@@ -1,7 +1,10 @@
 package edu.hniu.community.service;
 
+import edu.hniu.community.domain.Question;
 import edu.hniu.community.domain.UserInfo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 public interface UserInfoService {
@@ -84,4 +87,12 @@ public interface UserInfoService {
      * @return
      */
     long getIdByEmail(String email);
+
+    /**
+     * 根据email查询其下的所有question
+     * @param email
+     * @return
+     */
+    List<Question> getQuestionByEmail(String email);
+
 }

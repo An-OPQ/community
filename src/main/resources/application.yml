@@ -51,6 +51,7 @@ mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   #  配置包别名
   type-aliases-package: edu.hniu.community.domain
+
 #日志
 logging:
   level:

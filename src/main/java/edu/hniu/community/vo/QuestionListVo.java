@@ -11,7 +11,15 @@ public class QuestionListVo {
     private long commentCount;
     private long viewCount;
     private long likeCount;
-    private String tag;
+    private String typeName;
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
 
     public long getId() {
         return id;
@@ -85,14 +93,6 @@ public class QuestionListVo {
         this.likeCount = likeCount;
     }
 
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
     @Override
     public String toString() {
         return "QuestionListVo{" +
@@ -105,7 +105,7 @@ public class QuestionListVo {
                 ", commentCount=" + commentCount +
                 ", viewCount=" + viewCount +
                 ", likeCount=" + likeCount +
-                ", tag='" + tag + '\'' +
+                ", typeName='" + typeName + '\'' +
                 '}';
     }
 }

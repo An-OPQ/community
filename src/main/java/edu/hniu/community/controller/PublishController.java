@@ -27,6 +27,7 @@ public class PublishController {
 
     @PostMapping("/submit")
     public Object publishMessage(@RequestBody PublishSubmitVo publishSubmitVo) {
+        System.out.println(publishSubmitVo.toString());
         //根据Session中获取的email的值，来查找id。再把id插入question的createId列中。
         long userId = userInfoService.getIdByEmail(publishSubmitVo.getEmail());
         publishSubmitVo.setCreatorid(userId);

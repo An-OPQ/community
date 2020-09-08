@@ -109,8 +109,13 @@
 
 <script>
     $(function () {
-        $(".text-center li").eq(2).addClass("active");
+        $(".contentManager").addClass("active");
         getAllQuestion(1);
+        $.toastr.config({
+            time: 2000,
+            size: 'lg',
+            position: 'top-center',
+        });
     })
 
     function initTable(response) {
@@ -126,7 +131,7 @@
                 "         <td class=\"wrap\" title=\"" + question.title + "\">" + question.title + "</td>\n" +
                 "         <td class=\"wrap\" title=\"" + question.email + "\">" + question.email + "</td>\n" +
                 "         <td>" + question.createDate + "</td>\n" +
-                "         <td>" + question.tag + "</td>\n" +
+                "         <td>" + question.typeName + "</td>\n" +
                 "         <td>\n" +
                 "             <div class=\"btn-group\" role=\"group\">\n" +
                 "                 <button type=\"button\" class=\"btn btn-default dropdown-toggle\"\n" +
@@ -135,7 +140,8 @@
                 "                 </button>\n" +
                 "                <ul class=\"dropdown-menu\">\n" +
                 "                       <li><a href=\"questionView.html?id=" + question.id + "\">查看</a></li>\n" +
-                "                       <li><a href=\"#\" >删除</a></li>\n" +
+                "                       <li><a href=\"#\" >修改模块</a></li>\n" +
+                "                       <li><a href=\"#\" onclick=\'deleteQuestion(" + question.id + ",this)\' >删除</a></li>\n" +
                 "                     </ul>\n" +
                 "             </div>\n" +
                 "         </td>\n" +
@@ -205,20 +211,28 @@
         })
     }
 
-    function deleteQuestion(id) {
+    function deleteQuestion(id, srcEle) {
         $.ajax({
             url: "management/deleteQuestion?id=" + id,
             type: "DELETE",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
-
+                if (response) {
+                    $(srcEle).parent().parent().parent().parent().parent().remove()
+                    $.toastr.success("删除成功", {
+                        position: 'top-center'
+                    })
+                } else {
+                    $.toastr.success("删除失败", {
+                        position: 'top-center'
+                    })
+                }
             },
             error: function (response) {
                 console.error(response)
             }
         })
-
     }
 </script>
 </html>

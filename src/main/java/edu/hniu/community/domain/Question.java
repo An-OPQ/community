@@ -11,17 +11,7 @@ public class Question {
     private long commentCount;
     private long viewCount;
     private long likeCount;
-    private String tag;
-
-
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
+    private long typeid;
 
     public long getId() {
         return id;
@@ -31,7 +21,6 @@ public class Question {
         this.id = id;
     }
 
-
     public String getTitle() {
         return title;
     }
@@ -39,7 +28,6 @@ public class Question {
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     public String getDescription() {
         return description;
@@ -49,7 +37,6 @@ public class Question {
         this.description = description;
     }
 
-
     public long getCreatorid() {
         return creatorid;
     }
@@ -58,6 +45,13 @@ public class Question {
         this.creatorid = creatorid;
     }
 
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 
     public long getCommentCount() {
         return commentCount;
@@ -67,7 +61,6 @@ public class Question {
         this.commentCount = commentCount;
     }
 
-
     public long getViewCount() {
         return viewCount;
     }
@@ -75,7 +68,6 @@ public class Question {
     public void setViewCount(long viewCount) {
         this.viewCount = viewCount;
     }
-
 
     public long getLikeCount() {
         return likeCount;
@@ -85,27 +77,11 @@ public class Question {
         this.likeCount = likeCount;
     }
 
-
-    public String getTag() {
-        return tag;
+    public long getTypeid() {
+        return typeid;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", creatorid=" + creatorid +
-                ", createDate='" + createDate + '\'' +
-                ", commentCount=" + commentCount +
-                ", viewCount=" + viewCount +
-                ", likeCount=" + likeCount +
-                ", tag='" + tag + '\'' +
-                '}';
+    public void setTypeid(long typeid) {
+        this.typeid = typeid;
     }
 }

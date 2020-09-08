@@ -1,11 +1,12 @@
 package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.ManagementDao;
+import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
 import edu.hniu.community.vo.QuestionListVo;
-import edu.hniu.community.vo.UserRoleVo;
+import edu.hniu.community.vo.QuestionTypeVo;
 import edu.hniu.community.vo.userAndRoleListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,18 +80,12 @@ public class ManagementServiceImpl implements ManagementService {
     /**
      * 管理员插入数据并指名权限角色
      *
-     * @param userRoleVo
+     * @param userInfo
      * @return
      */
     @Override
-    public boolean addUserInfo(UserRoleVo userRoleVo) {
-        boolean flag = false;
-        boolean addUserInfo = managementDao.addUserInfo(userRoleVo)>0;
-        boolean addUserInfoByRole = managementDao.addUserInfoByRole(userRoleVo)>0;
-        if (addUserInfo && addUserInfoByRole){
-            flag=true;
-        }
-        return flag;
+    public boolean addUserInfo(UserInfo userInfo) {
+        return managementDao.addUserInfo(userInfo) > 0;
     }
 
     @Override
@@ -98,10 +93,23 @@ public class ManagementServiceImpl implements ManagementService {
         return managementDao.getAllQusetion();
     }
 
-//    @Override
-//    public boolean deleteQuestion(Integer id) {
-//        boolean flag=false;
-//        managementDao.deleteQuestion(id)
-//        return  flag;
-//    }
+    @Override
+    public boolean deleteQuestion(Integer id) {
+        return managementDao.deleteQuestion(id) > 0;
+    }
+
+    @Override
+    public List<QuestionType> getAllTagName() {
+        return managementDao.getAllTagName();
+    }
+
+    @Override
+    public boolean deleteTagById(int id) {
+        return managementDao.deleteTagById(id)>0;
+    }
+
+    @Override
+    public boolean addTag(QuestionTypeVo questionTypeVo) {
+        return managementDao.addTag(questionTypeVo)>0;
+    }
 }

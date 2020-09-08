@@ -1,6 +1,9 @@
-package com.sample;
+package edu.hniu.community.domain;
 
 
+/**
+ * @author jerry
+ */
 public class QuestionType {
 
   private long typeId;

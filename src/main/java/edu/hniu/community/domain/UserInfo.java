@@ -17,7 +17,25 @@ public class UserInfo {
   private String mobile;
   private String github;
   private String microblog;
+  private Comment comment;
 
+  private  Question question;
+
+  public Question getQuestion() {
+    return question;
+  }
+
+  public void setQuestion(Question question) {
+    this.question = question;
+  }
+
+  public Comment getComment() {
+    return comment;
+  }
+
+  public void setComment(Comment comment) {
+    this.comment = comment;
+  }
 
   public long getId() {
     return id;
@@ -161,6 +179,8 @@ public class UserInfo {
             ", mobile='" + mobile + '\'' +
             ", github='" + github + '\'' +
             ", microblog='" + microblog + '\'' +
+            ", comment=" + comment +
+            ", question=" + question +
             '}';
   }
 }

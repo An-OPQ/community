@@ -27,7 +27,7 @@
             <result property="commentCount" column="commentCount"/>
             <result property="viewCount" column="viewCount"/>
             <result property="likeCount" column="likeCount"/>
-            <result property="tag" column="tag"/>
+            <result property="roleid" column="roleid"/>
         </collection>
     </resultMap>
 
@@ -46,8 +46,8 @@
             <if test="createDate!='' and createDate!=null">
                 createDate,
             </if>
-            <if test="tag!='' and tag!=null">
-                tag
+            <if test="typeid!='' and typeid!=null">
+                typeid
             </if>
         </trim>
         ) values (default ,
@@ -64,8 +64,8 @@
             <if test="createDate!='' and createDate!=null">
                 #{createDate},
             </if>
-            <if test="tag!='' and tag!=null">
-                #{tag}
+            <if test="typeid!='' and typeid!=null">
+                #{typeid}
             </if>
         </trim>
         )

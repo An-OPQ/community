@@ -1,9 +1,10 @@
 package edu.hniu.community.service;
 
+import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.vo.QuestionListVo;
-import edu.hniu.community.vo.UserRoleVo;
+import edu.hniu.community.vo.QuestionTypeVo;
 import edu.hniu.community.vo.userAndRoleListVo;
 
 import java.util.List;
@@ -50,10 +51,10 @@ public interface ManagementService {
 
     /**
      * 管理员插入数据并指名权限角色
-     * @param userRoleVo
+     * @param userInfo
      * @return
      */
-    boolean addUserInfo(UserRoleVo userRoleVo);
+    boolean addUserInfo(UserInfo userInfo);
 
     /**
      * 管理员查询所有的question列表
@@ -62,10 +63,31 @@ public interface ManagementService {
     List<QuestionListVo> getAllQusetion();
 
 
-//    /**
-//     * 删除帖子以及帖子的回复
-//     * @param id
-//     * @return
-//     */
-//    boolean deleteQuestion(Integer id);
+    /**
+     * 删除帖子以及帖子的回复
+     * @param id
+     * @return
+     */
+    boolean deleteQuestion(Integer id);
+
+
+    /**
+     *
+     * @return
+     */
+    List<QuestionType> getAllTagName();
+
+    /**
+     * 删除模块名
+     * @param id
+     * @return
+     */
+    boolean deleteTagById(int id);
+
+    /**
+     * 添加模块名
+     * @param questionTypeVo
+     * @return
+     */
+    boolean addTag(QuestionTypeVo questionTypeVo);
 }

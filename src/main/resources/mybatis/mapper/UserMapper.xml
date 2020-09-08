@@ -4,6 +4,33 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.hniu.community.dao.UserInfoDao">
 
+    <!--一对多;以userinfo为主表-->
+    <resultMap id="questionList" type="UserInfo">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="accountName" column="accountName"/>
+        <result property="sex" column="sex"/>
+        <result property="icon" column="icon"/>
+        <result property="sginName" column="sginName"/>
+        <result property="qq" column="qq"/>
+        <result property="weChat" column="weChat"/>
+        <result property="mobile" column="mobile"/>
+        <result property="github" column="github"/>
+        <result property="microblog" column="microblog"/>
+        <collection property="question" ofType="Question">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="description" column="description"/>
+            <result property="creatorid" column="creatorid"/>
+            <result property="createDate" column="createDate"/>
+            <result property="commentCount" column="commentCount"/>
+            <result property="viewCount" column="viewCount"/>
+            <result property="likeCount" column="likeCount"/>
+            <result property="roleid" column="roleid"/>
+        </collection>
+    </resultMap>
+
     <select id="loginCheck" resultType="int">
         select count(1) from userinfo
         <where>
@@ -124,5 +151,9 @@
 
     <select id="getIdByEmail" parameterType="String" resultType="long">
         select id from userinfo where email=#{email}
+    </select>
+
+    <select id="getQuestionByEmail" parameterType="String" resultMap="questionList">
+        select  u.id as uid ,u.icon, q.* from userinfo u right join  question q  on u.id=q.creatorid   where email=#{email}
     </select>
 </mapper>

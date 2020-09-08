@@ -9,6 +9,7 @@
         <result property="email" column="email"/>
         <result property="password" column="password"/>
         <result property="accountName" column="accountName"/>
+        <result property="roleid" column="roleid"/>
         <result property="sex" column="sex"/>
         <result property="icon" column="icon"/>
         <result property="sginName" column="sginName"/>
@@ -26,7 +27,7 @@
             <result property="commentCount" column="commentCount"/>
             <result property="viewCount" column="viewCount"/>
             <result property="likeCount" column="likeCount"/>
-            <result property="tag" column="tag"/>
+            <result property="typeid" column="typeid"/>
         </collection>
     </resultMap>
 
@@ -36,6 +37,7 @@
         <result property="email" column="email"/>
         <result property="password" column="password"/>
         <result property="accountName" column="accountName"/>
+        <result property="roleid" column="roleid"/>
         <result property="sex" column="sex"/>
         <result property="icon" column="icon"/>
         <result property="sginName" column="sginName"/>
@@ -56,7 +58,7 @@
         </collection>
     </resultMap>
     <select id="getAllComment" resultMap="questionList" parameterType="long">
-        select q.*,u.id uid,u.accountName,u.icon from question q left join userinfo u  on q.creatorid=u.id where q.id=#{id}
+        select q.*,u.id uid,u.accountName,u.icon from question q left join userinfo u  on q.creatorid=u.id  where q.id=#{id}
     </select>
 
 

@@ -1,10 +1,13 @@
 package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.UserInfoDao;
+import edu.hniu.community.domain.Question;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
@@ -119,5 +122,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public long getIdByEmail(String email) {
         return userInfoDao.getIdByEmail(email);
+    }
+
+    @Override
+    public List<Question> getQuestionByEmail(String email) {
+        return userInfoDao.getQuestionByEmail(email);
     }
 }

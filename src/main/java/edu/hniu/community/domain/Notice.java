@@ -1,4 +1,4 @@
-package com.sample;
+package edu.hniu.community.domain;
 
 
 public class Notice {

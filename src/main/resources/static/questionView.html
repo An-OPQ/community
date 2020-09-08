@@ -79,9 +79,7 @@
                                 <h5 class="media-heading">
                                     <span>瓦刀</span>
                                 </h5>
-                                <div>①通过请求参数访问Github API的方式已经被废弃，可以按照此教程修改一小段代码：https://niter.cn/p/115。
-                                    ②也有可能是连接不稳定，参考这个帖子配置host ：https://niter.cn/p/125
-                                    ③github服务器在国外，极其不稳定，建议多尝试几次试试，实在不行，建议放弃，使用百度等第三方登录方式。
+                                <div>
                                 </div>
                                 <div class="menu">
                                     <span class="glyphicon glyphicon-thumbs-up icon"></span>
@@ -192,6 +190,7 @@
     </div>
 </div>
 <script src="./js/footer.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script>
     var email;
     $(function () {
@@ -216,6 +215,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
+                console.log(response)
                 $("#author_id").empty().val(response[0].question.creatorid);
                 $("#title").empty().text(response[0].question.title);
                 $(".author").empty().text(response[0].accountName);
@@ -277,8 +277,15 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
-                updateCommentCount();
-                window.location.reload()
+                if (response){
+                    updateCommentCount();
+                    window.location.reload()
+                    swal({
+                        text:"发布成功",
+                        icon: "success",
+                    });
+                }
+
             },
             error: function (response) {
                 console.error(response)

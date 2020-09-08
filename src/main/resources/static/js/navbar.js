@@ -34,11 +34,11 @@ document.writeln("                            <a id=\'config\' href=\'config.htm
 document.writeln("                                <span class=\'glyphicon glyphicon-cog\'></span>&nbsp;&nbsp;个人设置</a>");
 document.writeln("                        </li>");
 document.writeln("                        <li>");
-document.writeln("                            <a href=\'#\'>");
+document.writeln("                            <a href=\'profile_questions.html\'>");
 document.writeln("                                <span class=\'glyphicon glyphicon-question-sign\'></span>&nbsp;&nbsp;我的问题</a>");
 document.writeln("                        </li>");
 document.writeln("                        <li>");
-document.writeln("                            <a href=\'#\'>");
+document.writeln("                            <a href=\'profile_replies.html\'>");
 document.writeln("                                <span class=\'glyphicon glyphicon-envelope\'></span>&nbsp;&nbsp;最新回复</a>");
 document.writeln("                        </li>");
 document.writeln("                        <li role=\'separator\' class=\'divider\'></li>");
@@ -57,7 +57,7 @@ $(function () {
         type: 'GET',
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
-            $("#dLabel").html(response+'<span class=\'caret\'></span>');
+            $("#dLabel").html(response + '<span class=\'caret\'></span>');
         },
         error: function (response) {
         }
@@ -75,5 +75,4 @@ $('#logout').click(function () {
         error: function (response) {
         }
     })
-
 })

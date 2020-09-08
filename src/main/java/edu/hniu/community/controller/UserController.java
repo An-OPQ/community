@@ -1,5 +1,8 @@
 package edu.hniu.community.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import edu.hniu.community.domain.Question;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.MailService;
 import edu.hniu.community.service.UserInfoService;
@@ -7,6 +10,7 @@ import edu.hniu.community.toolkit.GetSessionValue;
 import edu.hniu.community.toolkit.MD5;
 import edu.hniu.community.toolkit.UpdateTokenByCookie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -14,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 
 @RestController
@@ -28,6 +33,9 @@ public class UserController {
 
     @Autowired
     UpdateTokenByCookie updateTokenByCookie;
+
+    @Value("${PageHelper.usermangerPageSize}")
+    private int usermangerPageSize;
 
     @Autowired
     GetSessionValue getSessionValue;
@@ -117,7 +125,6 @@ public class UserController {
     /**
      * 登出
      * session.invalidate();为清除Session中的所有对象，而不清楚本身
-     *
      * @param session
      */
     @GetMapping("/logout")
@@ -137,7 +144,15 @@ public class UserController {
 
     @GetMapping("/getAccountName")
     public Object getAccountName(HttpSession session, HttpServletRequest request) {
-        String email =getSessionValue.getSessionValue(session, request);
+        String email = getSessionValue.getSessionValue(session, request);
         return userInfoService.getAccountName(email);
+    }
+
+    @PostMapping("/getQuestionByEmail/{email}/{pageNo}")
+    public Object getQuestionByEmail(@PathVariable(name = "email") String email, @PathVariable(name = "pageNo") Integer pageNo) {
+        PageHelper.startPage(pageNo, usermangerPageSize);
+        List<Question> questionByEmail=userInfoService.getQuestionByEmail(email);
+        PageInfo<Question> questionPageInfo=new PageInfo<Question>(questionByEmail);
+        return questionPageInfo;
     }
 }

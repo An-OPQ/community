@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.hniu.community.dao.ManagementDao">
 
-
     <select id="loginCheck" resultType="Roleinfo">
     select  r.*  from userinfo u left join roleinfo r on u.roleid=r.roleid  WHERE email=#{email} and password=#{password}
     </select>
@@ -31,10 +30,7 @@
         select * from roleinfo
     </select>
 
-    <insert id="addUserInfo"  parameterType="edu.hniu.community.vo.UserRoleVo">
-        <selectKey order="AFTER" keyProperty="userid" resultType="int">
-            select LAST_INSERT_ID()
-        </selectKey>
+    <insert id="addUserInfo" parameterType="UserInfo">
         insert into userinfo(id,
         <trim suffixOverrides=",">
             <if test="accountName!=null and accountName!=''">
@@ -45,6 +41,9 @@
             </if>
             <if test="email!=null and email!=''">
                 email,
+            </if>
+            <if test="roleid!=null and roleid!=''">
+                roleid,
             </if>
             <if test="mobile!=null and mobile!=''">
                 mobile
@@ -61,6 +60,9 @@
             <if test="email!=null and email!=''">
                 #{email},
             </if>
+            <if test="roleid!=null and roleid!=''">
+                #{roleid},
+            </if>
             <if test="mobile!=null and mobile!=''">
                 #{mobile}
             </if>
@@ -68,37 +70,42 @@
         )
     </insert>
 
-    <insert id="addUserInfoByRole" parameterType="edu.hniu.community.vo.UserRoleVo">
-        insert into user_role(urid,
+
+    <select id="getAllQusetion" resultType="edu.hniu.community.vo.QuestionListVo">
+       select q.id,q.title,q.creatorid,q.createDate,qt.type_name,u.email from question q left join userinfo u on q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
+    </select>
+
+    <delete id="deleteQuestion" parameterType="int">
+         DELETE FROM question WHERE id=#{id}
+    </delete>
+
+    <select id="getAllTagName" resultType="QuestionType">
+        select * from question_type
+    </select>
+
+    <delete id="deleteTagById" parameterType="int">
+        delete from question_type where type_id=#{type_id}
+    </delete>
+
+    <insert id="addTag" parameterType="edu.hniu.community.vo.QuestionListVo">
+        insert into question_type(type_id,
         <trim suffixOverrides=",">
-            <if test="userid !=null and userid !=''">
-                userid,
+            <if test="type_name!=null and type_name!=''">
+                type_name,
             </if>
-            <if test="roleid !=null and roleid !=''">
-                roleid
+            <if test="type_createTime!=null">
+                type_createTime
             </if>
         </trim>
-        ) values(default,
+        )values(default ,
         <trim suffixOverrides=",">
-            <if test="userid !=null and userid !=''">
-                #{userid},
+            <if test="type_name!=null and type_name!=''">
+                #{type_name},
             </if>
-            <if test="roleid !=null and roleid !=''">
-                #{roleid}
+            <if test="type_createTime!=null">
+                #{type_createTime}
             </if>
         </trim>
         )
     </insert>
-
-    <select id="getAllQusetion"  resultType="edu.hniu.community.vo.QuestionListVo">
-       select q.id,q.title,q.creatorid,q.createDate,q.tag,u.email from question q left join userinfo u on q.creatorid=u.id
-    </select>
-
-<!--    <delete id="deleteQuestion" parameterType="int">-->
-<!--        DELETE FROM question WHERE id=#{id}-->
-<!--    </delete>-->
-
-<!--    <delete id="deleteComment" parameterType="int">-->
-<!--        -->
-<!--    </delete>-->
 </mapper>

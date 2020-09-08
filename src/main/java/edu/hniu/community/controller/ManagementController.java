@@ -2,12 +2,13 @@ package edu.hniu.community.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
 import edu.hniu.community.toolkit.MD5;
 import edu.hniu.community.toolkit.UpdateTokenByCookie;
 import edu.hniu.community.vo.QuestionListVo;
-import edu.hniu.community.vo.UserRoleVo;
+import edu.hniu.community.vo.QuestionTypeVo;
 import edu.hniu.community.vo.userAndRoleListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,19 +70,20 @@ public class ManagementController {
     @PutMapping("/resetPassword")
     public Object resetPassword(@RequestBody UserInfo userInfo) {
         userInfo = MD5.encode(userInfo);
+        System.out.println(userInfo.toString());
         return managementService.resetPassword(userInfo);
     }
 
     /**
      * 管理员权限下添加账户
      *
-     * @param userRoleVo
+     * @param userInfo
      * @return
      */
     @PostMapping("/addUserInfo")
-    public Object addUserInfo(@RequestBody UserRoleVo userRoleVo) {
-//        MD5加密
-        return managementService.addUserInfo(userRoleVo);
+    public Object addUserInfo(@RequestBody UserInfo userInfo) {
+        userInfo = MD5.encode(userInfo);
+        return managementService.addUserInfo(userInfo);
     }
 
     /**
@@ -103,12 +105,26 @@ public class ManagementController {
     public Object getAllQusetion(@RequestParam Integer pageNo) {
         PageHelper.startPage(pageNo, usermangerPageSize);
         List<QuestionListVo> questionListVos = managementService.getAllQusetion();
-        PageInfo<QuestionListVo> questionListVoPageInfo = new PageInfo<QuestionListVo>(questionListVos);
-        return questionListVoPageInfo;
+        return new PageInfo<QuestionListVo>(questionListVos);
     }
 
-//    @DeleteMapping("/deleteQuestion")
-//    public Object deleteQuestion(@RequestParam Integer id){
-//        return  null;
-//    }
+    @DeleteMapping("/deleteQuestion")
+    public Object deleteQuestion(@RequestParam Integer id) {
+        return managementService.deleteQuestion(id);
+    }
+
+    @GetMapping("/getAllTagName")
+    public Object getAllTagName() {
+        return managementService.getAllTagName();
+    }
+
+    @DeleteMapping("/deleteTagById/{id}")
+    public Object deleteTagById(@PathVariable(name = "id") int id) {
+        return managementService.deleteTagById(id);
+    }
+
+    @PostMapping("/addTag")
+    public Object addTag(@RequestBody QuestionTypeVo questionTypeVo) {
+        return managementService.addTag(questionTypeVo);
+    }
 }

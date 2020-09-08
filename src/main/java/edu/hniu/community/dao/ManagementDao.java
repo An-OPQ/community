@@ -1,9 +1,10 @@
 package edu.hniu.community.dao;
 
+import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.vo.QuestionListVo;
-import edu.hniu.community.vo.UserRoleVo;
+import edu.hniu.community.vo.QuestionTypeVo;
 import edu.hniu.community.vo.userAndRoleListVo;
 
 import java.util.List;
@@ -50,17 +51,11 @@ public interface ManagementDao {
 
     /**
      * 管理员插入数据并指名权限角色(插入！role信息)
-     * @param userRoleVo
+     * @param userInfo
      * @return
      */
-    int addUserInfo(UserRoleVo userRoleVo);
+    int addUserInfo(UserInfo userInfo);
 
-    /**
-     * 管理员插入数据并指名权限角色(插入role信息)
-     * @param userRoleVo
-     * @return
-     */
-    int addUserInfoByRole(UserRoleVo userRoleVo);
 
     /**
      * 管理员查询所有的question列表
@@ -68,12 +63,30 @@ public interface ManagementDao {
      */
     List<QuestionListVo> getAllQusetion();
 
-//    /**
-//     * 删除帖子以及帖子的回复
-//     * @param id
-//     * @return
-//     */
-//    int deleteQuestion(Integer id);
-//
-//    int deleteComment(Integer id);
+    /**
+     * 删除帖子以及帖子的回复
+     * @param id
+     * @return
+     */
+    int deleteQuestion(Integer id);
+
+    /**
+     *
+     * @return
+     */
+    List<QuestionType> getAllTagName();
+
+    /**
+     * 删除模块名
+     * @param id
+     * @return
+     */
+    int deleteTagById(int id);
+
+    /**
+     * 添加模块名
+     * @param questionTypeVo
+     * @return
+     */
+    int addTag(QuestionTypeVo questionTypeVo);
 }
