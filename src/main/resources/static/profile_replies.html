@@ -97,33 +97,81 @@
             contentType: "application/json;charset=utf-8",
             success: function (response) {
                 email = response;
-                refresh()
+                refresh(1)
             }
         })
     })
 
-    function refresh() {
+    function initTable(response) {
+        var mediasObj = $("#medias");
+        mediasObj.empty();
+        $(".badge").html(response.length)
+        for (let i = 0; i < response.length; i++) {
+            var mediaStr = "";
+            var media = response[i];
+            mediaStr = "<div class=\"media\">\n" +
+                "    <div class=\"media-body\">\n" +
+                "        <p class=\"media-heading\">\n" +
+                "            <span>" + media.accountName + " 回复了问题 </span>\n" +
+                "            <a  href=\"questionView.html?id=" + media.comment.questionId + "\">" + media.comment.commentDescription + "</a>\n" +
+                "        </p>\n" +
+                "    </div>\n" +
+                "</div>"
+            mediasObj.append(mediaStr);
+        }
+    }
+
+    function refresh(pageNum) {
+        var pageNo = 1;
+        if (pageNum !== undefined) {
+            pageNo = pageNum
+        }
         $.ajax({
-            url: "user/getAllCommentByEmail?email=" + email,
+            url: "user/getAllCommentByEmail/" + email + "/" + pageNo + "",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             success: function (response) {
-                var mediasObj = $("#medias");
-                mediasObj.empty();
-                $(".badge").html(response.length)
-                for (let i = 0; i < response.length; i++) {
-                    var mediaStr = "";
-                    var media = response[i];
-                    mediaStr = "<div class=\"media\">\n" +
-                        "    <div class=\"media-body\">\n" +
-                        "        <p class=\"media-heading\">\n" +
-                        "            <span>" + media.accountName + " 回复了问题 </span>\n" +
-                        "            <a  href=\"questionView.html?id=" + media.comment.questionId + "\">" + media.comment.commentDescription + "</a>\n" +
-                        "        </p>\n" +
-                        "    </div>\n" +
-                        "</div>"
-                    mediasObj.append(mediaStr);
+                initTable(response.list)
+                $(".pagination").empty();
+                var spliteStr = "";
+                //判断是否为首页
+                if (response.isFirstPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='refresh(" + (response.pageNum - 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
                 }
+                for (let i = 1; i <= response.pages; i++) {
+                    if (response.pageNum == i) {
+                        spliteStr += "<li class=\"active\">\n" +
+                            "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
+                            " </li>";
+                    } else {
+                        spliteStr += "<li onclick='refresh(" + i + ")'><a>" + i + "</a></li>"
+                    }
+                }
+                if (response.isLastPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='refresh(" + (response.pageNum + 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+                $(".pagination").append(spliteStr);
+
             }
         })
     }

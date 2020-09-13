@@ -157,8 +157,16 @@ public class UserController {
         return questionPageInfo;
     }
 
-    @GetMapping("/getAllCommentByEmail")
-    public Object getAllCommentByEmail(@RequestParam String email) {
-        return  userInfoService.getAllCommentByEmail(email);
+    @GetMapping("/getAllCommentByEmail/{email}/{pageNo}")
+    public Object getAllCommentByEmail(@PathVariable(name = "email") String email, @PathVariable(name = "pageNo") Integer pageNo) {
+        PageHelper.startPage(pageNo, usermangerPageSize);
+        List<UserInfo> userInfoList = userInfoService.getAllCommentByEmail(email);
+        PageInfo<UserInfo> userInfoPageInfo = new PageInfo<UserInfo>(userInfoList);
+        return userInfoPageInfo;
+    }
+
+    @GetMapping("/initModel")
+    public Object initModel(){
+        return userInfoService.initModel();
     }
 }

@@ -44,4 +44,9 @@ public class PublishServiceImpl implements PublishService {
     public boolean lessLikeCount(Integer id) {
         return publishDao.lessLikeCount(id)>0;
     }
+
+    @Override
+    public List<Question> getPublishMessageByModel(int modelId) {
+        return publishDao.getPublishMessageByModel(modelId);
+    }
 }

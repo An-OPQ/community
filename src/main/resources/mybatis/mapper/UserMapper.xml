@@ -186,4 +186,8 @@
        select c.*,u.accountName,u.icon from question q LEFT JOIN  comment c   on q.id=c.questionId  left join userinfo u on c.creatorId=u.id
             where questionId=ANY(select  q.id from userinfo u right join  question q  on u.id=q.creatorid   where email=#{email})
     </select>
+
+    <select id="initModel" resultType="QuestionType">
+        SELECT  * FROM question_type
+    </select>
 </mapper>

@@ -2,6 +2,7 @@ package edu.hniu.community.dao;
 
 
 import edu.hniu.community.domain.Question;
+import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -105,4 +106,9 @@ public interface UserInfoDao {
      */
     List<UserInfo> getAllCommentByEmail(String email);
 
+    /**
+     * 查询所有的板块
+     * @return
+     */
+    List<QuestionType> initModel();
 }

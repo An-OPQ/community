@@ -72,7 +72,12 @@
     </insert>
 
     <select id="getPublishMessage" resultMap="questionList">
+        SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid order by q.createDate  DESC
+    </select>
+
+    <select id="getPublishMessageByModel" resultMap="questionList" parameterType="int">
         SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid
+         WHERE typeid=#{typeid} order by q.createDate  DESC
     </select>
 
     <update id="updateViewCount" parameterType="Integer">

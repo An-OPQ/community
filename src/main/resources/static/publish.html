@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label for="tag">所属板块:</label>
                     <select id="tag" class="form-control">
-                        <option value="">科学技术</option>
+                        <option value="0">科学技术</option>
                     </select>
                     <div id="select-tag" class="publish-tag-tab">
                         <ul class="nav nav-tabs" role="tablist">
@@ -114,16 +114,15 @@
         var date = new Date();
         var Month = date.getMonth() + 1;
         var createDate = date.getFullYear() + "-" + Month + "-" + date.getDate();
-        var roleid=$("#tag option:selected").val()
+        var typeid = $("#tag option:selected").val()
         var json = {
             email: email,
             title: titleVal,
             description: descriptionVal,
-            roleid: roleid,
+            typeid: typeid,
             createDate: createDate
         }
         var jsonStr = JSON.stringify(json)
-        console.log(jsonStr)
         $.ajax({
             url: "publish/submit",
             type: "POST",

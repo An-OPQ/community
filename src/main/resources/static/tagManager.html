@@ -29,12 +29,12 @@
                 <div class="page-header">
                     <h4>板块管理</h4>
                 </div>
-                <form class="table" >
+                <form class="table">
                     <div class="col-md-10">
                         <input class="form-control" value="" id="tagName"/>
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-default  pull-left" onclick="addTag()">添加</button>
+                        <button class="btn btn-default  pull-left">添加</button>
                     </div>
                 </form>
                 <div class="tab-list">
@@ -121,27 +121,24 @@
         })
     }
 
-    function addTag() {
+    $("table").submit(function () {
         var typeName = $("#tagName").val();
         var typeCreateTime = new Date();
         var json = {
             type_name: typeName,
             type_createTime: typeCreateTime
         }
-        var jsonStr=JSON.stringify(json);
+        var jsonStr = JSON.stringify(json);
         $.ajax({
             url: "management/addTag",
             type: "POST",
-            data:jsonStr,
+            data: jsonStr,
             contentType: "application/json;charset=utf-8",
             success: function (response) {
-                if (response) {
-                    $.toastr.success("添加成功", {
-                        position: 'top-center'
-                    })
-                }
             }
         })
-    }
+    })
+
+
 </script>
 </html>

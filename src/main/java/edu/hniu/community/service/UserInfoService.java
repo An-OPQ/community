@@ -1,6 +1,7 @@
 package edu.hniu.community.service;
 
 import edu.hniu.community.domain.Question;
+import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -102,4 +103,9 @@ public interface UserInfoService {
      */
     List<UserInfo> getAllCommentByEmail(String email);
 
+    /**
+     * 查询所有的板块
+     * @return
+     */
+    List<QuestionType> initModel();
 }

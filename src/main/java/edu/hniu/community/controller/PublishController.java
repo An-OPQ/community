@@ -10,8 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
+/**
+ * @author jerry
+ */
 @RestController
 @RequestMapping("/publish")
 public class PublishController {
@@ -23,11 +29,10 @@ public class PublishController {
     UserInfoService userInfoService;
 
     @Value("${PageHelper.questionPageSize}")
-    private int  questionPageSize;
+    private int questionPageSize;
 
     @PostMapping("/submit")
     public Object publishMessage(@RequestBody PublishSubmitVo publishSubmitVo) {
-        System.out.println(publishSubmitVo.toString());
         //根据Session中获取的email的值，来查找id。再把id插入question的createId列中。
         long userId = userInfoService.getIdByEmail(publishSubmitVo.getEmail());
         publishSubmitVo.setCreatorid(userId);
@@ -36,12 +41,26 @@ public class PublishController {
 
     /**
      * 查询所有的帖子
+     *
      * @return
      */
     @GetMapping("/getPublishMessage")
     public Object getPublishMessage(@RequestParam Integer pageNo) {
-        PageHelper.startPage(pageNo,  questionPageSize);
+        PageHelper.startPage(pageNo, questionPageSize);
         List<Question> questionList = publishService.getPublishMessage();
+        PageInfo<Question> pageInfo = new PageInfo<Question>(questionList);
+        return pageInfo;
+    }
+
+    /**
+     * 查询所有的帖子根据模块来查询
+     *
+     * @return
+     */
+    @GetMapping("/getPublishMessageByModel/{pageNo}/{modelId}")
+    public Object getPublishMessageByModel(@PathVariable Integer pageNo, @PathVariable int modelId) {
+        PageHelper.startPage(pageNo, questionPageSize);
+        List<Question> questionList = publishService.getPublishMessageByModel(modelId);
         PageInfo<Question> pageInfo = new PageInfo<Question>(questionList);
         return pageInfo;
     }

@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Properties;
 
+/**
+ * @author jerry
+ */
 @MapperScan("edu.hniu.community.dao")
 @SpringBootApplication
 public class CommunityApplication {

@@ -17,13 +17,12 @@ document.writeln("                    <input type=\'text\' class=\'form-control\
 document.writeln("                </div>");
 document.writeln("                <button type=\'submit\' class=\'btn btn-default\'>搜索</button>");
 document.writeln("            </form>");
-document.writeln("            <ul class=\'nav navbar-nav\'>");
+document.writeln("            <ul class=\'nav navbar-nav\' id=\'model\'>");
 document.writeln("                <li class=\'active\'><a href=\'#\'>技术<span class=\'sr-only\'>(current)</span></a></li>");
 document.writeln("                <li><a href=\'#\'>学术</a></li>");
 document.writeln("            </ul>");
 document.writeln("            <ul class=\'nav navbar-nav navbar-right\'>");
 document.writeln("                <li><a id=\'publish\' href=\'publish.html\'>发帖</a></li>");
-document.writeln("");
 document.writeln("                <li class=\'dropdown\'>");
 document.writeln("                    <a id=\'dLabel\' href=\'#\' type=\'button\' data-toggle=\'dropdown\' aria-haspopup=\'true\'");
 document.writeln("                        aria-expanded=\'false\'>admin<span class=\'caret\'></span>");
@@ -58,6 +57,7 @@ $(function () {
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
             $("#dLabel").html(response + '<span class=\'caret\'></span>');
+            initModel();
         },
         error: function (response) {
         }
@@ -76,3 +76,28 @@ $('#logout').click(function () {
         }
     })
 })
+
+function initModel() {
+    $.ajax({
+        url: 'user/initModel',
+        type: 'GET',
+        contentType: 'application/json;charset=utf-8',
+        success: function (response) {
+            var modelObj = $("#model");
+            modelObj.empty();
+            var modelStr = "";
+            for (let i = 0; i < response.length; i++) {
+                var model = response[i];
+                modelStr += "<li><a href='#' onclick='jumpToModel(this," +model.typeId +")'>" + model.typeName + "<span class='sr-only'>(current)</span></a></li>"
+            }
+            modelObj.append(modelStr);
+        },
+        error: function (response) {
+        }
+    })
+}
+
+function jumpToModel(srcEle, typeId) {
+    $(srcEle).parent().addClass("active").siblings().removeClass("active");
+    window.location.href = "main_Model.html?typeId=" + typeId;
+}
