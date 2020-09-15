@@ -17,9 +17,7 @@ document.writeln("                    <input type=\'text\' class=\'form-control\
 document.writeln("                </div>");
 document.writeln("                <button type=\'submit\' class=\'btn btn-default\'>搜索</button>");
 document.writeln("            </form>");
-document.writeln("            <ul class=\'nav navbar-nav\' id=\'model\'>");
-document.writeln("                <li class=\'active\'><a href=\'#\'>技术<span class=\'sr-only\'>(current)</span></a></li>");
-document.writeln("                <li><a href=\'#\'>学术</a></li>");
+document.writeln("            <ul class=\'nav navbar-nav model\' id=\'model\'>");
 document.writeln("            </ul>");
 document.writeln("            <ul class=\'nav navbar-nav navbar-right\'>");
 document.writeln("                <li><a id=\'publish\' href=\'publish.html\'>发帖</a></li>");
@@ -69,7 +67,7 @@ $('#logout').click(function () {
         url: 'user/logout',
         type: 'GET',
         contentType: 'application/json;charset=utf-8',
-        success: function (response) {
+        success: function () {
             window.location.href = 'login.html'
         },
         error: function (response) {
@@ -88,7 +86,7 @@ function initModel() {
             var modelStr = "";
             for (let i = 0; i < response.length; i++) {
                 var model = response[i];
-                modelStr += "<li><a href='#' onclick='jumpToModel(this," +model.typeId +")'>" + model.typeName + "<span class='sr-only'>(current)</span></a></li>"
+                modelStr += "<li><a onclick='jumpToModel("+model.typeId+")'>" + model.typeName + "</a></li>"
             }
             modelObj.append(modelStr);
         },
@@ -97,7 +95,6 @@ function initModel() {
     })
 }
 
-function jumpToModel(srcEle, typeId) {
-    $(srcEle).parent().addClass("active").siblings().removeClass("active");
-    window.location.href = "main_Model.html?typeId=" + typeId;
+function jumpToModel(typeId) {
+    window.location.href="main_Model.html?typeId="+typeId;
 }
