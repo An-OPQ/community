@@ -45,17 +45,12 @@
                     </div>
                     <div id="description"></div>
                 </div>
-                <!--标签-->
-                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <span class="question-tag">
-                            <a href="#" class="community-tag" id="tag">test</a>
-                        </span>
-                </div>
                 <!--编辑-->
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
+                    <a href="#" class="community-menu">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                    </a>
                 </div>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             </div>
@@ -151,6 +146,7 @@
                 </div>
             </div>
         </div>
+        <!--广告部分-->
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div>
                 <div>
@@ -205,6 +201,7 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
+                console.log(response)
                 $("#author_id").empty().val(response[0].question.creatorid);
                 $("#title").empty().text(response[0].question.title);
                 $(".author").empty().text(response[0].accountName);
