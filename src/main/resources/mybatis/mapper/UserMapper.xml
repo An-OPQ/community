@@ -190,4 +190,8 @@
     <select id="initModel" resultType="QuestionType">
         SELECT  * FROM question_type
     </select>
+
+    <select id="getNotice" resultType="Notice">
+        SELECT * FROM notice ORDER BY create_time DESC LIMIT 1
+    </select>
 </mapper>

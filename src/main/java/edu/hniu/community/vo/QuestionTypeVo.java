@@ -34,4 +34,13 @@ public class QuestionTypeVo {
     public void setType_createTime(Timestamp type_createTime) {
         this.type_createTime = type_createTime;
     }
+
+    @Override
+    public String toString() {
+        return "QuestionTypeVo{" +
+                "type_id=" + type_id +
+                ", type_name='" + type_name + '\'' +
+                ", type_createTime=" + type_createTime +
+                '}';
+    }
 }

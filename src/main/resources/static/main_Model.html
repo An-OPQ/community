@@ -16,6 +16,21 @@
         .nav-tabs {
             margin-bottom: 30px;
         }
+        .notice {
+            color: #999;
+            background-color: #d9edf7;
+            max-width: 380px;
+            min-height: 150px;
+            width: auto;
+            height: auto;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+        .notice:hover {
+            color: #999;
+            background-color: #d9edf7;
+        }
     </style>
 </head>
 <body>
@@ -38,7 +53,7 @@
                     <a href="#">最热</a>
                 </li>
                 <li role="presentation">
-                    <a href="#" class="red">消灭零回复</a>
+                    <a href="#test" class="red">消灭零回复</a>
                 </li>
             </ul>
             <div id="tbody">
@@ -82,8 +97,9 @@
             <div>
                 <div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
-                        <h4>广告</h4>
-                        <img class="img-thumbnail question-wechat" src="./picture/official-account.png">
+                        <br>
+                        <h3><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 公告</h3>
+                        <div class="community-tag notice"></div>
                     </div>
                 </div>
             </div>
@@ -96,18 +112,13 @@
                 <a href="#" class="community-tag">好丽友</a>
                 <a href="#" class="community-tag">css</a>
                 <a href="#" class="community-tag">XXX</a>
-                <a href="#" class="community-tag">XXX</a>
-                <a href="#" class="community-tag">html5</a>
-                <a href="#" class="community-tag">XXX</a>
-                <a href="#" class="community-tag">XXX</a>
             </div>
             <div>
                 <div>
                     <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
-                        <a href="#" onclick="" target="_blank">
-                            <img class="img-thumbnail question-wechat" src="./picture/uhost.png">
-                        </a>
+                        <h4>广告推广</h4>
+                        <img class="img-thumbnail question-wechat" src="./picture/uhost.png">
                     </div>
                 </div>
             </div>
@@ -210,6 +221,19 @@
                 console.error(response)
             }
         })
+    }
+    $(function () {
+        $.ajax({
+            url: "user/getNotice",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                var $notice = $(".notice");
+                $notice.empty();
+                $notice.append(response.noticeContent)
+            }
+        })
+    })
 </script>
 </body>
 </html>

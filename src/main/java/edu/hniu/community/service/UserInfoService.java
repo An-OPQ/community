@@ -1,5 +1,6 @@
 package edu.hniu.community.service;
 
+import edu.hniu.community.domain.Notice;
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
@@ -108,4 +109,10 @@ public interface UserInfoService {
      * @return
      */
     List<QuestionType> initModel();
+
+    /**
+     * 查询通知
+     * @return
+     */
+    Notice getNotice();
 }

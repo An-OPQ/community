@@ -1,13 +1,17 @@
 package edu.hniu.community.domain;
 
 
+import java.sql.Timestamp;
+
+/**
+ * @author jerry
+ */
 public class Notice {
 
   private long id;
   private long createId;
   private String noticeContent;
   private java.sql.Timestamp createTime;
-
 
   public long getId() {
     return id;
@@ -17,7 +21,6 @@ public class Notice {
     this.id = id;
   }
 
-
   public long getCreateId() {
     return createId;
   }
@@ -25,7 +28,6 @@ public class Notice {
   public void setCreateId(long createId) {
     this.createId = createId;
   }
-
 
   public String getNoticeContent() {
     return noticeContent;
@@ -35,13 +37,21 @@ public class Notice {
     this.noticeContent = noticeContent;
   }
 
-
-  public java.sql.Timestamp getCreateTime() {
+  public Timestamp getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(java.sql.Timestamp createTime) {
+  public void setCreateTime(Timestamp createTime) {
     this.createTime = createTime;
   }
 
+  @Override
+  public String toString() {
+    return "Notice{" +
+            "id=" + id +
+            ", createId=" + createId +
+            ", noticeContent='" + noticeContent + '\'' +
+            ", createTime=" + createTime +
+            '}';
+  }
 }

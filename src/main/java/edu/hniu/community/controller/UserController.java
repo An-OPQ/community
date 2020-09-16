@@ -166,7 +166,17 @@ public class UserController {
     }
 
     @GetMapping("/initModel")
-    public Object initModel(){
+    public Object initModel() {
         return userInfoService.initModel();
+    }
+
+    @GetMapping("/getIdByEmail")
+    public Object getIdByEmail(@RequestParam String email) {
+        return userInfoService.getIdByEmail(email);
+    }
+
+    @GetMapping("/getNotice")
+    public Object getNotice() {
+        return userInfoService.getNotice();
     }
 }

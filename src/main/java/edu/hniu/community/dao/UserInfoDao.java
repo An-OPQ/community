@@ -1,6 +1,7 @@
 package edu.hniu.community.dao;
 
 
+import edu.hniu.community.domain.Notice;
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
@@ -111,4 +112,10 @@ public interface UserInfoDao {
      * @return
      */
     List<QuestionType> initModel();
+
+    /**
+     * 查询通知
+     * @return
+     */
+    Notice getNotice();
 }

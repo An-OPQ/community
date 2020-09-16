@@ -1,0 +1,1 @@
+alter table notice modify id int auto_increment;

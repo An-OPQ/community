@@ -33,7 +33,7 @@ document.writeln("						<a href=\'tagManager.html\'>");
 document.writeln("							<span class=\'glyphicon glyphicon-tag\'></span>&nbsp;&nbsp;板块管理</a>");
 document.writeln("					</li>");
 document.writeln("					<li class=\'advertmanager\'>");
-document.writeln("						<a href=\'advertmanager.html\'>");
+document.writeln("						<a>");
 document.writeln("							<span class=\'glyphicon glyphicon glyphicon-bullhorn\'></span>&nbsp;&nbsp;公告管理</a>");
 document.writeln("					</li>");
 document.writeln("				</ul>");
@@ -74,7 +74,7 @@ $(function () {
         type: 'GET',
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
-            $("#dLabel").html(response+'<span class=\'caret\'></span>');
+            $("#dLabel").html(response + '<span class=\'caret\'></span>');
         },
         error: function (response) {
         }
@@ -93,4 +93,33 @@ $('#logout').click(function () {
         }
     })
 })
+var email;
+function getSession () {
+    $.ajax({
+        async:false,
+        url: "user/getSession",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        success: function (response) {
+            email = response;
+            jumpToAdvertmanager(email)
+        }
+    })
+}
+getSession()
 
+var id
+function jumpToAdvertmanager(email) {
+    $.ajax({
+        async:false,//设置同步：代码没有执行完就 不执行下面的代码
+        url: "user/getIdByEmail?email=" + email,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        success: function (response) {
+            id = response;
+        }
+    })
+}
+$(".advertmanager").click(function () {
+    window.location.href="advertmanager.html?id="+id
+})

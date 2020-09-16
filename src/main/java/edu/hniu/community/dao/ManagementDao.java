@@ -1,8 +1,10 @@
 package edu.hniu.community.dao;
 
+import edu.hniu.community.domain.Notice;
 import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
+import edu.hniu.community.vo.NoticeVo;
 import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.QuestionTypeVo;
 import edu.hniu.community.vo.userAndRoleListVo;
@@ -89,4 +91,11 @@ public interface ManagementDao {
      * @return
      */
     int addTag(QuestionTypeVo questionTypeVo);
+
+    /**
+     * 发布广告
+     * @param noticeVo
+     * @return
+     */
+    int publishAdvert(NoticeVo noticeVo);
 }

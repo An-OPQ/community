@@ -2,11 +2,13 @@ package edu.hniu.community.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import edu.hniu.community.domain.Notice;
 import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
 import edu.hniu.community.toolkit.MD5;
 import edu.hniu.community.toolkit.UpdateTokenByCookie;
+import edu.hniu.community.vo.NoticeVo;
 import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.QuestionTypeVo;
 import edu.hniu.community.vo.userAndRoleListVo;
@@ -127,5 +129,10 @@ public class ManagementController {
     @PostMapping("/addTag")
     public Object addTag(@RequestBody QuestionTypeVo questionTypeVo) {
         return managementService.addTag(questionTypeVo);
+    }
+
+    @PostMapping("/publishAdvert")
+    public Object publishAdvert(@RequestBody NoticeVo noticeVo){
+        return managementService.publishAdvert(noticeVo);
     }
 }

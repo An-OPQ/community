@@ -87,7 +87,7 @@
         delete from question_type where type_id=#{type_id}
     </delete>
 
-    <insert id="addTag" parameterType="edu.hniu.community.vo.QuestionListVo">
+    <insert id="addTag" parameterType="edu.hniu.community.vo.QuestionTypeVo">
         insert into question_type(type_id,
         <trim suffixOverrides=",">
             <if test="type_name!=null and type_name!=''">
@@ -108,4 +108,33 @@
         </trim>
         )
     </insert>
+
+    <insert id="publishAdvert" parameterType="edu.hniu.community.vo.NoticeVo">
+        insert into notice(id,
+        <trim suffixOverrides=",">
+            <if test="create_id!=null and create_id!=''">
+                create_id,
+            </if>
+            <if test="notice_content!=null and notice_content!=''">
+                notice_content,
+            </if>
+            <if test="create_time!=null">
+                create_time
+            </if>
+        </trim>
+        )values(default ,
+        <trim suffixOverrides=",">
+            <if test="create_id!=null and create_id!=''">
+                #{create_id},
+            </if>
+            <if test="notice_content!=null and notice_content!=''">
+                #{notice_content},
+            </if>
+            <if test="create_time!=null">
+                #{create_time}
+            </if>
+        </trim>
+        )
+    </insert>
+
 </mapper>

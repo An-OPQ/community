@@ -1,8 +1,10 @@
 package edu.hniu.community.service;
 
+import edu.hniu.community.domain.Notice;
 import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
+import edu.hniu.community.vo.NoticeVo;
 import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.QuestionTypeVo;
 import edu.hniu.community.vo.userAndRoleListVo;
@@ -90,4 +92,11 @@ public interface ManagementService {
      * @return
      */
     boolean addTag(QuestionTypeVo questionTypeVo);
+
+    /**
+     * 发布广告
+     * @param noticeVo
+     * @return
+     */
+    boolean publishAdvert(NoticeVo noticeVo);
 }

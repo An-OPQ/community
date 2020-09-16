@@ -1,10 +1,12 @@
 package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.ManagementDao;
+import edu.hniu.community.domain.Notice;
 import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.RoleInfo;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
+import edu.hniu.community.vo.NoticeVo;
 import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.QuestionTypeVo;
 import edu.hniu.community.vo.userAndRoleListVo;
@@ -111,5 +113,10 @@ public class ManagementServiceImpl implements ManagementService {
     @Override
     public boolean addTag(QuestionTypeVo questionTypeVo) {
         return managementDao.addTag(questionTypeVo)>0;
+    }
+
+    @Override
+    public boolean publishAdvert(NoticeVo noticeVo) {
+        return managementDao.publishAdvert(noticeVo)>0;
     }
 }

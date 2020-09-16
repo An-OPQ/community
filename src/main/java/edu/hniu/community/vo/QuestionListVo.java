@@ -1,5 +1,8 @@
 package edu.hniu.community.vo;
 
+/**
+ * @author jerry
+ */
 public class QuestionListVo {
 
     private long id;
