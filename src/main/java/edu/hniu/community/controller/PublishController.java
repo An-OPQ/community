@@ -79,5 +79,8 @@ public class PublishController {
         return publishService.lessLikeCount(id);
     }
 
-
+    @PostMapping("/updateQuestion")
+    public Object updateQuestion(@RequestBody Question question) {
+        return publishService.updateQuestion(question);
+    }
 }

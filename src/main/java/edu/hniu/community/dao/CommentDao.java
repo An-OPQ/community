@@ -1,6 +1,8 @@
 package edu.hniu.community.dao;
 
 import edu.hniu.community.domain.Comment;
+import edu.hniu.community.domain.Question;
+import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
 
 import java.util.List;
@@ -28,4 +30,11 @@ public interface CommentDao {
      * @return
      */
     List<UserInfo> getAllCommentByQuestion(long questionId);
+
+    /**
+     *  question的编辑
+     * @param id
+     * @return
+     */
+    Question getQuestionAndModel(long id);
 }

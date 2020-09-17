@@ -13,6 +13,9 @@
     <script src="./js/jquery-3.4.1.min.js"></script>
     <script src="./js/bootstrap.min.js" type="application/javascript"></script>
     <script src="./js/community.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="./wangEditor/wangEditor.min.css">
+    <script src="./wangEditor/wangEditor.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link href="./img/favicon.ico" rel="icon">
     <style>
         hr {
@@ -20,6 +23,17 @@
             margin-bottom: 20px;
             border: 0;
             border-top: 1px solid #eee;
+        }
+
+        .modal-dialog, .modal-content {
+            top: 10%;
+            width: 1000px;
+            height: 600px;
+            margin: 0 auto;
+        }
+
+        .modal-content label {
+            font-size: 14px;
         }
     </style>
 </head>
@@ -50,8 +64,9 @@
                 <!--编辑-->
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <a href="#" class="community-menu">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                    <a class="community-menu" href="#myModal" role="button" data-toggle="modal"
+                       data-target="#myModal">
+                        <span class=" glyphicon glyphicon-pencil" aria-hidden="true"> 编辑 </span>
                     </a>
                 </div>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -63,45 +78,44 @@
                 </h4>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
                 <div id="commentDescriptions">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments">
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object img-rounded"
-                                         src="">
-                                </a>
-                            </div>
-                            <div class="media-body" id="comment-body-3315">
-                                <h5 class="media-heading">
-                                    <span>瓦刀</span>
-                                </h5>
-                                <div>
-                                </div>
-                                <div class="menu">
-                                    <span class="glyphicon glyphicon-thumbs-up icon"></span>
-                                    <span data-id="3315" class="comment-icon">
-                                        <span class="glyphicon glyphicon-comment"></span>
-                                        <span>0</span>
-                                    </span>
-                                    <span class="pull-right">2020-08-13</span>
-                                </div>
-                                <!--二级评论-->
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments"
-                                     id="comment-3315">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" class="form-control" placeholder="评论一下……"
-                                               id="input-3315">
-                                        <button type="button" class="btn btn-success pull-right"
-                                                data-id="3315">评论
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<!--                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments">-->
+<!--                        <div class="media">-->
+<!--                            <div class="media-left">-->
+<!--                                <a href="#">-->
+<!--                                    <img class="media-object img-rounded"-->
+<!--                                         src="">-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="media-body" id="comment-body-3315">-->
+<!--                                <h5 class="media-heading">-->
+<!--                                    <span>瓦刀</span>-->
+<!--                                </h5>-->
+<!--                                <div>-->
+<!--                                </div>-->
+<!--                                <div class="menu">-->
+<!--                                    <span class="glyphicon glyphicon-thumbs-up icon"></span>-->
+<!--                                    <span data-id="3315" class="comment-icon">-->
+<!--                                        <span class="glyphicon glyphicon-comment"></span>-->
+<!--                                        <span>0</span>-->
+<!--                                    </span>-->
+<!--                                    <span class="pull-right">2020-08-13</span>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash;二级评论&ndash;&gt;-->
+<!--                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments"-->
+<!--                                     id="comment-3315">-->
+<!--                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">-->
+<!--                                        <input type="text" class="form-control" placeholder="评论一下……"-->
+<!--                                               id="input-3315">-->
+<!--                                        <button type="button" class="btn btn-success pull-right"-->
+<!--                                                data-id="3315">评论-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
-
             <!--回复输入框-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>
@@ -123,7 +137,7 @@
                     </div>
                     <input type="hidden" id="user_id" value="">
                     <input type="hidden" id="question_id" value="">
-                    <textarea class="form-control comment" rows="6" id="comment_content" value=""></textarea>
+                    <textarea class="form-control comment" rows="6" id="comment_content"></textarea>
                     <button class="btn btn-success btn-comment" id="commentSubmit">回复</button>
                 </div>
             </div>
@@ -177,6 +191,42 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myEditModalLabel">编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="select_model">选择板块:</label>
+                    <select class="select_model input-sm" id="select_model" style="margin-right: 300px; width: 150px;">
+                        <option value="1">科学技术</option>
+                        <option value="1">科学技术</option>
+                        <option value="1">科学技术</option>
+                    </select>
+                    <label for="title">标题:</label>
+                    <input id="edit_title" placeholder="请输入帖子标题，不超过30字" minlength="2" maxlength="30" class="input-sm"
+                           style="width: 400px;" value="">
+                </div>
+
+                <div class="form-group" id="edit_description">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+                </button>
+                <button type="button" id="btn_submit2" class="btn btn-primary" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>修改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="./js/footer.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script>
@@ -194,16 +244,19 @@
         })
     });
 
+    var params = window.location.search;
+    var id = params.substring(params.indexOf("=") + 1)
+    var titleVal
+    var descriptionVal
+
+    //加载question刷新到页面上
     function refresh() {
-        var params = window.location.search;
-        var id = params.substring(params.indexOf("=") + 1)
         $.ajax({
             url: "comment/getAllComment?id=" + id,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.log(response)
                 $("#author_id").empty().val(response[0].question.creatorid);
                 $("#title").empty().text(response[0].question.title);
                 $(".author").empty().text(response[0].accountName);
@@ -213,6 +266,8 @@
                 $("#createDate").empty().text(response[0].question.createDate);
                 $("#view_count").empty().text(response[0].question.viewCount);
                 $("#tag").empty().text(response[0].question.tag);
+                titleVal = response[0].question.title
+                descriptionVal = response[0].question.description
                 getAllCommentByQuestion();
                 updateViewCount();
             },
@@ -415,6 +470,92 @@
             })
         }
     }
+
+    //富文本编辑器,稍后整合
+    var E = window.wangEditor;
+    var editor = new E("#edit_description");
+    editor.customConfig.debug = true;
+    // 关闭粘贴内容中的样式
+    editor.customConfig.pasteFilterStyle = false;
+    // 忽略粘贴内容中的图片
+    editor.customConfig.pasteIgnoreImg = false;
+    // 上传图片到服务器
+    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+    //自定义上传图片事件
+    editor.customConfig.uploadImgHooks = {
+        before: function (xhr, editor, files) {
+        },
+        success: function (xhr, editor, result) {
+            console.log("上传成功");
+        },
+        fail: function (xhr, editor, result) {
+            console.log("上传失败,原因是" + result);
+        },
+        error: function (xhr, editor) {
+            console.log("上传出错");
+        },
+        timeout: function (xhr, editor) {
+            console.log("上传超时");
+        }
+    }
+    editor.create();
+
+    $(".community-menu").click(function () {
+        $.ajax({
+            url: "management/getAllTagName",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                $("#edit_title").empty().val(titleVal);
+                editor.txt.html(descriptionVal);
+                var tabObj = $("#select_model");
+                tabObj.empty();
+                var tabStr = "";
+                for (let i = 0; i < response.length; i++) {
+                    var tag = response[i]
+                    tabStr += "<option value=" + tag.typeId + ">" + tag.typeName + "</option>"
+                }
+                tabObj.append(tabStr)
+            },
+            error: function (response) {
+            }
+        })
+    })
+
+    $("#btn_submit2").click(function () {
+        var titleVal = $("#edit_title").val();
+        var descriptionVal = editor.txt.html();
+        var date = new Date();
+        var Month = date.getMonth() + 1;
+        var createDate = date.getFullYear() + "-" + Month + "-" + date.getDate();
+        var typeid = $("#select_model option:selected").val()
+        var json = {
+            id: id,
+            title: titleVal,
+            description: descriptionVal,
+            typeid: typeid,
+            createDate: createDate
+        }
+        var jsonStr = JSON.stringify(json)
+        $.ajax({
+            url: "publish/updateQuestion",
+            type: "POST",
+            data: jsonStr,
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+               if (response){
+                   swal({
+                       text: "修改成功",
+                       icon: "success",
+                   });
+                   refresh()
+               }
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    })
 </script>
 </body>
 </html>

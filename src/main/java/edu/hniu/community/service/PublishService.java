@@ -57,4 +57,11 @@ public interface PublishService {
      * @return
      */
     boolean lessLikeCount(Integer id);
+
+    /**
+     * 更新question
+     * @param question
+     * @return
+     */
+    boolean updateQuestion(Question question);
 }

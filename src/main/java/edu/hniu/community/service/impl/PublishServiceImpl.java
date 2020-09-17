@@ -51,4 +51,9 @@ public class PublishServiceImpl implements PublishService {
     public List<Question> getPublishMessageByModel(int modelId) {
         return publishDao.getPublishMessageByModel(modelId);
     }
+
+    @Override
+    public boolean updateQuestion(Question question) {
+        return publishDao.updateQuestion(question)>0;
+    }
 }

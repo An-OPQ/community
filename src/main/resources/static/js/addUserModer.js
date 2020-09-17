@@ -29,7 +29,6 @@ document.writeln("                    <div class=\"form-group\">");
 document.writeln("                        <label for=\"addzu\">管理权限</label>");
 document.writeln("                        <select id=\"addzu\" name='addzu' class=\"form-control\">");
 document.writeln("                            <option value=\"普通用户\">普通用户</option>");
-// document.writeln("                            <option value=\"管理员\">管理员</option>");
 document.writeln("                        </select>");
 document.writeln("                    </div>");
 document.writeln("                </form>");

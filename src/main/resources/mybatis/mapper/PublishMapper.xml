@@ -94,4 +94,23 @@
     <update id="lessLikeCount" parameterType="Integer">
         UPDATE comment	set likeCount=likeCount-1 WHERE id=#{id}
     </update>
+
+    <update id="updateQuestion" parameterType="Question">
+        update question
+        <set>
+            <if test="title!=null and title!=''">
+                title=#{title},
+            </if>
+            <if test="description!=null and description!=''">
+                description=#{description},
+            </if>
+            <if test="typeid!=null and typeid!=''">
+                typeid=#{typeid},
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                createDate=#{createDate},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>

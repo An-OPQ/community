@@ -13,6 +13,16 @@ public class Question {
     private long likeCount;
     private long typeid;
 
+    private QuestionType questionType;
+
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
+    }
+
     public long getId() {
         return id;
     }
@@ -83,5 +93,21 @@ public class Question {
 
     public void setTypeid(long typeid) {
         this.typeid = typeid;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", creatorid=" + creatorid +
+                ", createDate='" + createDate + '\'' +
+                ", commentCount=" + commentCount +
+                ", viewCount=" + viewCount +
+                ", likeCount=" + likeCount +
+                ", typeid=" + typeid +
+                ", questionType=" + questionType +
+                '}';
     }
 }

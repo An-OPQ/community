@@ -59,4 +59,11 @@ public interface PublishDao {
      * @return
      */
     int lessLikeCount(Integer id);
+
+    /**
+     * 更新question
+     * @param question
+     * @return
+     */
+    int updateQuestion(Question question);
 }
