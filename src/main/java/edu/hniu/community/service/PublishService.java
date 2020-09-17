@@ -5,13 +5,16 @@ import edu.hniu.community.vo.PublishSubmitVo;
 
 import java.util.List;
 
+/**
+ * @author jerry
+ */
 public interface PublishService {
     /**
      * 帖子发布
-     * @param publishSubmitVo
+     * @param question
      * @return
      */
-    boolean publishMessage(PublishSubmitVo publishSubmitVo);
+    boolean publishMessage(Question question);
 
     /**
      * 查询所有帖子

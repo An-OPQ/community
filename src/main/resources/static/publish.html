@@ -53,23 +53,7 @@
                     <select id="tag" class="form-control">
                         <option value="0">科学技术</option>
                     </select>
-                    <div id="select-tag" class="publish-tag-tab">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation">
-                                <a aria-controls="home" role="tab" data-toggle="tab"></a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel">
-                                    <span>
-                                        <span>
-                                            <span class="community-tag">
-                                            </span>
-                                        </span>
-                                    </span>
-                            </div>
-                        </div>
-                    </div>
+                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 </div>
 
                 <div class="container-fluid main ">
@@ -95,19 +79,10 @@
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script>
-    var email;
-    $(function () {
-        $.ajax({
-            url: "user/getSession",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            success: function (response) {
-                email = response;
-            }
-        })
-        getAllTag();
-    })
+    var params=window.location.search;
+    var id=params.substring(params.indexOf("=")+1)
 
+    getAllTag();
     $("#submit").click(function () {
         var titleVal = $("#title").val();
         var descriptionVal = editor.txt.html();
@@ -116,7 +91,7 @@
         var createDate = date.getFullYear() + "-" + Month + "-" + date.getDate();
         var typeid = $("#tag option:selected").val()
         var json = {
-            email: email,
+            creatorid: id,
             title: titleVal,
             description: descriptionVal,
             typeid: typeid,

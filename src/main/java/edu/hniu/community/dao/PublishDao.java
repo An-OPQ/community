@@ -10,10 +10,10 @@ public interface PublishDao {
     /**
      * 帖子发布
      *
-     * @param publishSubmitVo
+     * @param question
      * @return
      */
-    int publishMessage(PublishSubmitVo publishSubmitVo);
+    int publishMessage(Question question);
 
 
     /**

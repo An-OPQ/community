@@ -20,7 +20,7 @@ document.writeln("            </form>");
 document.writeln("            <ul class=\'nav navbar-nav model\' id=\'model\'>");
 document.writeln("            </ul>");
 document.writeln("            <ul class=\'nav navbar-nav navbar-right\'>");
-document.writeln("                <li><a id=\'publish\' href=\'publish.html\'>发帖</a></li>");
+document.writeln("                <li><a id=\'publish\' href=\'#\'>发帖</a></li>");
 document.writeln("                <li class=\'dropdown\'>");
 document.writeln("                    <a id=\'dLabel\' href=\'#\' type=\'button\' data-toggle=\'dropdown\' aria-haspopup=\'true\'");
 document.writeln("                        aria-expanded=\'false\'>admin<span class=\'caret\'></span>");
@@ -98,3 +98,36 @@ function initModel() {
 function jumpToModel(typeId) {
     window.location.href="main_Model.html?typeId="+typeId;
 }
+var email;
+function getSession () {
+    $.ajax({
+        async:false,
+        url: "user/getSession",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        success: function (response) {
+            email = response;
+            jumpToAdvertmanager(email)
+        }
+    })
+}
+getSession()
+var id
+function jumpToAdvertmanager(email) {
+    $.ajax({
+        async:false,//设置同步：代码没有执行完就 不执行下面的代码
+        url: "user/getIdByEmail?email=" + email,
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        success: function (response) {
+            id = response;
+        }
+    })
+}
+$(".advertmanager").click(function () {
+    window.location.href="advertmanager.html?id="+id
+})
+
+$("#publish").click(function (){
+    window.location.href="publish.html?id="+id;
+})

@@ -32,11 +32,9 @@ public class PublishController {
     private int questionPageSize;
 
     @PostMapping("/submit")
-    public Object publishMessage(@RequestBody PublishSubmitVo publishSubmitVo) {
-        //根据Session中获取的email的值，来查找id。再把id插入question的createId列中。
-        long userId = userInfoService.getIdByEmail(publishSubmitVo.getEmail());
-        publishSubmitVo.setCreatorid(userId);
-        return publishService.publishMessage(publishSubmitVo);
+    public Object publishMessage(@RequestBody Question question) {
+        System.out.println(question);
+        return publishService.publishMessage(question);
     }
 
     /**
