@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/community.css">
     <link rel="stylesheet" href="./css/config.css">
+    <link href="./img/favicon.ico" rel="icon">
 
     <script src="./js/jquery-3.4.1.min.js"></script>
     <script src="./js/bootstrap.min.js" type="application/javascript"></script>
@@ -26,33 +27,6 @@
                         <p class="media-heading">
                             <span>小Y 回复了问题 </span>
                             <a href="/notification/3206">哈哈，b站视频过来的</a>
-
-                        </p>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-body">
-                        <p class="media-heading">
-                            <span>fathyman 回复了问题 </span>
-                            <a href="/notification/3167">哈哈，b站视频过来的</a>
-
-                        </p>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-body">
-                        <p class="media-heading">
-                            <span>For Code 回复了问题 </span>
-                            <a href="/notification/3156">哈哈，b站视频过来的</a>
-
-                        </p>
-                    </div>
-                </div>
-                <div class="media">
-                    <div class="media-body">
-                        <p class="media-heading">
-                            <span>null 回复了问题 </span>
-                            <a href="/notification/3150">哈哈，b站视频过来的</a>
 
                         </p>
                     </div>
@@ -100,7 +74,6 @@
     function initTable(response) {
         var mediasObj = $("#medias");
         mediasObj.empty();
-        $(".badge").html(response.length)
         for (let i = 0; i < response.length; i++) {
             var mediaStr = "";
             var media = response[i];
@@ -127,6 +100,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (response) {
                 initTable(response.list)
+                $(".badge").html(response.total)
                 $(".pagination").empty();
                 var spliteStr = "";
                 //判断是否为首页

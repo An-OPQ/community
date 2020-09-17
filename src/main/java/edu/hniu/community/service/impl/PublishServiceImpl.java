@@ -3,12 +3,14 @@ package edu.hniu.community.service.impl;
 import edu.hniu.community.dao.PublishDao;
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.service.PublishService;
-import edu.hniu.community.vo.PublishSubmitVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author jerry
+ */
 @Service
 public class PublishServiceImpl implements PublishService {
 

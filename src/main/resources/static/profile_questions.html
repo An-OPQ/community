@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>求知论坛</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link href="./img/favicon.ico" rel="icon">
     <link rel="stylesheet" href="./css/community.css">
     <link rel="stylesheet" href="./css/config.css">
     <script src="./js/jquery-3.4.1.min.js"></script>
@@ -89,7 +90,6 @@
         var mediaStr = "";
         for (let i = 0; i < response.length; i++) {
             var question = response[i];
-            commentCountVal += question.question.commentCount;
             mediaStr += "<div class=\"media\">\n" +
                 "    <div class=\"media-left\">\n" +
                 "        <a href=\"#\">\n" +
@@ -111,7 +111,6 @@
                 "</div>"
         }
         mediaObj.append(mediaStr);
-        $(".badge").html(commentCountVal)
     }
 
     function refresh(pageNum) {
@@ -125,6 +124,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (response) {
                 initTable(response.list)
+                $(".badge").html(response.total)
                 $(".pagination").empty();
                 var spliteStr = "";
                 //判断是否为首页
