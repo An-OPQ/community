@@ -248,6 +248,7 @@
     var id = params.substring(params.indexOf("=") + 1)
     var titleVal
     var descriptionVal
+    var ModelVal
 
     //加载question刷新到页面上
     function refresh() {
@@ -268,6 +269,7 @@
                 $("#tag").empty().text(response[0].question.tag);
                 titleVal = response[0].question.title
                 descriptionVal = response[0].question.description
+                ModelVal = response[0].question.typeid
                 getAllCommentByQuestion();
                 updateViewCount();
             },
@@ -516,6 +518,7 @@
                     tabStr += "<option value=" + tag.typeId + ">" + tag.typeName + "</option>"
                 }
                 tabObj.append(tabStr)
+                $("#select_model").find("option[value="+ModelVal+"]").attr("selected",true)
             },
             error: function (response) {
             }
