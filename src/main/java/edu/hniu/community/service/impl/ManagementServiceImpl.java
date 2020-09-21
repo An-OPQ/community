@@ -119,4 +119,14 @@ public class ManagementServiceImpl implements ManagementService {
     public boolean publishAdvert(NoticeVo noticeVo) {
         return managementDao.publishAdvert(noticeVo)>0;
     }
+
+    @Override
+    public Notice getAdvert() {
+        return managementDao.getAdvert();
+    }
+
+    @Override
+    public boolean updateAdvert(NoticeVo noticeVo) {
+        return managementDao.updateAdvert(noticeVo)>0;
+    }
 }

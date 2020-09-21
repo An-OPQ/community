@@ -98,4 +98,17 @@ public interface ManagementDao {
      * @return
      */
     int publishAdvert(NoticeVo noticeVo);
+
+    /**
+     * 查询最近一条通知
+     * @return
+     */
+    Notice getAdvert();
+
+    /**
+     * 更新公告
+     * @param noticeVo
+     * @return
+     */
+    int updateAdvert(NoticeVo noticeVo);
 }

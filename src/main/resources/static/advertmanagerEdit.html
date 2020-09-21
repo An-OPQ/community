@@ -28,8 +28,8 @@
             <!--左列表 -->
             <div class="col-md-3">
                 <div class="list-group">
-                    <a href="#" class="list-group-item  active">发布公告</a>
-                    <a href="#" class="list-group-item advertmanagerEdit">修改广告</a>
+                    <a href="#" class="list-group-item  advert">发布公告</a>
+                    <a href="#" class="list-group-item  active">修改公告</a>
                     <a href="#" class="list-group-item ">发布广告</a>
                 </div>
             </div>
@@ -39,8 +39,8 @@
                     <h4>广告管理</h4>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><a href="#">发布公告</a></li>
-                    <li role="presentation" class="advertmanagerEdit"><a href="#">发布公告</a></li>
+                    <li role="presentation" class="advert"><a href="#">发布公告</a></li>
+                    <li role="presentation" class="active"><a href="#">修改公告</a></li>
                     <li role="presentation"><a href="#">发布广告</a></li>
                 </ul>
                 <div class="tab">
@@ -49,7 +49,7 @@
                         <div id="description"></div>
                     </div>
                     <div class="checkbox">
-                        <button type="button" class="btn btn-default  pull-right">发布公告</button>
+                        <button type="button" class="btn btn-default  pull-right">修改公告</button>
                     </div>
                 </div>
             </div>
@@ -71,17 +71,24 @@
 <script>
     $(".advertmanager").addClass("active");
     var params = window.location.search;
-    var id=params.substring(params.indexOf("=") + 1)
-
+    var id = params.substring(params.indexOf("=") + 1)
     $(function () {
+        $.ajax({
+            url: "management/getAdvert",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                editor.txt.html(response.noticeContent)
+            }
+        })
         $.toastr.config({
             time: 2000,
             size: 'lg',
             position: 'top-center',
         });
     })
-    $(".advertmanagerEdit").click(function (){
-        window.location.href="advertmanagerEdit.html?id="+id
+    $(".advert").click(function (){
+        window.location.href="advertmanager.html?id="+id;
     })
 
     $(".tab button").click(function () {
@@ -94,8 +101,8 @@
         }
         var jsonStr = JSON.stringify(json)
         $.ajax({
-            url: "management/publishAdvert",
-            type: "POST",
+            url: "management/updateAdvert",
+            type: "PUT",
             data: jsonStr,
             contentType: "application/json;charset=utf-8",
             success: function (response) {

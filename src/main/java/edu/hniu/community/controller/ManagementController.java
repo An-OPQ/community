@@ -132,7 +132,17 @@ public class ManagementController {
     }
 
     @PostMapping("/publishAdvert")
-    public Object publishAdvert(@RequestBody NoticeVo noticeVo){
+    public Object publishAdvert(@RequestBody NoticeVo noticeVo) {
         return managementService.publishAdvert(noticeVo);
+    }
+
+    @GetMapping("/getAdvert")
+    public Object getAdvert() {
+        return managementService.getAdvert();
+    }
+
+    @PutMapping("/updateAdvert")
+    public Object updateAdvert(@RequestBody NoticeVo noticeVo){
+        return  managementService.updateAdvert(noticeVo);
     }
 }

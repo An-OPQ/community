@@ -78,42 +78,42 @@
                 </h4>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
                 <div id="commentDescriptions">
-<!--                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments">-->
-<!--                        <div class="media">-->
-<!--                            <div class="media-left">-->
-<!--                                <a href="#">-->
-<!--                                    <img class="media-object img-rounded"-->
-<!--                                         src="">-->
-<!--                                </a>-->
-<!--                            </div>-->
-<!--                            <div class="media-body" id="comment-body-3315">-->
-<!--                                <h5 class="media-heading">-->
-<!--                                    <span>瓦刀</span>-->
-<!--                                </h5>-->
-<!--                                <div>-->
-<!--                                </div>-->
-<!--                                <div class="menu">-->
-<!--                                    <span class="glyphicon glyphicon-thumbs-up icon"></span>-->
-<!--                                    <span data-id="3315" class="comment-icon">-->
-<!--                                        <span class="glyphicon glyphicon-comment"></span>-->
-<!--                                        <span>0</span>-->
-<!--                                    </span>-->
-<!--                                    <span class="pull-right">2020-08-13</span>-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash;二级评论&ndash;&gt;-->
-<!--                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments"-->
-<!--                                     id="comment-3315">-->
-<!--                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">-->
-<!--                                        <input type="text" class="form-control" placeholder="评论一下……"-->
-<!--                                               id="input-3315">-->
-<!--                                        <button type="button" class="btn btn-success pull-right"-->
-<!--                                                data-id="3315">评论-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="media-object img-rounded"
+                                         src="">
+                                </a>
+                            </div>
+                            <div class="media-body" id="comment-body-3315">
+                                <h5 class="media-heading">
+                                    <span>瓦刀</span>
+                                </h5>
+                                <div>
+                                </div>
+                                <div class="menu">
+                                    <span class="glyphicon glyphicon-thumbs-up icon"></span>
+                                    <span data-id="3315" class="comment-icon">
+                                        <span class="glyphicon glyphicon-comment"></span>
+                                        <span>0</span>
+                                    </span>
+                                    <span class="pull-right">2020-08-13</span>
+                                </div>
+                                <!--二级评论-->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments"
+                                     id="comment-3315">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="评论一下……"
+                                               id="input-3315">
+                                        <button type="button" class="btn btn-success pull-right"
+                                                data-id="3315">评论
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!--回复输入框-->
@@ -156,7 +156,7 @@
                     </div>
                     <div class="media-body">
                         <h5 class="media-heading">
-                            <span class="author">wanglei</span>
+                            <span class="author">author</span>
                         </h5>
                     </div>
                 </div>
@@ -178,19 +178,11 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4>赞助商家</h4>
                 <a href="#" class="community-tag">阿里巴巴</a>
-                <a href="#" class="community-tag">javascript</a>
-                <a href="#" class="community-tag">爱美食</a>
-                <a href="#" class="community-tag">好丽友</a>
-                <a href="#" class="community-tag">css</a>
-                <a href="#" class="community-tag">XXX</a>
-                <a href="#" class="community-tag">XXX</a>
-                <a href="#" class="community-tag">html5</a>
-                <a href="#" class="community-tag">XXX</a>
-                <a href="#" class="community-tag">XXX</a>
             </div>
         </div>
     </div>
 </div>
+<!--编辑弹出框-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -204,16 +196,12 @@
                     <label for="select_model">选择板块:</label>
                     <select class="select_model input-sm" id="select_model" style="margin-right: 300px; width: 150px;">
                         <option value="1">科学技术</option>
-                        <option value="1">科学技术</option>
-                        <option value="1">科学技术</option>
                     </select>
                     <label for="title">标题:</label>
                     <input id="edit_title" placeholder="请输入帖子标题，不超过30字" minlength="2" maxlength="30" class="input-sm"
                            style="width: 400px;" value="">
                 </div>
-
                 <div class="form-group" id="edit_description">
-
                 </div>
             </div>
             <div class="modal-footer">
@@ -384,7 +372,16 @@
                         "                   </span>\n" +
                         "                   <span class=\"pull-right\">" + comment.comment.commentDate + "</span>\n" +
                         "               </div>\n" +
-                        "           </div>\n" +
+                        "          <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments\"\n" +
+                        "               id=\"comment-3315\">\n" +
+                        "              <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n" +
+                        "                  <input type=\"text\" class=\"form-control\" placeholder=\"评论一下……\"\n" +
+                        "                         id=\"input-3315\">\n" +
+                        "                  <button type=\"button\" class=\"btn btn-success pull-right\"\n" +
+                        "                          data-id=\"3315\">评论\n" +
+                        "                  </button>\n" +
+                        "              </div>\n" +
+                        "          </div>" + "           </div>\n" +
                         "         </div>\n" +
                         "     </div>\n" +
                         " </div>"
@@ -432,46 +429,46 @@
     }
 
 
-    function LikeCount(obj) {
-        var id = $(obj).find("input").val();
-        if ($(obj).find(".icon").css("color") == 'rgb(153, 153, 153)') {
-            $.ajax({
-                url: "publish/addLikeCount?id=" + id,
-                type: "PUT",
-                contentType: "application/json;charset=utf-8",
-                success: function (response) {
-                    if (response) {
-                        var cLikeCount = $(obj).find("#cLikeCount").html();
-                        var count = parseInt(cLikeCount) + 1;
-                        $(obj).find("#cLikeCount").html(count);
-                        $(obj).find(".icon").css("color", 'rgb(255, 0, 0)')
-                    }
-
-                },
-                error: function (response) {
-                    console.error(response)
-                }
-            })
-        } else if ($(obj).find(".icon").css("color") == 'rgb(255, 0, 0)') {
-            $.ajax({
-                url: "publish/lessLikeCount?id=" + id,
-                type: "PUT",
-                contentType: "application/json;charset=utf-8",
-                success: function (response) {
-                    if (response) {
-                        var cLikeCount = $(obj).find("#cLikeCount").html();
-                        var count = parseInt(cLikeCount) - 1;
-                        $(obj).find("#cLikeCount").html(count);
-                        $(obj).find(".icon").css("color", 'rgb(153, 153, 153)')
-                    }
-
-                },
-                error: function (response) {
-                    console.error(response)
-                }
-            })
-        }
-    }
+    // function LikeCount(obj) {
+    //     var id = $(obj).find("input").val();
+    //     if ($(obj).find(".icon").css("color") == 'rgb(153, 153, 153)') {
+    //         $.ajax({
+    //             url: "publish/addLikeCount?id=" + id,
+    //             type: "PUT",
+    //             contentType: "application/json;charset=utf-8",
+    //             success: function (response) {
+    //                 if (response) {
+    //                     var cLikeCount = $(obj).find("#cLikeCount").html();
+    //                     var count = parseInt(cLikeCount) + 1;
+    //                     $(obj).find("#cLikeCount").html(count);
+    //                     $(obj).find(".icon").css("color", 'rgb(255, 0, 0)')
+    //                 }
+    //
+    //             },
+    //             error: function (response) {
+    //                 console.error(response)
+    //             }
+    //         })
+    //     } else if ($(obj).find(".icon").css("color") == 'rgb(255, 0, 0)') {
+    //         $.ajax({
+    //             url: "publish/lessLikeCount?id=" + id,
+    //             type: "PUT",
+    //             contentType: "application/json;charset=utf-8",
+    //             success: function (response) {
+    //                 if (response) {
+    //                     var cLikeCount = $(obj).find("#cLikeCount").html();
+    //                     var count = parseInt(cLikeCount) - 1;
+    //                     $(obj).find("#cLikeCount").html(count);
+    //                     $(obj).find(".icon").css("color", 'rgb(153, 153, 153)')
+    //                 }
+    //
+    //             },
+    //             error: function (response) {
+    //                 console.error(response)
+    //             }
+    //         })
+    //     }
+    // }
 
     //富文本编辑器,稍后整合
     var E = window.wangEditor;
@@ -518,7 +515,7 @@
                     tabStr += "<option value=" + tag.typeId + ">" + tag.typeName + "</option>"
                 }
                 tabObj.append(tabStr)
-                $("#select_model").find("option[value="+ModelVal+"]").attr("selected",true)
+                $("#select_model").find("option[value=" + ModelVal + "]").attr("selected", true)
             },
             error: function (response) {
             }
@@ -546,13 +543,13 @@
             data: jsonStr,
             contentType: "application/json;charset=utf-8",
             success: function (response) {
-               if (response){
-                   swal({
-                       text: "修改成功",
-                       icon: "success",
-                   });
-                   refresh()
-               }
+                if (response) {
+                    swal({
+                        text: "修改成功",
+                        icon: "success",
+                    });
+                    refresh()
+                }
             },
             error: function (response) {
                 console.log(response)
