@@ -17,7 +17,6 @@
         .nav-tabs {
             margin-bottom: 30px;
         }
-
         .notice {
             color: #999;
             background-color: #d9edf7;
@@ -29,7 +28,6 @@
             border-radius: 15px;
             font-size: 14px;
         }
-
         .notice:hover {
             color: #999;
             background-color: #d9edf7;
@@ -103,7 +101,7 @@
                         <br>
                         <h3><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> 公告</h3>
                         <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="community-tag notice">
+                        <div class="community-tag notice img-thumbnail">
                         </div>
                     </div>
                 </div>
@@ -118,7 +116,7 @@
                     <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 side">
                         <h4>广告推广</h4>
-                        <img class="img-thumbnail advertImg" src="" >
+                        <img class="img-thumbnail advertImg" src="">
                     </div>
                 </div>
             </div>
@@ -129,7 +127,16 @@
 <!--加载广告-->
 <script src="./js/getAdvert.js" type="text/javascript"></script>
 <script>
-    sreachAllQuestion(1)
+    var $search="";
+    sreachAllQuestion(1,$search)
+
+    /**
+     * 搜索
+     */
+    $("#searchSubmit").click(function () {
+        var $search= $("#search").val();
+        sreachAllQuestion(1,$search)
+    })
 
     function initTable(response) {
         var tbodyObj = $("#tbody")
@@ -163,13 +170,13 @@
         tbodyObj.append(bodyStr);
     }
 
-    function sreachAllQuestion(pageNum) {
+    function sreachAllQuestion(pageNum,searchVal) {
         var pageNo = 1;
         if (pageNum != undefined) {
             pageNo = pageNum;
         }
         $.ajax({
-            url: "publish/getPublishMessage?pageNo=" + pageNo,
+            url: "publish/getPublishMessage?pageNo=" + pageNo+"&searchVal="+searchVal+"",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -233,6 +240,14 @@
                 $notice.append(Obj);
             }
         })
+    })
+
+    /**
+     * 搜索
+     */
+    $("#searchSubmit").click(function () {
+        var $search= $("#search").val();
+        sreachAllQuestion(1,$search)
     })
 </script>
 </body>

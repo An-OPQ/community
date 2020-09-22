@@ -8,7 +8,6 @@ $(function () {
         type: "GET",
         contentType: "application/json;charset=utf-8",
         success: function (response) {
-            console.log(response)
             if (response != null && response !== '') {
                 $sponsor.html(response.advertName);
                 $advertImg.attr("src", "static/upload/" + response.pictureAddress + "")
