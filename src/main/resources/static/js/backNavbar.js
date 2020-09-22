@@ -8,13 +8,13 @@ document.writeln("					<span class=\'icon-bar\'></span>");
 document.writeln("					<span class=\'icon-bar\'></span>");
 document.writeln("					<span class=\'icon-bar\'></span>");
 document.writeln("				</button>");
-document.writeln("				<a class=\'navbar-brand\' href=\'backIndex.html\' >求知论坛管理</a>");
+document.writeln("				<a class=\'navbar-brand\' href=\'userManger.html\' >求知论坛管理</a>");
 document.writeln("			</div>");
 document.writeln("			<div class=\'collapse navbar-collapse\'>");
 document.writeln("				<ul class=\'nav navbar-nav navbar-left text-center\' id=\'navbarObj\'>");
-document.writeln("					<li class=\'backIndex\'>");
-document.writeln("						<a href=\'backIndex.html\'>");
-document.writeln("							<span class=\'glyphicon glyphicon-home\'></span>&nbsp;&nbsp;后台首页</a>");
+document.writeln("					<li  class=\'contentManager\'>");
+document.writeln("						<a href=\'contentManager.html\'>");
+document.writeln("							<span class=\'glyphicon glyphicon-folder-open\'></span>&nbsp;&nbsp;内容管理</a>");
 document.writeln("					</li>");
 document.writeln("					<li class=\'userManger\'>");
 document.writeln("						<a href=\'userManger.html\'>");
@@ -23,10 +23,6 @@ document.writeln("					</li>");
 document.writeln("					<li class=\'adminManger\'>");
 document.writeln("						<a href=\'adminManger.html\'>");
 document.writeln("							<span class=\'glyphicon glyphicon-user\'></span>&nbsp;&nbsp;管理员管理</a>");
-document.writeln("					</li>");
-document.writeln("					<li  class=\'contentManager\'>");
-document.writeln("						<a href=\'contentManager.html\'>");
-document.writeln("							<span class=\'glyphicon glyphicon-folder-open\'></span>&nbsp;&nbsp;内容管理</a>");
 document.writeln("					</li>");
 document.writeln("					<li class=\'tagManager\'>");
 document.writeln("						<a href=\'tagManager.html\'>");
@@ -94,9 +90,10 @@ $('#logout').click(function () {
     })
 })
 var email;
-function getSession () {
+
+function getSession() {
     $.ajax({
-        async:false,
+        async: false,
         url: "user/getSession",
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -106,12 +103,14 @@ function getSession () {
         }
     })
 }
+
 getSession()
 
 var id
+
 function jumpToAdvertmanager(email) {
     $.ajax({
-        async:false,//设置同步：代码没有执行完就 不执行下面的代码
+        async: false,//设置同步：代码没有执行完就 不执行下面的代码
         url: "user/getIdByEmail?email=" + email,
         type: "GET",
         contentType: "application/json;charset=utf-8",
@@ -120,6 +119,7 @@ function jumpToAdvertmanager(email) {
         }
     })
 }
+
 $(".advertmanager").click(function () {
-    window.location.href="advertmanager.html?id="+id
+    window.location.href = "advertmanager.html?id=" + id
 })
