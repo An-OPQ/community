@@ -179,4 +179,9 @@ public class UserController {
     public Object getNotice() {
         return userInfoService.getNotice();
     }
+
+    @GetMapping("/getAdvert")
+    public Object getAdvert() {
+        return userInfoService.getAdvert();
+    }
 }

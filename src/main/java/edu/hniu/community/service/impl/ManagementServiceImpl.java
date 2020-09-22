@@ -1,10 +1,7 @@
 package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.ManagementDao;
-import edu.hniu.community.domain.Notice;
-import edu.hniu.community.domain.QuestionType;
-import edu.hniu.community.domain.RoleInfo;
-import edu.hniu.community.domain.UserInfo;
+import edu.hniu.community.domain.*;
 import edu.hniu.community.service.ManagementService;
 import edu.hniu.community.vo.NoticeVo;
 import edu.hniu.community.vo.QuestionListVo;
@@ -116,17 +113,22 @@ public class ManagementServiceImpl implements ManagementService {
     }
 
     @Override
-    public boolean publishAdvert(NoticeVo noticeVo) {
-        return managementDao.publishAdvert(noticeVo)>0;
+    public boolean publishNotice(NoticeVo noticeVo) {
+        return managementDao.publishNotice(noticeVo)>0;
     }
 
     @Override
-    public Notice getAdvert() {
-        return managementDao.getAdvert();
+    public Notice getNotice() {
+        return managementDao.getNotice();
     }
 
     @Override
-    public boolean updateAdvert(NoticeVo noticeVo) {
-        return managementDao.updateAdvert(noticeVo)>0;
+    public boolean updateNotice(NoticeVo noticeVo) {
+        return managementDao.updateNotice(noticeVo)>0;
+    }
+
+    @Override
+    public boolean publishAdvert(Advert advert) {
+        return managementDao.publishAdvert(advert)>0;
     }
 }

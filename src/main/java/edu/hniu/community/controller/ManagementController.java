@@ -2,6 +2,7 @@ package edu.hniu.community.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import edu.hniu.community.domain.Advert;
 import edu.hniu.community.domain.Notice;
 import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
@@ -131,18 +132,23 @@ public class ManagementController {
         return managementService.addTag(questionTypeVo);
     }
 
+    @PostMapping("/publishNotice")
+    public Object publishNotice(@RequestBody NoticeVo noticeVo) {
+        return managementService.publishNotice(noticeVo);
+    }
+
+    @GetMapping("/getNotice")
+    public Object getNotice() {
+        return managementService.getNotice();
+    }
+
+    @PutMapping("/updateNotice")
+    public Object updateNotice(@RequestBody NoticeVo noticeVo){
+        return  managementService.updateNotice(noticeVo);
+    }
+
     @PostMapping("/publishAdvert")
-    public Object publishAdvert(@RequestBody NoticeVo noticeVo) {
-        return managementService.publishAdvert(noticeVo);
-    }
-
-    @GetMapping("/getAdvert")
-    public Object getAdvert() {
-        return managementService.getAdvert();
-    }
-
-    @PutMapping("/updateAdvert")
-    public Object updateAdvert(@RequestBody NoticeVo noticeVo){
-        return  managementService.updateAdvert(noticeVo);
+    public Object publishAdvert(@RequestBody Advert advert){
+        return  managementService.publishAdvert(advert);
     }
 }

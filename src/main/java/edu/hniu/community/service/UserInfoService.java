@@ -1,9 +1,6 @@
 package edu.hniu.community.service;
 
-import edu.hniu.community.domain.Notice;
-import edu.hniu.community.domain.Question;
-import edu.hniu.community.domain.QuestionType;
-import edu.hniu.community.domain.UserInfo;
+import edu.hniu.community.domain.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -115,4 +112,10 @@ public interface UserInfoService {
      * @return
      */
     Notice getNotice();
+
+    /**
+     * 查询最近的一条广告
+     * @return
+     */
+    Advert getAdvert();
 }

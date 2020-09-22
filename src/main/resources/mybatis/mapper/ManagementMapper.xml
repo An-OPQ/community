@@ -109,7 +109,7 @@
         )
     </insert>
 
-    <insert id="publishAdvert" parameterType="edu.hniu.community.vo.NoticeVo">
+    <insert id="publishNotice" parameterType="edu.hniu.community.vo.NoticeVo">
         insert into notice(id,
         <trim suffixOverrides=",">
             <if test="create_id!=null and create_id!=''">
@@ -137,11 +137,11 @@
         )
     </insert>
 
-    <select id="getAdvert" resultType="Notice">
+    <select id="getNotice" resultType="Notice">
         select * from notice order by create_time DESC  limit 1
     </select>
 
-    <update id="updateAdvert" parameterType="edu.hniu.community.vo.NoticeVo">
+    <update id="updateNotice" parameterType="edu.hniu.community.vo.NoticeVo">
         update notice
         <set>
             <if test="notice_content!=null and notice_content!=''">
@@ -153,4 +153,44 @@
         </set>
         where create_id=#{create_id}
     </update>
+
+    <insert id="publishAdvert" parameterType="Advert">
+        insert into advert(id,
+        <trim suffixOverrides=",">
+            <if test="createId!=''and createId!=null">
+                createId,
+            </if>
+            <if test="pictureAddress!=''and pictureAddress!=null">
+                pictureAddress,
+            </if>
+            <if test="advertURL!=''and advertURL!=null">
+                advertURL,
+            </if>
+            <if test="advertName!=''and advertName!=null">
+                advertName,
+            </if>
+            <if test="createTime!=null">
+                createTime
+            </if>
+        </trim>
+        )values(default,
+        <trim suffixOverrides=",">
+            <if test="createId!=''and createId!=null">
+                #{createId},
+            </if>
+            <if test="pictureAddress!=''and pictureAddress!=null">
+                #{pictureAddress},
+            </if>
+            <if test="advertURL!=''and advertURL!=null">
+                #{advertURL},
+            </if>
+            <if test="advertName!=''and advertName!=null">
+                #{advertName},
+            </if>
+            <if test="createTime!=null">
+                #{createTime}
+            </if>
+        </trim>
+        )
+    </insert>
 </mapper>

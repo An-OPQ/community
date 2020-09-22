@@ -30,7 +30,7 @@
                 <div class="list-group">
                     <a href="#" class="list-group-item  advert">发布公告</a>
                     <a href="#" class="list-group-item  active">修改公告</a>
-                    <a href="#" class="list-group-item ">发布广告</a>
+                    <a href="#" class="list-group-item publishAdvert">发布广告</a>
                 </div>
             </div>
             <!-- 右列表 -->
@@ -41,7 +41,7 @@
                 <ul class="nav nav-tabs">
                     <li role="presentation" class="advert"><a href="#">发布公告</a></li>
                     <li role="presentation" class="active"><a href="#">修改公告</a></li>
-                    <li role="presentation"><a href="#">发布广告</a></li>
+                    <li role="presentation" class="publishAdvert"><a href="#">发布广告</a></li>
                 </ul>
                 <div class="tab">
                     <br>
@@ -74,7 +74,7 @@
     var id = params.substring(params.indexOf("=") + 1)
     $(function () {
         $.ajax({
-            url: "management/getAdvert",
+            url: "management/getNotice",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             success: function (response) {
@@ -90,6 +90,9 @@
     $(".advert").click(function (){
         window.location.href="advertmanager.html?id="+id;
     })
+    $(".publishAdvert").click(function (){
+        window.location.href="publishAdvert.html?id="+id;
+    })
 
     $(".tab button").click(function () {
         var noticeContent = editor.txt.html();
@@ -101,7 +104,7 @@
         }
         var jsonStr = JSON.stringify(json)
         $.ajax({
-            url: "management/updateAdvert",
+            url: "management/updateNotice",
             type: "PUT",
             data: jsonStr,
             contentType: "application/json;charset=utf-8",

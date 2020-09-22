@@ -1,10 +1,7 @@
 package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.UserInfoDao;
-import edu.hniu.community.domain.Notice;
-import edu.hniu.community.domain.Question;
-import edu.hniu.community.domain.QuestionType;
-import edu.hniu.community.domain.UserInfo;
+import edu.hniu.community.domain.*;
 import edu.hniu.community.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,5 +141,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public Notice getNotice() {
         return userInfoDao.getNotice();
+    }
+
+    @Override
+    public Advert getAdvert() {
+        return userInfoDao.getAdvert();
     }
 }

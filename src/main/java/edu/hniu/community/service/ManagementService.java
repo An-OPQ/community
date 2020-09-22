@@ -1,9 +1,6 @@
 package edu.hniu.community.service;
 
-import edu.hniu.community.domain.Notice;
-import edu.hniu.community.domain.QuestionType;
-import edu.hniu.community.domain.RoleInfo;
-import edu.hniu.community.domain.UserInfo;
+import edu.hniu.community.domain.*;
 import edu.hniu.community.vo.NoticeVo;
 import edu.hniu.community.vo.QuestionListVo;
 import edu.hniu.community.vo.QuestionTypeVo;
@@ -98,18 +95,25 @@ public interface ManagementService {
      * @param noticeVo
      * @return
      */
-    boolean publishAdvert(NoticeVo noticeVo);
+    boolean publishNotice(NoticeVo noticeVo);
 
     /**
      * 查询最近一条通知
      * @return
      */
-    Notice getAdvert();
+    Notice getNotice();
 
     /**
      * 更新公告
      * @param noticeVo
      * @return
      */
-    boolean updateAdvert(NoticeVo noticeVo);
+    boolean updateNotice(NoticeVo noticeVo);
+
+    /**
+     * 发布广告
+     * @param advert
+     * @return
+     */
+    boolean publishAdvert(Advert advert);
 }

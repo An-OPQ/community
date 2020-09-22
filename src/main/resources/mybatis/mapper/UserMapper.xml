@@ -194,4 +194,8 @@
     <select id="getNotice" resultType="Notice">
         SELECT * FROM notice ORDER BY create_time DESC LIMIT 1
     </select>
+
+    <select id="getAdvert" resultType="Advert">
+        select * from advert order by createTime desc  limit 1
+    </select>
 </mapper>
