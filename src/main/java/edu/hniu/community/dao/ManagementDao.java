@@ -1,10 +1,7 @@
 package edu.hniu.community.dao;
 
 import edu.hniu.community.domain.*;
-import edu.hniu.community.vo.NoticeVo;
-import edu.hniu.community.vo.QuestionListVo;
-import edu.hniu.community.vo.QuestionTypeVo;
-import edu.hniu.community.vo.userAndRoleListVo;
+import edu.hniu.community.vo.*;
 
 import java.util.List;
 
@@ -69,6 +66,12 @@ public interface ManagementDao {
     List<QuestionListVo> getAllQusetion();
 
     /**
+     * 管理员查询所有的question列表
+     * @return
+     */
+    List<QuestionListVo> searchQuestion(searchQuestionVo searchQuestionVo);
+
+    /**
      * 删除帖子以及帖子的回复
      *
      * @param id
@@ -128,4 +131,11 @@ public interface ManagementDao {
      * @return
      */
     int publishAdvert(Advert advert);
+
+    /**
+     * 批量删除
+     * @param array
+     * @return
+     */
+    int deleteBatch(int[] array);
 }

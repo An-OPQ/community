@@ -3,10 +3,7 @@ package edu.hniu.community.service.impl;
 import edu.hniu.community.dao.ManagementDao;
 import edu.hniu.community.domain.*;
 import edu.hniu.community.service.ManagementService;
-import edu.hniu.community.vo.NoticeVo;
-import edu.hniu.community.vo.QuestionListVo;
-import edu.hniu.community.vo.QuestionTypeVo;
-import edu.hniu.community.vo.userAndRoleListVo;
+import edu.hniu.community.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +90,11 @@ public class ManagementServiceImpl implements ManagementService {
     }
 
     @Override
+    public List<QuestionListVo> searchQuestion(searchQuestionVo searchQuestionVo) {
+        return managementDao.searchQuestion(searchQuestionVo);
+    }
+
+    @Override
     public boolean deleteQuestion(Integer id) {
         return managementDao.deleteQuestion(id) > 0;
     }
@@ -130,5 +132,10 @@ public class ManagementServiceImpl implements ManagementService {
     @Override
     public boolean publishAdvert(Advert advert) {
         return managementDao.publishAdvert(advert)>0;
+    }
+
+    @Override
+    public boolean deleteBatch(int[] array) {
+        return managementDao.deleteBatch(array)>0;
     }
 }

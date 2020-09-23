@@ -72,7 +72,21 @@
 
 
     <select id="getAllQusetion" resultType="edu.hniu.community.vo.QuestionListVo">
-       select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
+        select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on
+        q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
+    </select>
+
+    <select id="searchQuestion" resultType="edu.hniu.community.vo.QuestionListVo">
+        select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on
+         q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
+        <where>
+            <if test="title !=''and title !=null">
+                and title like  concat('%',#{title},'%')
+            </if>
+            <if test="typeid !=-1">
+                and typeid=#{typeid}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteQuestion" parameterType="int">
@@ -193,4 +207,11 @@
         </trim>
         )
     </insert>
+
+    <delete id="deleteBatch">
+        delete from question where id in
+        <foreach collection="array" item="array" open="(" index="index" separator="," close=")">
+            #{array}
+        </foreach>
+    </delete>
 </mapper>

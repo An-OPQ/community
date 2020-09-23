@@ -9,10 +9,7 @@ import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
 import edu.hniu.community.toolkit.MD5;
 import edu.hniu.community.toolkit.UpdateTokenByCookie;
-import edu.hniu.community.vo.NoticeVo;
-import edu.hniu.community.vo.QuestionListVo;
-import edu.hniu.community.vo.QuestionTypeVo;
-import edu.hniu.community.vo.userAndRoleListVo;
+import edu.hniu.community.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -143,12 +140,24 @@ public class ManagementController {
     }
 
     @PutMapping("/updateNotice")
-    public Object updateNotice(@RequestBody NoticeVo noticeVo){
-        return  managementService.updateNotice(noticeVo);
+    public Object updateNotice(@RequestBody NoticeVo noticeVo) {
+        return managementService.updateNotice(noticeVo);
     }
 
     @PostMapping("/publishAdvert")
-    public Object publishAdvert(@RequestBody Advert advert){
-        return  managementService.publishAdvert(advert);
+    public Object publishAdvert(@RequestBody Advert advert) {
+        return managementService.publishAdvert(advert);
+    }
+
+    @PostMapping("/searchQuestion")
+    public Object searchQuestion(@RequestBody searchQuestionVo searchQuestionVo) {
+        PageHelper.startPage(searchQuestionVo.getPageNo(), usermangerPageSize);
+        List<QuestionListVo> questionListVos = managementService.searchQuestion(searchQuestionVo);
+        return new PageInfo<QuestionListVo>(questionListVos);
+    }
+
+    @DeleteMapping("/deleteBatch")
+    public Object deleteBatch(@RequestBody int[] array){
+        return managementService.deleteBatch(array);
     }
 }

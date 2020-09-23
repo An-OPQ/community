@@ -1,10 +1,7 @@
 package edu.hniu.community.service;
 
 import edu.hniu.community.domain.*;
-import edu.hniu.community.vo.NoticeVo;
-import edu.hniu.community.vo.QuestionListVo;
-import edu.hniu.community.vo.QuestionTypeVo;
-import edu.hniu.community.vo.userAndRoleListVo;
+import edu.hniu.community.vo.*;
 
 import java.util.List;
 
@@ -61,6 +58,12 @@ public interface ManagementService {
      */
     List<QuestionListVo> getAllQusetion();
 
+    /**
+     * 管理员查询所有的question列表
+     * @return
+     */
+    List<QuestionListVo> searchQuestion(searchQuestionVo searchQuestionVo);
+
 
     /**
      * 删除帖子以及帖子的回复
@@ -116,4 +119,11 @@ public interface ManagementService {
      * @return
      */
     boolean publishAdvert(Advert advert);
+
+    /**
+     * 批量删除
+     * @param array
+     * @return
+     */
+    boolean deleteBatch(int[] array);
 }

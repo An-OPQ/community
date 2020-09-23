@@ -20,10 +20,15 @@
         table {
             table-layout: fixed;
         }
+
         .wrap {
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
+        }
+
+        #Lr {
+            min-height: 800px;
         }
     </style>
 </head>
@@ -44,15 +49,15 @@
                     <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 文章管理</h3>
                 </div>
                 <div class="panel-body">
-                    <button type="button" class="btn btn-primary" style="float:left;">
+                    <button type="button" class="btn btn-primary" style="float:left;" onclick="deleteBatch()">
                         <i class="glyphicon glyphicon-plus"></i> 批量删除
                     </button>
 
                     <form class="form-inline" role="form" style="float:right;">
                         <div class="form-group has-feedback">
                             <div class="input-group">
-                                <div class="input-group-addon">发布日期</div>
-                                <input class="form-control has-success" id="email" type="text">
+                                <div class="input-group-addon">文章标题</div>
+                                <input class="form-control has-success" id="questionTitle" type="text">
                                 <div class="input-group-addon">所属板块</div>
                                 <select class="form-control" id="status">
                                     <option value="">所有</option>
@@ -60,7 +65,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="button" onclick="searchUserInfo()" class="btn btn-warning"><i
+                        <button type="button" id="searchQuestion" class="btn btn-warning"><i
                                 class="glyphicon glyphicon-search"></i>查询
                         </button>
                     </form>
@@ -71,7 +76,7 @@
                             <thead>
                             <tr>
                                 <th width="30">#</th>
-                                <th width="30"><input type="checkbox" onclick="return false;" checked="checked"></th>
+                                <th width="30"><input type="checkbox" checked="checked"/></th>
                                 <th align="center">ID</th>
                                 <th class="wrap" width="35%">文章标题</th>
                                 <th class="wrap" width="200">作者账号</th>
@@ -148,6 +153,7 @@
                 "  </tr>"
         }
         tbodyObj.append(tbodyStr);
+
     }
 
     function getAllQuestion(pageNum) {
@@ -162,53 +168,57 @@
             dataType: "json",
             success: function (response) {
                 initTable(response.list)
-                var pageObj = $(".pagination");
-                pageObj.empty();
-                var spliteStr = "";
-                //判断是否为首页
-                if (response.isFirstPage) {
-                    spliteStr += "<li class=\'disabled\'>\n" +
-                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
-                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
-                        "    </a>\n" +
-                        "</li>";
-                } else {
-                    spliteStr += "<li onclick='getAllQuestion(" + (response.pageNum - 1) + ")'>\n" +
-                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
-                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
-                        "    </a>\n" +
-                        "</li>";
-                }
-
-                for (let i = 1; i <= response.pages; i++) {
-                    if (response.pageNum == i) {
-                        spliteStr += "<li class=\"active\">\n" +
-                            "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
-                            " </li>";
-
-                    } else {
-                        spliteStr += "<li onclick='getAllQuestion(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
-                    }
-                }
-                if (response.isLastPage) {
-                    spliteStr += "<li class=\'disabled\'>\n" +
-                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
-                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
-                        "    </a>\n" +
-                        "</li>";
-                } else {
-                    spliteStr += "<li onclick='getAllUserinfo(" + (response.pageNum + 1) + ")'>\n" +
-                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
-                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
-                        "    </a>\n" +
-                        "</li>";
-                }
-                pageObj.append(spliteStr);
+                initPagination(response)
             },
             error: function (response) {
                 console.error(response)
             }
         })
+    }
+
+    function initPagination(response) {
+        var pageObj = $(".pagination");
+        pageObj.empty();
+        var spliteStr = "";
+        //判断是否为首页
+        if (response.isFirstPage) {
+            spliteStr += "<li class=\'disabled\'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        } else {
+            spliteStr += "<li onclick='getAllQuestion(" + (response.pageNum - 1) + ")'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        }
+
+        for (let i = 1; i <= response.pages; i++) {
+            if (response.pageNum == i) {
+                spliteStr += "<li class=\"active\">\n" +
+                    "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
+                    " </li>";
+
+            } else {
+                spliteStr += "<li onclick='getAllQuestion(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
+            }
+        }
+        if (response.isLastPage) {
+            spliteStr += "<li class=\'disabled\'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        } else {
+            spliteStr += "<li onclick='getAllQuestion(" + (response.pageNum + 1) + ")'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        }
+        pageObj.append(spliteStr);
     }
 
     function deleteQuestion(id, srcEle) {
@@ -231,6 +241,133 @@
             },
             error: function (response) {
                 console.error(response)
+            }
+        })
+    }
+
+    $(function () {
+            $.ajax({
+                url: "management/getAllTagName",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    var statusObj = $("#status");
+                    statusObj.empty();
+                    var tabStr = "";
+                    tabStr += "<option value=\"-1\">所有</option>"
+                    for (let i = 0; i < response.length; i++) {
+                        var tag = response[i]
+                        tabStr += "<option value=" + tag.typeId + ">" + tag.typeName + "</option>"
+                    }
+                    statusObj.append(tabStr)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        }
+    )
+    $("#searchQuestion").click(function () {
+        searchQuestion(1)
+    })
+
+    function searchQuestion(pageNum) {
+        var pageNo = 1;
+        if (undefined != pageNum) {
+            pageNo = pageNum;
+        }
+        var questionTitleVal = $("#questionTitle").val();
+        var statusVal = $("#status").val()
+        var json = {
+            title: questionTitleVal,
+            typeid: statusVal,
+            pageNo: pageNo
+        }
+        var jsonStr = JSON.stringify(json)
+        $.ajax({
+            url: "management/searchQuestion",
+            type: "POST",
+            data: jsonStr,
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                initTable(response.list)
+                var pageObj = $(".pagination");
+                pageObj.empty();
+                var spliteStr = "";
+                //判断是否为首页
+                if (response.isFirstPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='searchQuestion(" + (response.pageNum - 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+
+                for (let i = 1; i <= response.pages; i++) {
+                    if (response.pageNum == i) {
+                        spliteStr += "<li class=\"active\">\n" +
+                            "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
+                            " </li>";
+
+                    } else {
+                        spliteStr += "<li onclick='searchQuestion(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
+                    }
+                }
+                if (response.isLastPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='searchQuestion(" + (response.pageNum + 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+                pageObj.append(spliteStr);
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    }
+
+    function deleteBatch() {
+        var nodeVal = new Array();
+        $("#dataTable input[type='checkbox']:checked").each(function () {
+            nodeVal.push($(this).val())
+        })
+        var jsonStr = JSON.stringify(nodeVal)
+        $.ajax({
+            url: "management/deleteBatch",
+            type: "DELETE",
+            data: jsonStr,
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                if (response) {
+                    $("#dataTable input[type='checkbox']:checked").each(function () {
+                        $(this).parent().parent().parent().parent().parent().remove()
+                    })
+                    $.toastr.success("删除成功", {
+                        position: 'top-center'
+                    })
+                } else {
+                    $.toastr.success("删除失败", {
+                        position: 'top-center'
+                    })
+                }
+            },
+            error: function (response) {
+                console.log(response)
             }
         })
     }
