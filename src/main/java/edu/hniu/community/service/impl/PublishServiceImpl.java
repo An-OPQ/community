@@ -3,8 +3,10 @@ package edu.hniu.community.service.impl;
 import edu.hniu.community.dao.PublishDao;
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.service.PublishService;
+import edu.hniu.community.vo.searchQuestionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -25,6 +27,11 @@ public class PublishServiceImpl implements PublishService {
     @Override
     public List<Question> getPublishMessage() {
         return publishDao.getPublishMessage();
+    }
+
+    @Override
+    public List<Question> searchQuestion(searchQuestionVo searchQuestionVo) {
+        return publishDao.searchQuestion(searchQuestionVo);
     }
 
     @Override

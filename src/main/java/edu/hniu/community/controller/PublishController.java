@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.service.PublishService;
 import edu.hniu.community.service.UserInfoService;
+import edu.hniu.community.vo.searchQuestionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,18 @@ public class PublishController {
         List<Question> questionList = publishService.getPublishMessage();
         PageInfo<Question> pageInfo = new PageInfo<Question>(questionList);
         return pageInfo;
+    }
+
+    /**
+     * 搜索帖子
+     *
+     * @return
+     */
+    @PostMapping("/searchQuestion")
+    public Object searchQuestion(@RequestBody searchQuestionVo searchQuestionVo) {
+        PageHelper.startPage(searchQuestionVo.getPageNo(), questionPageSize);
+        List<Question> questionList = publishService.searchQuestion(searchQuestionVo);
+        return new PageInfo<>(questionList);
     }
 
     /**

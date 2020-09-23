@@ -1,6 +1,8 @@
 package edu.hniu.community.service;
 
 import edu.hniu.community.domain.Question;
+import edu.hniu.community.vo.searchQuestionVo;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -20,6 +22,13 @@ public interface PublishService {
      * @return
      */
     List<Question> getPublishMessage();
+
+    /**
+     * 搜索帖子
+     * @param searchQuestionVo
+     * @return
+     */
+    List<Question> searchQuestion(searchQuestionVo searchQuestionVo);
 
     /**
      * 查询所有帖子根据模块来查询
