@@ -47,6 +47,16 @@ public class ManagementServiceImpl implements ManagementService {
     }
 
     /**
+     * 模糊查询用户
+     * @param searchUserVo
+     * @return
+     */
+    @Override
+    public List<userAndRoleListVo> searchUser(searchUserVo searchUserVo) {
+        return managementDao.searchUser(searchUserVo);
+    }
+
+    /**
      * 删除用户
      *
      * @param id

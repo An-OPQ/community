@@ -20,12 +20,22 @@ public interface ManagementService {
 
     /**
      * 查询所有的用户
+     *
      * @return
      */
     List<userAndRoleListVo> getAllUserinfo();
 
     /**
+     * 模糊查询用户
+     * @param searchUserVo
+     * @return
+     */
+    List<userAndRoleListVo> searchUser(searchUserVo searchUserVo);
+
+
+    /**
      * 删除用户
+     *
      * @param id
      * @return
      */
@@ -41,12 +51,14 @@ public interface ManagementService {
 
     /**
      * 查询所有的role
+     *
      * @return
      */
     List<RoleInfo> getAddzuId();
 
     /**
      * 管理员插入数据并指名权限角色
+     *
      * @param userInfo
      * @return
      */
@@ -54,12 +66,14 @@ public interface ManagementService {
 
     /**
      * 管理员查询所有的question列表
+     *
      * @return
      */
     List<QuestionListVo> getAllQusetion();
 
     /**
      * 管理员查询所有的question列表
+     *
      * @return
      */
     List<QuestionListVo> searchQuestion(searchQuestionVo searchQuestionVo);
@@ -67,6 +81,7 @@ public interface ManagementService {
 
     /**
      * 删除帖子以及帖子的回复
+     *
      * @param id
      * @return
      */
@@ -74,13 +89,13 @@ public interface ManagementService {
 
 
     /**
-     *
      * @return
      */
     List<QuestionType> getAllTagName();
 
     /**
      * 删除模块名
+     *
      * @param id
      * @return
      */
@@ -88,6 +103,7 @@ public interface ManagementService {
 
     /**
      * 添加模块名
+     *
      * @param questionTypeVo
      * @return
      */
@@ -95,6 +111,7 @@ public interface ManagementService {
 
     /**
      * 发布广告
+     *
      * @param noticeVo
      * @return
      */
@@ -102,12 +119,14 @@ public interface ManagementService {
 
     /**
      * 查询最近一条通知
+     *
      * @return
      */
     Notice getNotice();
 
     /**
      * 更新公告
+     *
      * @param noticeVo
      * @return
      */
@@ -115,6 +134,7 @@ public interface ManagementService {
 
     /**
      * 发布广告
+     *
      * @param advert
      * @return
      */
@@ -122,8 +142,11 @@ public interface ManagementService {
 
     /**
      * 批量删除
+     *
      * @param array
      * @return
      */
     boolean deleteBatch(int[] array);
+
+
 }

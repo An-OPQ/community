@@ -21,7 +21,7 @@ public class PublishServiceImpl implements PublishService {
 
     @Override
     public boolean publishMessage(Question question) {
-        return publishDao.publishMessage(question) > 0;
+        return publishDao.publishMessage(question)>0;
     }
 
     @Override

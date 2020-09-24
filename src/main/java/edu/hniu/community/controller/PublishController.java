@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jerry
@@ -28,10 +30,19 @@ public class PublishController {
     @Value("${PageHelper.questionPageSize}")
     private int questionPageSize;
 
+    /**
+     * 发帖功能。在发帖后跳转到帖子的view页面。所以: 使用了selectKey。其结果会返回到你设置的paramerType实体类的属性中。
+     * 在controller中，我则返回flag与ID。
+     * @param question
+     * @return
+     */
     @PostMapping("/submit")
     public Object publishMessage(@RequestBody Question question) {
-        System.out.println(question);
-        return publishService.publishMessage(question);
+        Map<String,Object> map=new HashMap<>(3);
+        boolean flag=publishService.publishMessage(question);
+        map.put("flag",flag);
+        map.put("questionId",question.getId());
+        return map;
     }
 
     /**

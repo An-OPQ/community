@@ -23,14 +23,12 @@
             border: 0;
             border-top: 1px solid #eee;
         }
-
         .modal-dialog, .modal-content {
             top: 10%;
             width: 1000px;
             height: 600px;
             margin: 0 auto;
         }
-
         .modal-content label {
             font-size: 14px;
         }
@@ -138,7 +136,6 @@
                 </div>
             </div>
         </div>
-
         <!--右边信息块-->
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -185,7 +182,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myEditModalLabel">编辑</h4>
+                <h4 class="modal-title" id="myEditModalLabel"><span class="glyphicon glyphicon-edit"></span> 编辑</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -322,6 +319,7 @@
                     });
                     //发布评论后，然后重新查询一下评论的数据。
                     getAllCommentByQuestion();
+                    $("#comment_content").val("")
                 }
 
             },
@@ -553,7 +551,7 @@
                         text: "修改成功",
                         icon: "success",
                     });
-                    refresh()
+                    refresh(id)
                 }
             },
             error: function (response) {

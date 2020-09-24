@@ -4,7 +4,7 @@ document.writeln("        <div class=\"modal-content\">");
 document.writeln("            <div class=\"modal-header\">");
 document.writeln("                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span>");
 document.writeln("                </button>");
-document.writeln("                <h4 class=\"modal-title\" id=\"myModalLabel\">新增</h4>");
+document.writeln("                <h4 class=\"modal-title\" id=\"myModalLabel\"><span class=\"glyphicon glyphicon-send\"></span> 新增</h4>");
 document.writeln("            </div>");
 document.writeln("            <div class=\"modal-body\">");
 document.writeln("                <form>");

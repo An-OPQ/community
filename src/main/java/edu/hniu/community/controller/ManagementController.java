@@ -29,9 +29,11 @@ public class ManagementController {
     @Autowired
     ManagementService managementService;
 
+    @Value("${PageHelper.questionPageSize}")
+    private int questionPageSize;
+
     @Value("${PageHelper.usermangerPageSize}")
     private int usermangerPageSize;
-
 
     @Autowired
     UpdateTokenByCookie updateTokenByCookie;
@@ -104,7 +106,7 @@ public class ManagementController {
      */
     @GetMapping("/getAllQusetion")
     public Object getAllQusetion(@RequestParam Integer pageNo) {
-        PageHelper.startPage(pageNo, usermangerPageSize);
+        PageHelper.startPage(pageNo, questionPageSize);
         List<QuestionListVo> questionListVos = managementService.getAllQusetion();
         return new PageInfo<QuestionListVo>(questionListVos);
     }
@@ -151,13 +153,20 @@ public class ManagementController {
 
     @PostMapping("/searchQuestion")
     public Object searchQuestion(@RequestBody searchQuestionVo searchQuestionVo) {
-        PageHelper.startPage(searchQuestionVo.getPageNo(), usermangerPageSize);
+        PageHelper.startPage(searchQuestionVo.getPageNo(), questionPageSize);
         List<QuestionListVo> questionListVos = managementService.searchQuestion(searchQuestionVo);
-        return new PageInfo<QuestionListVo>(questionListVos);
+        return new PageInfo<>(questionListVos);
     }
 
     @DeleteMapping("/deleteBatch")
-    public Object deleteBatch(@RequestBody int[] array){
+    public Object deleteBatch(@RequestBody int[] array) {
         return managementService.deleteBatch(array);
+    }
+
+    @PostMapping("/searchUser")
+    public Object searchUser(@RequestBody searchUserVo searchUserVo) {
+        PageHelper.startPage(searchUserVo.getPageNo(), usermangerPageSize);
+        List<userAndRoleListVo> userAndRoleListVoList = managementService.searchUser(searchUserVo);
+        return new PageInfo<>(userAndRoleListVoList);
     }
 }

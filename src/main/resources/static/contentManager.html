@@ -20,15 +20,17 @@
         table {
             table-layout: fixed;
         }
-
         .wrap {
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
         }
-
         #Lr {
             min-height: 800px;
+        }
+        .alert {
+            margin-bottom: 0;
+            display: contents;
         }
     </style>
 </head>
@@ -52,8 +54,10 @@
                     <button type="button" class="btn btn-primary" style="float:left;" onclick="deleteBatch()">
                         <i class="glyphicon glyphicon-plus"></i> 批量删除
                     </button>
-
                     <form class="form-inline" role="form" style="float:right;">
+                        <div class="alert alert-info" role="alert">
+                            <strong>小提示：</strong>默认ID排序
+                        </div>&nbsp;&nbsp;
                         <div class="form-group has-feedback">
                             <div class="input-group">
                                 <div class="input-group-addon">文章标题</div>
@@ -62,6 +66,11 @@
                                 <select class="form-control" id="status">
                                     <option value="">所有</option>
                                     <option value="">科学技术</option>
+                                </select>
+                                <div class="input-group-addon">排序方式</div>
+                                <select class="form-control" id="sort">
+                                    <option value="0">时间</option>
+                                    <option value="1">ID</option>
                                 </select>
                             </div>
                         </div>
@@ -267,6 +276,10 @@
             })
         }
     )
+
+    /**
+     * 帖子搜索功能
+     */
     $("#searchQuestion").click(function () {
         searchQuestion(1)
     })
@@ -277,10 +290,12 @@
             pageNo = pageNum;
         }
         var questionTitleVal = $("#questionTitle").val();
-        var statusVal = $("#status").val()
+        var statusVal = $("#status option:selected").val()
+        var sortVal =$("#sort option:selected").val()
         var json = {
             title: questionTitleVal,
             typeid: statusVal,
+            sort:sortVal,
             pageNo: pageNo
         }
         var jsonStr = JSON.stringify(json)
@@ -355,7 +370,7 @@
             success: function (response) {
                 if (response) {
                     $("#dataTable input[type='checkbox']:checked").each(function () {
-                        $(this).parent().parent().parent().parent().parent().remove()
+                        $(this).parent().parent().remove()
                     })
                     $.toastr.success("删除成功", {
                         position: 'top-center'

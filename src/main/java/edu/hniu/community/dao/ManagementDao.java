@@ -26,6 +26,13 @@ public interface ManagementDao {
     List<userAndRoleListVo> getAllUserinfo();
 
     /**
+     * 模糊查询用户
+     * @param searchUserVo
+     * @return
+     */
+    List<userAndRoleListVo> searchUser(searchUserVo searchUserVo);
+
+    /**
      * 删除用户
      *
      * @param id

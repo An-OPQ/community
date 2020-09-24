@@ -2,10 +2,12 @@ package edu.hniu.community.dao;
 
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.vo.searchQuestionVo;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+/**
+ * @author jerry
+ */
 public interface PublishDao {
 
     /**

@@ -25,8 +25,10 @@
             <div class="col-md-3">
                 <div class="list-group">
                     <a href="userManger.html" class="list-group-item active"> 用户管理</a>
-                    <a href="userSearch.html" class="list-group-item">用户搜索</a>
-                    <a href="" role="button" class="list-group-item" data-toggle="modal" data-target="#myModal">添加用户</a>
+                    <a href="" role="button" class="list-group-item" data-toggle="modal"
+                       data-target="#myModal">添加用户</a>
+                    <a href="" role="button" class="list-group-item" data-toggle="modal"
+                       data-target="#mySearchModal">查询用户</a>
                 </div>
             </div>
             <!-- 右列表 -->
@@ -36,9 +38,10 @@
                 </div>
                 <ul class="nav nav-tabs">
                     <li role="presentation" class="active"><a href="userManger.html">用户列表</a></li>
-                    <li role="presentation"><a href="userSearch.html">用户搜索</a></li>
                     <li role="presentation"><a href="#" role="button" data-toggle="modal"
                                                data-target="#myModal">添加用户</a></li>
+                    <li role="presentation"><a href="#" role="button" data-toggle="modal"
+                                               data-target="#mySearchModal">查询用户</a></li>
                 </ul>
                 <!-- Table -->
                 <table class="table">
@@ -103,40 +106,8 @@
 </section>
 <!-- 添加用户弹出框 -->
 <script src="./js/addUserModer.js" type="application/javascript"></script>
-<!--添加用户弹出框-->
-<div class="modal fade" id="myEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myEditModalLabel">修改</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="accountName">用户名</label>
-                    <input type="text" name="accountName" class="form-control" id="accountName" placeholder="用户名">
-                </div>
-                <div class="form-group">
-                    <label for="password1">密码</label>
-                    <input type="password" name="password1" class="form-control" id="password1" placeholder="输入密码">
-                </div>
-                <div class="form-group">
-                    <label for="password2">确认密码</label>
-                    <input type="password" name="password2" class="form-control" id="password2" placeholder="确认密码">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><span
-                        class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
-                </button>
-                <button type="button" id="btn_submit2" class="btn btn-primary" data-dismiss="modal"><span
-                        class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+<!--用户查询弹出框-->
+<script src="./js/searchUser.js" type="application/javascript"></script>
 <!-- footer -->
 <section id="footer">
     <div class="row  text-center">
@@ -196,53 +167,57 @@
             dataType: "json",
             success: function (response) {
                 initTable(response.list)
-                var pageObj = $(".pagination");
-                pageObj.empty();
-                var spliteStr = "";
-                //判断是否为首页
-                if (response.isFirstPage) {
-                    spliteStr += "<li class=\'disabled\'>\n" +
-                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
-                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
-                        "    </a>\n" +
-                        "</li>";
-                } else {
-                    spliteStr += "<li onclick='getAllUserinfo(" + (response.pageNum - 1) + ")'>\n" +
-                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
-                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
-                        "    </a>\n" +
-                        "</li>";
-                }
-
-                for (let i = 1; i <= response.pages; i++) {
-                    if (response.pageNum == i) {
-                        spliteStr += "<li class=\"active\">\n" +
-                            "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
-                            " </li>";
-
-                    } else {
-                        spliteStr += "<li onclick='getAllUserinfo(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
-                    }
-                }
-                if (response.isLastPage) {
-                    spliteStr += "<li class=\'disabled\'>\n" +
-                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
-                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
-                        "    </a>\n" +
-                        "</li>";
-                } else {
-                    spliteStr += "<li onclick='getAllUserinfo(" + (response.pageNum + 1) + ")'>\n" +
-                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
-                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
-                        "    </a>\n" +
-                        "</li>";
-                }
-                pageObj.append(spliteStr);
+                initPagination(response)
             },
             error: function () {
 
             }
         })
+    }
+
+    function initPagination(response) {
+        var pageObj = $(".pagination");
+        pageObj.empty();
+        var spliteStr = "";
+        //判断是否为首页
+        if (response.isFirstPage) {
+            spliteStr += "<li class=\'disabled\'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        } else {
+            spliteStr += "<li onclick='getAllUserinfo(" + (response.pageNum - 1) + ")'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        }
+
+        for (let i = 1; i <= response.pages; i++) {
+            if (response.pageNum == i) {
+                spliteStr += "<li class=\"active\">\n" +
+                    "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
+                    " </li>";
+
+            } else {
+                spliteStr += "<li onclick='getAllUserinfo(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
+            }
+        }
+        if (response.isLastPage) {
+            spliteStr += "<li class=\'disabled\'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        } else {
+            spliteStr += "<li onclick='getAllUserinfo(" + (response.pageNum + 1) + ")'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        }
+        pageObj.append(spliteStr);
     }
 
     function deleteUser(id, srcEle) {

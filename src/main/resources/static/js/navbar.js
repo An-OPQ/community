@@ -112,7 +112,7 @@ function getSession () {
     })
 }
 getSession()
-var id
+var Uid
 function jumpToAdvertmanager(email) {
     $.ajax({
         async:false,//设置同步：代码没有执行完就 不执行下面的代码
@@ -120,14 +120,11 @@ function jumpToAdvertmanager(email) {
         type: "GET",
         contentType: "application/json;charset=utf-8",
         success: function (response) {
-            id = response;
+            Uid = response;
         }
     })
 }
-$(".advertmanager").click(function () {
-    window.location.href="advertmanager.html?id="+id
-})
 
 $("#publish").click(function (){
-    window.location.href="publish.html?id="+id;
+    window.location.href="publish.html?id="+Uid;
 })

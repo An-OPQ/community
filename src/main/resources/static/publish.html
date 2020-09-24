@@ -82,7 +82,6 @@
 <script>
     var params=window.location.search;
     var id=params.substring(params.indexOf("=")+1)
-
     getAllTag();
     $("#submit").click(function () {
         var titleVal = $("#title").val();
@@ -104,11 +103,17 @@
             type: "POST",
             data: jsonStr,
             contentType: "application/json;charset=utf-8",
-            success: function () {
-                swal({
-                    text: "发布成功",
-                    icon: "success",
-                });
+            dataType:"json",
+            success: function (response) {
+                if(response.flag){
+                    swal({
+                        text: "发布成功",
+                        icon: "success",
+                    });
+                    setTimeout(function (){
+                        window.location.href="questionView.html?id="+response.questionId;
+                    },1000);
+                }
             },
             error: function (response) {
                 console.log(response)

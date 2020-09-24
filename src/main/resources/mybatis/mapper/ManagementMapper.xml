@@ -9,7 +9,23 @@
     </select>
 
     <select id="getAllUserinfo" resultType="edu.hniu.community.vo.userAndRoleListVo">
-    select  u.id,u.email,u.password,u.accountName,r.*  from  roleinfo r right join userinfo u on r.roleid=u.roleid
+    select  u.id,u.email,u.password,u.accountName,r.*  from  roleinfo r right join userinfo u on r.roleid=u.roleid order by u.id asc
+    </select>
+
+    <select id="searchUser" resultType="edu.hniu.community.vo.userAndRoleListVo">
+        select u.id,u.email,u.password,u.accountName,r.* from roleinfo r right join userinfo u on r.roleid=u.roleid
+        <where>
+            <if test="accountName !=null and accountName!=''">
+                and accountName like concat('%',#{accountName},'%')
+            </if>
+            <if test="email !=null and email!=''">
+                and email like concat('%',#{email},'%')
+            </if>
+            <if test="roleid !=-1">
+                and roleid=#{roleid}
+            </if>
+        </where>
+        order by u.id asc
     </select>
 
     <delete id="deleteUser" parameterType="int">
@@ -73,20 +89,28 @@
 
     <select id="getAllQusetion" resultType="edu.hniu.community.vo.QuestionListVo">
         select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on
-        q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
+        q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id order by q.id asc
     </select>
 
     <select id="searchQuestion" resultType="edu.hniu.community.vo.QuestionListVo">
         select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on
-         q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
+        q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
         <where>
             <if test="title !=''and title !=null">
-                and title like  concat('%',#{title},'%')
+                and title like concat('%',#{title},'%')
             </if>
             <if test="typeid !=-1">
                 and typeid=#{typeid}
             </if>
         </where>
+        order by
+         <if test="sort==0">
+             q.createDate
+         </if>
+         <if test="sort==1">
+             q.id
+         </if>
+         asc
     </select>
 
     <delete id="deleteQuestion" parameterType="int">
