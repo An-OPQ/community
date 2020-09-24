@@ -216,6 +216,11 @@
 <script src="./js/getAdvert.js" type="text/javascript"></script>
 <script src="./js/sweetalert.min.js"></script>
 <script>
+    <!--禁用搜索框-->
+    $(function () {
+        $("#searchSubmit").attr("disabled", "disabled");
+        $("#search").attr("disabled", "disabled")
+    })
 
     var params = window.location.search;
     var id = params.substring(params.indexOf("=") + 1)
