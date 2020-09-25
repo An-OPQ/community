@@ -6,6 +6,7 @@ package edu.hniu.community.vo;
 public class searchQuestionVo {
     private String title;
     private int typeid;
+    private String classify;
     private int sort;
     private int pageNo;
 
@@ -15,6 +16,14 @@ public class searchQuestionVo {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getClassify() {
+        return classify;
+    }
+
+    public void setClassify(String classify) {
+        this.classify = classify;
     }
 
     public int getTypeid() {
@@ -46,6 +55,7 @@ public class searchQuestionVo {
         return "searchQuestionVo{" +
                 "title='" + title + '\'' +
                 ", typeid=" + typeid +
+                ", classify='" + classify + '\'' +
                 ", sort=" + sort +
                 ", pageNo=" + pageNo +
                 '}';

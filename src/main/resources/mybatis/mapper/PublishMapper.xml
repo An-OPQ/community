@@ -84,8 +84,24 @@
             <if test="title !=''and title !=null">
                 and title like concat('%',#{title},'%')
             </if>
+            <if test="classify=='new'">
+                and DATE_SUB(curdate(),INTERVAL 3 DAY) &lt;=date
+                (q.createDate)
+            </if>
+            <if test="classify=='red'">
+                and q.commentCount=0
+            </if>
+            <if test="classify=='hot7'">
+                and DATE_SUB(curdate(),INTERVAL 7 DAY) &lt;=date
+                (q.createDate)  order by q.viewCount DESC
+            </if>
         </where>
-        order by q.createDate DESC
+        <if test="classify==null">
+            order by q.createDate DESC
+        </if>
+        <if test="classify=='hot'">
+            order by q.viewCount DESC
+        </if>
     </select>
 
     <select id="getPublishMessageByModel" resultMap="questionList" parameterType="int">

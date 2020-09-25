@@ -1,15 +1,20 @@
 $("#searchSubmit").click(function () {
-    searchQuestion(1)
+    searchQuestion(1,null)
 })
 
-function searchQuestion(pageNum) {
+function searchQuestion(pageNum,classifyVal) {
     var pageNo = 1;
     if (undefined != pageNum) {
         pageNo = pageNum;
     }
+    var classify=null;
+    if (undefined !=classifyVal){
+        classify=classifyVal
+    }
     var search = $("#search").val();
     var json = {
         title: search,
+        classify:classify,
         pageNo: pageNo
     }
     var jsonStr = JSON.stringify(json)
@@ -32,13 +37,12 @@ function searchQuestion(pageNum) {
                     "    </a>\n" +
                     "</li>";
             } else {
-                spliteStr += "<li onclick='searchQuestion(" + (response.pageNum - 1) + ")'>\n" +
+                spliteStr += "<li onclick='searchQuestion(" + (response.pageNum - 1) + ",\""+classify+"\")'>\n" +
                     "   <a href=\"#\" aria-label=\"Previous\">\n" +
                     "      <span aria-hidden=\"true\">&lt;</span>\n" +
                     "    </a>\n" +
                     "</li>";
             }
-
             for (let i = 1; i <= response.pages; i++) {
                 if (response.pageNum == i) {
                     spliteStr += "<li class=\"active\">\n" +
@@ -46,7 +50,7 @@ function searchQuestion(pageNum) {
                         " </li>";
 
                 } else {
-                    spliteStr += "<li onclick='searchQuestion(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
+                    spliteStr += "<li onclick='searchQuestion(" + i + ",\""+classify+"\")'><a href=\"#\">" + i + "</a></li>\n";
                 }
             }
             if (response.isLastPage) {
@@ -56,7 +60,7 @@ function searchQuestion(pageNum) {
                     "    </a>\n" +
                     "</li>";
             } else {
-                spliteStr += "<li onclick='searchQuestion(" + (response.pageNum + 1) + ")'>\n" +
+                spliteStr += "<li onclick='searchQuestion(" + (response.pageNum + 1) + ",\""+classify+"\")'>\n" +
                     "   <a href=\"#\" aria-label=\"Previous\">\n" +
                     "      <span aria-hidden=\"true\">&gt;</span>\n" +
                     "    </a>\n" +
