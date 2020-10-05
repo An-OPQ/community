@@ -110,5 +110,8 @@ function initTable2(response) {
             "</div>\n" +
             "</div>\n"
     }
+    if (response.length===0){
+        bodyStr = "<div><div class=\"alert alert-info\" role=\"alert\">可能近期没有帖子，呜呜呜！</div></div>";
+    }
     tbodyObj.append(bodyStr);
 }
