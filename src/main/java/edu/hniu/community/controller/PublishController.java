@@ -59,7 +59,7 @@ public class PublishController {
     }
 
     /**
-     * 搜索帖子
+     * 搜索帖子并根据板块
      *
      * @return
      */
@@ -68,19 +68,6 @@ public class PublishController {
         PageHelper.startPage(searchQuestionVo.getPageNo(), questionPageSize);
         List<Question> questionList = publishService.searchQuestion(searchQuestionVo);
         return new PageInfo<>(questionList);
-    }
-
-    /**
-     * 查询所有的帖子根据模块来查询
-     *
-     * @return
-     */
-    @GetMapping("/getPublishMessageByModel/{pageNo}/{modelId}")
-    public Object getPublishMessageByModel(@PathVariable Integer pageNo, @PathVariable int modelId) {
-        PageHelper.startPage(pageNo, questionPageSize);
-        List<Question> questionList = publishService.getPublishMessageByModel(modelId);
-        PageInfo<Question> pageInfo = new PageInfo<Question>(questionList);
-        return pageInfo;
     }
 
     @PutMapping("/updateViewCount")

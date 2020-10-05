@@ -62,6 +62,9 @@ $(function () {
     })
 })
 
+/**
+ * 登出
+ */
 $('#logout').click(function () {
     $.ajax({
         url: 'user/logout',
@@ -75,6 +78,9 @@ $('#logout').click(function () {
     })
 })
 
+/**
+ * 板块分类
+ */
 function initModel() {
     $.ajax({
         url: 'user/initModel',
@@ -86,7 +92,7 @@ function initModel() {
             var modelStr = "";
             for (let i = 0; i < response.length; i++) {
                 var model = response[i];
-                modelStr += "<li><a onclick='jumpToModel("+model.typeId+")'>" + model.typeName + "</a></li>"
+                modelStr += "<li onclick='searchQuestion(1,null,"+model.typeId+")'><a>" + model.typeName + "</a></li>"
             }
             modelObj.append(modelStr);
         },
@@ -94,10 +100,15 @@ function initModel() {
         }
     })
 }
+$(".model").on("click","li",function (){
+    $(this).addClass("active").siblings().removeClass("active")
+    $(".nav-tabs li").removeClass("active")
+})
 
-function jumpToModel(typeId) {
-    window.location.href="main_Model.html?typeId="+typeId;
-}
+
+/**
+ * 获取登录用户ID
+ */
 var email;
 function getSession () {
     $.ajax({

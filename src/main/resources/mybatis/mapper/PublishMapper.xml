@@ -70,7 +70,7 @@
         </trim>
         )
         <selectKey keyColumn="id" keyProperty="id" resultType="long" order="AFTER">
-            select  last_insert_id()
+            select last_insert_id()
         </selectKey>
     </insert>
 
@@ -84,16 +84,19 @@
             <if test="title !=''and title !=null">
                 and title like concat('%',#{title},'%')
             </if>
-            <if test="classify=='new'">
-                and DATE_SUB(curdate(),INTERVAL 3 DAY) &lt;=date
-                (q.createDate)
+            <if test="typeid !=''and typeid !=null">
+                and typeid=#{typeid}
             </if>
             <if test="classify=='red'">
                 and q.commentCount=0
             </if>
+            <if test="classify=='new'">
+                and DATE_SUB(curdate(),INTERVAL 7 DAY) &lt;=date
+                (q.createDate) order by q.createDate DESC
+            </if>
             <if test="classify=='hot7'">
                 and DATE_SUB(curdate(),INTERVAL 7 DAY) &lt;=date
-                (q.createDate)  order by q.viewCount DESC
+                (q.createDate) order by q.viewCount DESC
             </if>
         </where>
         <if test="classify==null">
@@ -102,11 +105,6 @@
         <if test="classify=='hot'">
             order by q.viewCount DESC
         </if>
-    </select>
-
-    <select id="getPublishMessageByModel" resultMap="questionList" parameterType="int">
-        SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid
-         WHERE typeid=#{typeid} order by q.createDate  DESC
     </select>
 
     <update id="updateViewCount" parameterType="Integer">

@@ -33,14 +33,6 @@ public interface PublishDao {
      */
     List<Question> searchQuestion(searchQuestionVo searchQuestionVo);
 
-
-    /**
-     * 查询所有帖子根据模块来查询
-     * @param modelId
-     * @return
-     */
-    List<Question> getPublishMessageByModel(int modelId);
-
     /**
      * 更新阅读数
      *

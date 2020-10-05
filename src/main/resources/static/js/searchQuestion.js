@@ -1,8 +1,14 @@
+/**
+ * 问题搜索按钮
+ * search 为input中的值
+ */
 $("#searchSubmit").click(function () {
-    searchQuestion(1,null)
+    searchQuestion(1,null,null)
 })
+var modelID=null;
 
-function searchQuestion(pageNum,classifyVal) {
+function searchQuestion(pageNum,classifyVal,modelId) {
+    modelID=modelId;
     var pageNo = 1;
     if (undefined != pageNum) {
         pageNo = pageNum;
@@ -15,6 +21,7 @@ function searchQuestion(pageNum,classifyVal) {
     var json = {
         title: search,
         classify:classify,
+        typeid:modelId,
         pageNo: pageNo
     }
     var jsonStr = JSON.stringify(json)

@@ -31,6 +31,7 @@ public class PublishServiceImpl implements PublishService {
 
     @Override
     public List<Question> searchQuestion(searchQuestionVo searchQuestionVo) {
+        System.out.println(searchQuestionVo.toString());
         return publishDao.searchQuestion(searchQuestionVo);
     }
 
@@ -52,11 +53,6 @@ public class PublishServiceImpl implements PublishService {
     @Override
     public boolean lessLikeCount(Integer id) {
         return publishDao.lessLikeCount(id)>0;
-    }
-
-    @Override
-    public List<Question> getPublishMessageByModel(int modelId) {
-        return publishDao.getPublishMessageByModel(modelId);
     }
 
     @Override
