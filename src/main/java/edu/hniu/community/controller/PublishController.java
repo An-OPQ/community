@@ -94,4 +94,14 @@ public class PublishController {
     public Object updateQuestion(@RequestBody Question question) {
         return publishService.updateQuestion(question);
     }
+
+    @PostMapping("/addQuestionLikeCount/{id}")
+    public Object addQuestionLikeCount(@PathVariable(name = "id") Integer id ){
+        return publishService.addQuestionLikeCount(id);
+    }
+
+    @PostMapping("/lessQuestionLikeCount/{id}")
+    public Object lessQuestionLikeCount(@PathVariable(name = "id") Integer id ){
+        return publishService.lessQuestionLikeCount(id);
+    }
 }

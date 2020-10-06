@@ -70,4 +70,18 @@ public interface PublishDao {
      * @return
      */
     int updateQuestion(Question question);
+
+    /**
+     * question点赞数
+     * @param id
+     * @return
+     */
+    int addQuestionLikeCount(Integer id);
+
+    /**
+     * question点赞数
+     * @param id
+     * @return
+     */
+    int lessQuestionLikeCount(Integer id);
 }

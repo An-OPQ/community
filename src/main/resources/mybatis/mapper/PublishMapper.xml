@@ -140,4 +140,12 @@
         </set>
         where id=#{id}
     </update>
+
+    <update id="addQuestionLikeCount" parameterType="Integer">
+        UPDATE question	set likeCount=likeCount+1 WHERE id=#{id}
+    </update>
+
+    <update id="lessQuestionLikeCount" parameterType="Integer">
+        UPDATE question	set likeCount=likeCount-1 WHERE id=#{id}
+    </update>
 </mapper>

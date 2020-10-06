@@ -59,4 +59,14 @@ public class PublishServiceImpl implements PublishService {
     public boolean updateQuestion(Question question) {
         return publishDao.updateQuestion(question)>0;
     }
+
+    @Override
+    public boolean addQuestionLikeCount(Integer id) {
+        return publishDao.addQuestionLikeCount(id)>0;
+    }
+
+    @Override
+    public boolean lessQuestionLikeCount(Integer id) {
+        return publishDao.lessQuestionLikeCount(id)>0;
+    }
 }

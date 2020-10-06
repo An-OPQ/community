@@ -66,4 +66,19 @@ public interface PublishService {
      * @return
      */
     boolean updateQuestion(Question question);
+
+
+    /**
+     * question点赞数
+     * @param id
+     * @return
+     */
+    boolean addQuestionLikeCount(Integer id);
+
+    /**
+     * question点赞数
+     * @param id
+     * @return
+     */
+    boolean lessQuestionLikeCount(Integer id);
 }

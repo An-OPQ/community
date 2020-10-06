@@ -23,12 +23,14 @@
             border: 0;
             border-top: 1px solid #eee;
         }
+
         .modal-dialog, .modal-content {
             top: 10%;
             width: 1000px;
             height: 600px;
             margin: 0 auto;
         }
+
         .modal-content label {
             font-size: 14px;
         }
@@ -63,12 +65,12 @@
                        data-target="#myModal">
                         <span class=" glyphicon glyphicon-pencil" aria-hidden="true"> 编辑 </span>
                     </a>
-                    <div class="pull-right">
+                    <div class="pull-right likeModel">
                         <span class="label label-success" role="button" onclick="like(this)">
-                            <span class="glyphicon glyphicon-thumbs-up" >&thinsp;顶</span>
+                            <span class="glyphicon glyphicon-thumbs-up">&thinsp;顶</span>
                         </span>&nbsp;
                         <span class="label label-warning" role="button" onclick="like(this)">
-                            <span class="glyphicon glyphicon-thumbs-down" >&thinsp;踩</span>
+                            <span class="glyphicon glyphicon-thumbs-down">&thinsp;踩</span>
                         </span>
                     </div>
                 </div>
@@ -530,12 +532,63 @@
         })
     })
 
+    /**
+     * !$(objEle).is('.dz')判断是按钮是按下还是按起
+     *
+     * $(objEle).children().is('.glyphicon-thumbs-up')判断是‘顶’(true)还是‘踩’(false)
+     * @param objEle
+     */
     function like(objEle) {
-        if (!$(objEle).is('.dz')){
-            $(objEle).css("opacity",0.3).addClass("dz").siblings().css("opacity",1.0).removeClass("dz")
-        }else{
-            $(objEle).css("opacity",1.0).removeClass("dz").siblings().css("opacity",1.0).removeClass("dz")
+        if ($(objEle).children().is('.glyphicon-thumbs-up')) {
+            if (!$(objEle).is('.dz')) {
+                if (addQuestionLikeCount()) {
+                    $(objEle).css("opacity", 0.3).addClass("dz").siblings().css("opacity", 1.0).removeClass("dz")
+                }
+            } else {
+                if (lessQuestionLikeCount()) {
+                    $(objEle).css("opacity",1.0).removeClass("dz").siblings().css("opacity",1.0).removeClass("dz")
+                }
+            }
+        } else {
+            if (!$(objEle).is('.dz')) {
+                if (lessQuestionLikeCount()) {
+                    $(objEle).css("opacity", 0.3).addClass("dz").siblings().css("opacity", 1.0).removeClass("dz")
+                }
+            } else {
+                if (addQuestionLikeCount()) {
+                    $(objEle).css("opacity",1.0).removeClass("dz").siblings().css("opacity",1.0).removeClass("dz")
+                }
+
+            }
         }
+    }
+
+    function addQuestionLikeCount() {
+        var flag=false;
+        $.ajax({
+            async:false,
+            url: "publish/addQuestionLikeCount/" + id + "",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                flag=response
+            }
+        })
+        return flag;
+    }
+
+    function lessQuestionLikeCount() {
+        var flag=false;
+        $.ajax({
+            async:false,
+            url: "publish/lessQuestionLikeCount/" + id + "",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                flag=response
+            }
+        })
+        return flag;
     }
 </script>
 </body>
