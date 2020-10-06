@@ -55,7 +55,6 @@ $(function () {
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
             $("#dLabel").html(response + '<span class=\'caret\'></span>');
-            initModel();
         },
         error: function (response) {
         }
@@ -77,34 +76,6 @@ $('#logout').click(function () {
         }
     })
 })
-
-/**
- * 板块分类
- */
-function initModel() {
-    $.ajax({
-        url: 'user/initModel',
-        type: 'GET',
-        contentType: 'application/json;charset=utf-8',
-        success: function (response) {
-            var modelObj = $("#model");
-            modelObj.empty();
-            var modelStr = "";
-            for (let i = 0; i < response.length; i++) {
-                var model = response[i];
-                modelStr += "<li onclick='searchQuestion(1,null,"+model.typeId+")'><a>" + model.typeName + "</a></li>"
-            }
-            modelObj.append(modelStr);
-        },
-        error: function (response) {
-        }
-    })
-}
-$(".model").on("click","li",function (){
-    $(this).addClass("active").siblings().removeClass("active")
-    $(".nav-tabs li").removeClass("active")
-})
-
 
 /**
  * 获取登录用户ID
