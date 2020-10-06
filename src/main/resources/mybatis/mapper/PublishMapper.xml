@@ -75,7 +75,7 @@
     </insert>
 
     <select id="getPublishMessage" resultMap="questionList">
-        SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid order by q.createDate  DESC
+        SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid order by q.likeCount DESC ,q.createDate DESC
     </select>
 
     <select id="searchQuestion" resultMap="questionList">
