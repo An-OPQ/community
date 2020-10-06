@@ -109,6 +109,6 @@
     </insert>
 
     <select id="getAllCommentByQuestion" parameterType="long" resultMap="commentList">
-            select c.*,u.accountName,u.icon from comment c left join userinfo u on c.creatorId=u.id where questionId=#{questionId}
+            select c.*,u.accountName,u.icon,u.roleid from comment c left join userinfo u on c.creatorId=u.id where questionId=#{questionId}
     </select>
 </mapper>

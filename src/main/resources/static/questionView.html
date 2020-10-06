@@ -23,16 +23,37 @@
             border: 0;
             border-top: 1px solid #eee;
         }
-
         .modal-dialog, .modal-content {
             top: 10%;
             width: 1000px;
             height: 600px;
             margin: 0 auto;
         }
-
         .modal-content label {
             font-size: 14px;
+        }
+        .label{
+            padding: 5px;
+        }
+        .label-danger{
+            opacity: 0.5;
+        }
+        .label-info{
+            background-color: #fff;
+            border: 1px solid #f5f5f5;
+            border-radius: 4px;
+            opacity: 0.7;
+            color: #999;
+        }
+        .commentDescriptionVal{
+            margin: 15px 0 15px 10px;
+        }
+        .label-default{
+            opacity: 0.7;
+            background-color: #499ef3;
+        }
+        .menu{
+            margin-bottom:10px;
         }
     </style>
 </head>
@@ -107,6 +128,7 @@
                 </div>
             </div>
         </div>
+        <br>
         <!--右边信息块-->
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -332,24 +354,26 @@
                             " </a>\n";
                     }
                     bodyStr += "</div>\n" +
-                        "           <div class=\"media-body\" id=\"comment-body-3315\">\n" +
+                        "           <div class=\"media-body\">\n" +
                         "               <h5 class=\"media-heading\">\n" +
-                        "                   <span>" + comment.accountName + "</span>\n" +
+                        "                   <span class='label label-danger'>" + comment.accountName + "</span>\n" +
                         "               </h5>\n" +
-                        "               <div>" + comment.comment.commentDescription + "</div>\n" +
+                        "               <div class='commentDescriptionVal'>" + comment.comment.commentDescription + "</div>\n" +
                         "               <div class=\"menu\">\n" +
-                        "                   <span data-id=\"3316\" class=\"comment-icon\" onclick='LikeCount(this)'>\n" +
+                        "                   <span data-id=\"3316\" class=\"comment-icon\">\n" +
                         "                    <input type=\"hidden\" class=\"commentId\" value=\"" + comment.comment.id + "\">\n" +
-                        "                       <span class=\"glyphicon glyphicon-thumbs-up icon\"></span>\n" +
-                        "                       <span id=\'cLikeCount\' >" + comment.comment.likeCount + "</span>\n" +
-                        "                   <span data-id=\"3315\" class=\"comment-icon\">\n" +
+                        "                   <span class=\'label label-info\'>\n"+
+                        "                       <span class=\"glyphicon glyphicon-thumbs-up\"></span>\n" +
+                        "                       <span id=\'cLikeCount\' >"+ comment.comment.likeCount + "</span>\n" +
+                        "                   </span>&nbsp;"+
+                        "                   <span class=\"label label-default\" onclick=\'secondaryComment(this)\'>\n" +
                         "                       <span class=\"glyphicon glyphicon-comment\"></span>\n" +
                         "                       <span>" + comment.comment.commentCount + "</span>\n" +
                         "                   </span>\n" +
                         "                   <span class=\"pull-right\">" + comment.comment.commentDate + "</span>\n" +
                         "               </div>\n" +
                         "          <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments\"\n" +
-                        "               id=\"comment-3315\">\n" +
+                        "               >\n" +
                         "              <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n" +
                         "                  <input type=\"text\" class=\"form-control\" placeholder=\"评论一下……\"/>" +
                         "                  <button type=\"button\" class=\"btn btn-success pull-right\"\n" +
@@ -444,6 +468,18 @@
     //         })
     //     }
     // }
+
+
+    //二级评论
+    function secondaryComment(srcEle){
+        var secondaryCommentObj = $(srcEle).parent().parent().next();
+        if (!secondaryCommentObj.is('.active')){
+            secondaryCommentObj.addClass("active").css("display","block")
+        }else{
+            secondaryCommentObj.css("display","none").removeClass("active")
+        }
+    }
+
 
     //富文本编辑器,稍后整合
     var E = window.wangEditor;
@@ -576,7 +612,6 @@
         })
         return flag;
     }
-
     function lessQuestionLikeCount() {
         var flag = false;
         $.ajax({
@@ -590,7 +625,6 @@
         })
         return flag;
     }
-
     //添加编辑权限
     function updateQuestion() {
         var objStr = "<a class=\"community-menu\" href=\"#myModal\" role=\"button\" data-toggle=\"modal\"\n" +
@@ -601,7 +635,6 @@
             $("#updateQuestion").append(objStr)
         }
     }
-
 </script>
 </body>
 </html>
