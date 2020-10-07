@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author jerry
@@ -73,6 +74,18 @@ public class PublishServiceImpl implements PublishService {
 
     @Override
     public boolean secondarySubmit(CommentMulti commentMulti) {
-        return publishDao.secondarySubmit(commentMulti)>0;
+        boolean flag=false;
+        try {
+            flag= publishDao.secondarySubmit(commentMulti)>0;
+            flag= publishDao.addCommentCount(commentMulti)>0;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    @Override
+    public List<CommentMulti> secondaryComment(Integer id) {
+        return publishDao.secondaryComment(id);
     }
 }

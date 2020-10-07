@@ -13,7 +13,36 @@ public class CommentMulti {
   private String comMultiContent;
   private long comMultiUserId;
   private java.sql.Timestamp  comMultiTime;
+  private long likeCount;
+  private long commentCount;
 
+
+
+  private UserInfo userInfo;
+
+  public UserInfo getUserInfo() {
+    return userInfo;
+  }
+
+  public long getLikeCount() {
+    return likeCount;
+  }
+
+  public void setLikeCount(long likeCount) {
+    this.likeCount = likeCount;
+  }
+
+  public long getCommentCount() {
+    return commentCount;
+  }
+
+  public void setCommentCount(long commentCount) {
+    this.commentCount = commentCount;
+  }
+
+  public void setUserInfo(UserInfo userInfo) {
+    this.userInfo = userInfo;
+  }
 
   public long getComMultiId() {
     return comMultiId;
@@ -66,6 +95,9 @@ public class CommentMulti {
             ", comMultiContent='" + comMultiContent + '\'' +
             ", comMultiUserId=" + comMultiUserId +
             ", comMultiTime=" + comMultiTime +
+            ", likeCount=" + likeCount +
+            ", commentCount=" + commentCount +
+            ", userInfo=" + userInfo +
             '}';
   }
 }

@@ -89,4 +89,11 @@ public interface PublishService {
      * @return
      */
     boolean secondarySubmit(CommentMulti commentMulti);
+
+    /**
+     * 查询所有的二级评论
+     * @param id
+     * @return
+     */
+    List<CommentMulti> secondaryComment(Integer id);
 }

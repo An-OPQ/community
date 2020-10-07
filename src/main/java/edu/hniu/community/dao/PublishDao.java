@@ -92,4 +92,18 @@ public interface PublishDao {
      * @return
      */
     int secondarySubmit(CommentMulti commentMulti);
+
+    /**
+     * 发布二级评论后添加回复数
+     * @return
+     */
+    int addCommentCount(CommentMulti commentMulti);
+
+    /**
+     * 查询所有的二级评论
+     * @param id
+     * @return
+     */
+    List<CommentMulti> secondaryComment(Integer id);
+
 }

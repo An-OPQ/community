@@ -389,7 +389,7 @@
                         "               </div>\n" +
                         "               <div id='commtentLevel2'>" +
                         "                <hr class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp\">" +
-                        "              </div>\n"+
+                        "              </div>\n" +
                         "           </div>\n" +
                         "         </div>\n" +
                         "     </div>\n" +
@@ -401,22 +401,6 @@
                 console.error(response)
             }
         })
-    }
-
-    function refreshSecondaryComment(srcEle,comID){
-        // $.ajax({
-        //     url: "publish/refreshSecondaryComment?id=" + id,
-        //     type: "GET",
-        //     contentType: "application/json;charset=utf-8",
-        //     success: function (response) {
-        //
-        //     },
-        //     error: function (response) {
-        //         console.error(response)
-        //     }
-        // })
-        console.log(srcEle)
-        console.log(comID)
     }
 
 
@@ -496,13 +480,60 @@
     //     }
     // }
 
-
-    //二级评论
+    //查询所有的二级评论
     function secondaryComment(srcEle, ID, accountName) {
+        if (!$(srcEle).parent().parent().next().children().next().is("div")){
+            $.ajax({
+                url: "publish/secondaryComment?id=" + ID,
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (response != null) {
+                        var objStr = "";
+                        for (let i = 0; i < response.length; i++) {
+                            var commentObj = response[i];
+                            var date=commentObj.comMultiTime.toString()
+                            date=date.substring(0,date.indexOf("T"))
+                            objStr += "<div class=\"media-body\">\n" +
+                                "    <h5 class=\"media-heading\" style='display: inline'>\n" +
+                                "        <span class=\"label label-danger\" style='color: #5BBF5A;background-color: #F5F5F5'>" +commentObj.userInfo.accountName + "</span><span style='color: lightgray'> 回复@ <span style='color: #5BBF5A'>" + accountName + "</span> : </span>\n" +
+                                "    </h5>\n" +
+                                "    <div class=\"commentDescriptionVal\" style='display: inline'>" + commentObj.comMultiContent + "</div>\n" +
+                                "    <div class=\"menuLevel2\">\n" +
+                                "        <span class=\"comment-icon\">\n" +
+                                "            <input type=\"hidden\" class=\"commentId\" value=\"1\">\n" +
+                                "            <span class=\"label label-info\">\n" +
+                                "                <span class=\"glyphicon glyphicon-thumbs-up\"></span>\n" +
+                                "                <span id=\"cLikeCount\">"+commentObj.likeCount+"</span>\n" +
+                                "            </span>&nbsp;\n" +
+                                "            <span class=\"label label-default\" onclick=\"secondaryComment(this)\">\n" +
+                                "                <span class=\"glyphicon glyphicon-comment\"></span>\n" +
+                                "                <span>0</span>\n" +
+                                "            </span>\n" +
+                                "            <span class=\"pull-right\" style='color: #999'>" + date + "</span>\n" +
+                                "        </span>\n" +
+                                "    </div>\n" +
+                                "</div>\n"+
+                                "<hr class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">"
+                        }
+                        $(srcEle).parent().parent().next().append(objStr);
+                    }
+                },
+                error: function (response) {
+                    console.error(response)
+                }
+            })
+        }
+        secondaryCommentBtn(srcEle, ID, accountName);
+
+    }
+
+    //添加评论框
+    function secondaryCommentBtn(srcEle, ID, accountName) {
         var objStr = " <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments\">\n" +
             "     <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n" +
             "         <input type=\"text\" class=\"form-control\" placeholder=\"回复@" + accountName + " : \"/>" +
-            "         <button type=\"button\" class=\"btn btn-success pull-right\" onclick=\'secondarySubmit(\"" + ID + "\",\"" + accountName + "\")\'  \n" +
+            "         <button type=\"button\" class=\"btn btn-success pull-right\" onclick=\'secondarySubmit(\"" + ID + "\",\"" + accountName + "\")\'\n" +
             "                 data-id=\"3315\">评论\n" +
             "         </button>\n" +
             "     </div>\n" +
@@ -514,13 +545,16 @@
                 secondaryCommentObj.parent().append(objStr)
             }
             secondaryCommentObj.next().css("display", "block")
+            secondaryCommentObj.css("display", "block")
+
         } else {
+            secondaryCommentObj.css("display", "none")
             secondaryCommentObj.next().css("display", "none")
             secondaryCommentObj.removeClass("active")
 
         }
     }
-
+    //发布二级评论
     function secondarySubmit(commentID, name) {
         var userID = $("#user_id").val()
         var commentVal = $(".sub-comments").find("input").val()
@@ -561,9 +595,11 @@
                         "            <span class=\"pull-right\">" + commentDate + "</span>\n" +
                         "        </span>\n" +
                         "    </div>\n" +
-                        "</div>"
+                        "</div>\n"+
+                        "<hr class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">"
                     $("#commtentLevel2").append(objStr);
                 }
+                $(".sub-comments").find("input").val("");
             },
             error: function (response) {
             }

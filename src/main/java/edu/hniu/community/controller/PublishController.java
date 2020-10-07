@@ -111,4 +111,9 @@ public class PublishController {
     public Object secondarySubmit(@RequestBody CommentMulti commentMulti) {
         return publishService.secondarySubmit(commentMulti);
     }
+
+    @GetMapping("/secondaryComment")
+    public Object secondaryComment(@RequestParam Integer id) {
+        return publishService.secondaryComment(id);
+    }
 }

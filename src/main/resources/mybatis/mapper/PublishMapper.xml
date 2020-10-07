@@ -31,6 +31,29 @@
         </collection>
     </resultMap>
 
+
+    <resultMap id="commentMultiList" type="CommentMulti">
+        <id property="comMultiId" column="com_multi_id"/>
+        <result property="comId" column="com_id"/>
+        <result property="comMultiContent" column="com_multi_content"/>
+        <result property="comMultiUserId" column="com_multi_user_id"/>
+        <result property="comMultiTime" column="com_multi_time"/>
+        <association property="userInfo" javaType="UserInfo">
+            <id property="id" column="uid"/>
+            <result property="password" column="password"/>
+            <result property="accountName" column="accountName"/>
+            <result property="roleid" column="roleid"/>
+            <result property="sex" column="sex"/>
+            <result property="icon" column="icon"/>
+            <result property="sginName" column="sginName"/>
+            <result property="qq" column="qq"/>
+            <result property="weChat" column="weChat"/>
+            <result property="mobile" column="mobile"/>
+            <result property="github" column="github"/>
+            <result property="microblog" column="microblog"/>
+        </association>
+    </resultMap>
+
     <insert id="publishMessage" parameterType="Question">
         insert into question(id,
         <trim suffixOverrides=",">
@@ -171,7 +194,7 @@
                 #{comId},
             </if>
             <if test="comMultiContent!=null and comMultiContent!=''">
-               #{comMultiContent},
+                #{comMultiContent},
             </if>
             <if test="comMultiUserId!=null and comMultiUserId!=''">
                 #{comMultiUserId},
@@ -181,6 +204,13 @@
             </if>
         </trim>
         )
-
     </insert>
+    
+    <update id="addCommentCount" parameterType="CommentMulti">
+        UPDATE comment set commentCount =commentCount +1 WHERE id=#{comId}
+    </update>
+
+    <select id="secondaryComment" parameterType="Integer" resultMap="commentMultiList">
+        SELECT  cm.*,u.id,u.accountName,u.roleid FROM comment_multi cm left join userinfo u on cm.com_multi_user_id =u.id WHERE cm.com_id =#{id}
+    </select>
 </mapper>
