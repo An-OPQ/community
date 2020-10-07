@@ -1,13 +1,18 @@
-package com.sample;
+package edu.hniu.community.domain;
 
 
+import java.sql.Timestamp;
+
+/**
+ * @author jerry
+ */
 public class CommentMulti {
 
   private long comMultiId;
   private long comId;
   private String comMultiContent;
   private long comMultiUserId;
-  private java.sql.Timestamp comMultiTime;
+  private java.sql.Timestamp  comMultiTime;
 
 
   public long getComMultiId() {
@@ -45,13 +50,22 @@ public class CommentMulti {
     this.comMultiUserId = comMultiUserId;
   }
 
-
-  public java.sql.Timestamp getComMultiTime() {
+  public Timestamp getComMultiTime() {
     return comMultiTime;
   }
 
-  public void setComMultiTime(java.sql.Timestamp comMultiTime) {
+  public void setComMultiTime(Timestamp comMultiTime) {
     this.comMultiTime = comMultiTime;
   }
 
+  @Override
+  public String toString() {
+    return "CommentMulti{" +
+            "comMultiId=" + comMultiId +
+            ", comId=" + comId +
+            ", comMultiContent='" + comMultiContent + '\'' +
+            ", comMultiUserId=" + comMultiUserId +
+            ", comMultiTime=" + comMultiTime +
+            '}';
+  }
 }

@@ -148,4 +148,39 @@
     <update id="lessQuestionLikeCount" parameterType="Integer">
         UPDATE question	set likeCount=likeCount-1 WHERE id=#{id}
     </update>
+
+    <insert id="secondarySubmit" parameterType="CommentMulti">
+        insert into comment_multi(com_multi_id,
+        <trim suffixOverrides=",">
+            <if test="comId!=null and comId!=''">
+                com_id,
+            </if>
+            <if test="comMultiContent!=null and comMultiContent!=''">
+                com_multi_content,
+            </if>
+            <if test="comMultiUserId!=null and comMultiUserId!=''">
+                com_multi_user_id,
+            </if>
+            <if test="comMultiTime!=null">
+                com_multi_time
+            </if>
+        </trim>
+        ) values(default ,
+        <trim suffixOverrides=",">
+            <if test="comId!=null and comId!=''">
+                #{comId},
+            </if>
+            <if test="comMultiContent!=null and comMultiContent!=''">
+               #{comMultiContent},
+            </if>
+            <if test="comMultiUserId!=null and comMultiUserId!=''">
+                #{comMultiUserId},
+            </if>
+            <if test="comMultiTime!=null">
+                #{comMultiTime}
+            </if>
+        </trim>
+        )
+
+    </insert>
 </mapper>

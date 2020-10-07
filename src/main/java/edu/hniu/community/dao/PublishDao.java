@@ -1,5 +1,6 @@
 package edu.hniu.community.dao;
 
+import edu.hniu.community.domain.CommentMulti;
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.vo.searchQuestionVo;
 
@@ -84,4 +85,11 @@ public interface PublishDao {
      * @return
      */
     int lessQuestionLikeCount(Integer id);
+
+    /**
+     * 发布二级评论
+     * @param commentMulti
+     * @return
+     */
+    int secondarySubmit(CommentMulti commentMulti);
 }

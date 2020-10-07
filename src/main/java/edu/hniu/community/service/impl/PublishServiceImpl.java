@@ -1,6 +1,7 @@
 package edu.hniu.community.service.impl;
 
 import edu.hniu.community.dao.PublishDao;
+import edu.hniu.community.domain.CommentMulti;
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.service.PublishService;
 import edu.hniu.community.vo.searchQuestionVo;
@@ -68,5 +69,10 @@ public class PublishServiceImpl implements PublishService {
     @Override
     public boolean lessQuestionLikeCount(Integer id) {
         return publishDao.lessQuestionLikeCount(id)>0;
+    }
+
+    @Override
+    public boolean secondarySubmit(CommentMulti commentMulti) {
+        return publishDao.secondarySubmit(commentMulti)>0;
     }
 }

@@ -1,5 +1,6 @@
 package edu.hniu.community.service;
 
+import edu.hniu.community.domain.CommentMulti;
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.vo.searchQuestionVo;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -81,4 +82,11 @@ public interface PublishService {
      * @return
      */
     boolean lessQuestionLikeCount(Integer id);
+
+    /**
+     * 发布二级评论
+     * @param commentMulti
+     * @return
+     */
+    boolean secondarySubmit(CommentMulti commentMulti);
 }

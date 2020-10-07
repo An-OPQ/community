@@ -23,37 +23,50 @@
             border: 0;
             border-top: 1px solid #eee;
         }
+
         .modal-dialog, .modal-content {
             top: 10%;
             width: 1000px;
             height: 600px;
             margin: 0 auto;
         }
+
         .modal-content label {
             font-size: 14px;
         }
-        .label{
+
+        .label {
             padding: 5px;
         }
-        .label-danger{
+
+        .label-danger {
             opacity: 0.5;
         }
-        .label-info{
+
+        .label-info {
             background-color: #fff;
             border: 1px solid #f5f5f5;
             border-radius: 4px;
             opacity: 0.7;
             color: #999;
         }
-        .commentDescriptionVal{
+
+        .commentDescriptionVal {
             margin: 15px 0 15px 10px;
         }
-        .label-default{
+
+        .label-default {
             opacity: 0.7;
             background-color: #499ef3;
         }
-        .menu{
-            margin-bottom:10px;
+
+        .menu {
+            margin-bottom: 10px;
+        }
+
+        .menuLevel2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -218,6 +231,7 @@
     var titleVal
     var descriptionVal
     var ModelVal
+    var accountName
 
     /**
      * 查询登录的用户为？
@@ -271,6 +285,7 @@
                 titleVal = response[0].question.title
                 descriptionVal = response[0].question.description
                 ModelVal = response[0].question.typeid
+                accountName = response[0].accountName
                 getAllCommentByQuestion();
                 updateViewCount();
                 updateQuestion()
@@ -362,25 +377,20 @@
                         "               <div class=\"menu\">\n" +
                         "                   <span data-id=\"3316\" class=\"comment-icon\">\n" +
                         "                    <input type=\"hidden\" class=\"commentId\" value=\"" + comment.comment.id + "\">\n" +
-                        "                   <span class=\'label label-info\'>\n"+
+                        "                   <span class=\'label label-info\'>\n" +
                         "                       <span class=\"glyphicon glyphicon-thumbs-up\"></span>\n" +
-                        "                       <span id=\'cLikeCount\' >"+ comment.comment.likeCount + "</span>\n" +
-                        "                   </span>&nbsp;"+
-                        "                   <span class=\"label label-default\" onclick=\'secondaryComment(this)\'>\n" +
+                        "                       <span id=\'cLikeCount\' >" + comment.comment.likeCount + "</span>\n" +
+                        "                   </span>&nbsp;" +
+                        "                   <span class=\"label label-default\" onclick=\'secondaryComment(this,\"" + comment.comment.id + "\",\"" + comment.accountName + "\")\'>\n" +
                         "                       <span class=\"glyphicon glyphicon-comment\"></span>\n" +
                         "                       <span>" + comment.comment.commentCount + "</span>\n" +
                         "                   </span>\n" +
                         "                   <span class=\"pull-right\">" + comment.comment.commentDate + "</span>\n" +
                         "               </div>\n" +
-                        "          <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments\"\n" +
-                        "               >\n" +
-                        "              <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n" +
-                        "                  <input type=\"text\" class=\"form-control\" placeholder=\"评论一下……\"/>" +
-                        "                  <button type=\"button\" class=\"btn btn-success pull-right\"\n" +
-                        "                          data-id=\"3315\">评论\n" +
-                        "                  </button>\n" +
-                        "              </div>\n" +
-                        "          </div>" + "           </div>\n" +
+                        "               <div id='commtentLevel2'>" +
+                        "                <hr class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp\">" +
+                        "              </div>\n"+
+                        "           </div>\n" +
                         "         </div>\n" +
                         "     </div>\n" +
                         " </div>"
@@ -392,6 +402,23 @@
             }
         })
     }
+
+    function refreshSecondaryComment(srcEle,comID){
+        // $.ajax({
+        //     url: "publish/refreshSecondaryComment?id=" + id,
+        //     type: "GET",
+        //     contentType: "application/json;charset=utf-8",
+        //     success: function (response) {
+        //
+        //     },
+        //     error: function (response) {
+        //         console.error(response)
+        //     }
+        // })
+        console.log(srcEle)
+        console.log(comID)
+    }
+
 
     function updateViewCount() {
         var id = $("#question_id").val();
@@ -471,13 +498,76 @@
 
 
     //二级评论
-    function secondaryComment(srcEle){
+    function secondaryComment(srcEle, ID, accountName) {
+        var objStr = " <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments\">\n" +
+            "     <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n" +
+            "         <input type=\"text\" class=\"form-control\" placeholder=\"回复@" + accountName + " : \"/>" +
+            "         <button type=\"button\" class=\"btn btn-success pull-right\" onclick=\'secondarySubmit(\"" + ID + "\",\"" + accountName + "\")\'  \n" +
+            "                 data-id=\"3315\">评论\n" +
+            "         </button>\n" +
+            "     </div>\n" +
+            "  </div>";
         var secondaryCommentObj = $(srcEle).parent().parent().next();
-        if (!secondaryCommentObj.is('.active')){
-            secondaryCommentObj.addClass("active").css("display","block")
-        }else{
-            secondaryCommentObj.css("display","none").removeClass("active")
+        if (!secondaryCommentObj.is('.active')) {
+            secondaryCommentObj.addClass("active");
+            if (!secondaryCommentObj.next().is('.collapse')) {
+                secondaryCommentObj.parent().append(objStr)
+            }
+            secondaryCommentObj.next().css("display", "block")
+        } else {
+            secondaryCommentObj.next().css("display", "none")
+            secondaryCommentObj.removeClass("active")
+
         }
+    }
+
+    function secondarySubmit(commentID, name) {
+        var userID = $("#user_id").val()
+        var commentVal = $(".sub-comments").find("input").val()
+        var date = new Date();
+        var Month = date.getMonth() + 1;
+        var commentDate = date.getFullYear() + "-" + Month + "-" + date.getDate();
+        var json = {
+            comMultiUserId: userID,
+            comId: commentID,
+            comMultiContent: commentVal,
+            comMultiTime: date
+        }
+        var jsonStr = JSON.stringify(json)
+        $.ajax({
+            url: "publish/secondarySubmit",
+            type: "POST",
+            data: jsonStr,
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                if (response) {
+                    var objStr = "";
+                    objStr += "<div class=\"media-body\">\n" +
+                        "    <h5 class=\"media-heading\" style='display: inline'>\n" +
+                        "        <span class=\"label label-danger\">" + accountName + "</span><span style='color: lightgray'> 回复@ " + name + " : </span>\n" +
+                        "    </h5>\n" +
+                        "    <div class=\"commentDescriptionVal\" style='display: inline'>" + commentVal + "</div>\n" +
+                        "    <div class=\"menuLevel2\">\n" +
+                        "        <span class=\"comment-icon\">\n" +
+                        "            <input type=\"hidden\" class=\"commentId\" value=\"1\">\n" +
+                        "            <span class=\"label label-info\">\n" +
+                        "                <span class=\"glyphicon glyphicon-thumbs-up\"></span>\n" +
+                        "                <span id=\"cLikeCount\">0</span>\n" +
+                        "            </span>&nbsp;\n" +
+                        "            <span class=\"label label-default\" onclick=\"secondaryComment(this)\">\n" +
+                        "                <span class=\"glyphicon glyphicon-comment\"></span>\n" +
+                        "                <span>0</span>\n" +
+                        "            </span>\n" +
+                        "            <span class=\"pull-right\">" + commentDate + "</span>\n" +
+                        "        </span>\n" +
+                        "    </div>\n" +
+                        "</div>"
+                    $("#commtentLevel2").append(objStr);
+                }
+            },
+            error: function (response) {
+            }
+        })
     }
 
 
@@ -612,6 +702,7 @@
         })
         return flag;
     }
+
     function lessQuestionLikeCount() {
         var flag = false;
         $.ajax({
@@ -625,6 +716,7 @@
         })
         return flag;
     }
+
     //添加编辑权限
     function updateQuestion() {
         var objStr = "<a class=\"community-menu\" href=\"#myModal\" role=\"button\" data-toggle=\"modal\"\n" +
