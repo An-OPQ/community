@@ -530,6 +530,7 @@
 
     //添加评论框
     function secondaryCommentBtn(srcEle, ID, accountName) {
+        $(".sub-comments").remove()
         var objStr = " <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments\">\n" +
             "     <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n" +
             "         <input type=\"text\" class=\"form-control\" placeholder=\"回复@" + accountName + " : \"/>" +
