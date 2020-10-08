@@ -13,13 +13,16 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(sessionInterceptor).addPathPatterns("");
-//                .excludePathPatterns("login.html")
-//                .excludePathPatterns("main.html")
-//                .excludePathPatterns("/**/*.html")
-//                .excludePathPatterns("/**/*.js")
-//                .excludePathPatterns("/**/*.css")
-//                .excludePathPatterns("/**/*.png")
-//                .excludePathPatterns("/**/*.jpg");
+        registry.addInterceptor(sessionInterceptor).addPathPatterns("/**")
+                .excludePathPatterns("/login.html")
+                .excludePathPatterns("/register.html")
+                .excludePathPatterns("/reset.html")
+                .excludePathPatterns("/forgot.html")
+                .excludePathPatterns("/user/**")
+                .excludePathPatterns("/management/loginCheck")
+                .excludePathPatterns("/**/*.js")
+                .excludePathPatterns("/**/*.css")
+                .excludePathPatterns("/**/*.png")
+                .excludePathPatterns("/**/*.jpg");
     }
 }

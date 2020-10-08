@@ -10,6 +10,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author jerry
+ */
 @Service
 public class SessionInterceptor implements HandlerInterceptor {
 
@@ -19,7 +22,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //获取cookie中的token的值，拿到token的值去数据库里面查出user的email的值，再去保存到Session里面。
-        boolean falg = false;
+        boolean flag = false;
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
@@ -27,13 +30,16 @@ public class SessionInterceptor implements HandlerInterceptor {
                     String token = cookie.getValue();
                     Object email = request.getSession().getAttribute(token);
                     if (email != null) {
-                        falg = true;
+                        flag = true;
                     }
-                    response.sendRedirect(request.getContextPath() + "login.html");
                 }
             }
         }
-        return falg;
+        System.out.println(flag);
+        if (!flag){
+            response.sendRedirect(request.getContextPath() + "/login.html");
+        }
+        return flag;
     }
 
     @Override

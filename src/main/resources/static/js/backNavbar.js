@@ -8,7 +8,7 @@ document.writeln("					<span class=\'icon-bar\'></span>");
 document.writeln("					<span class=\'icon-bar\'></span>");
 document.writeln("					<span class=\'icon-bar\'></span>");
 document.writeln("				</button>");
-document.writeln("				<a class=\'navbar-brand\' href=\'userManger.html\' >求知论坛管理</a>");
+document.writeln("				<a class=\'navbar-brand\' href=\'contentManager.html\' >求知论坛管理</a>");
 document.writeln("			</div>");
 document.writeln("			<div class=\'collapse navbar-collapse\'>");
 document.writeln("				<ul class=\'nav navbar-nav navbar-left text-center\' id=\'navbarObj\'>");
