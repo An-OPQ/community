@@ -1,13 +1,15 @@
 package edu.hniu.community.domain;
 
 
+import java.sql.Timestamp;
+
 public class Comment {
 
   private long id;
   private long creatorId;
   private long questionId;
   private String commentDescription;
-  private String commentDate;
+  private java.sql.Timestamp commentDate;
   private String likeCount;
   private String commentCount;
 
@@ -48,14 +50,13 @@ public class Comment {
   }
 
 
-  public String getCommentDate() {
+  public Timestamp getCommentDate() {
     return commentDate;
   }
 
-  public void setCommentDate(String commentDate) {
+  public void setCommentDate(Timestamp commentDate) {
     this.commentDate = commentDate;
   }
-
 
   public String getLikeCount() {
     return likeCount;

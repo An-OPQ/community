@@ -74,7 +74,7 @@
             <if test="commentDescription != null and commentDescription != ''">
                 commentDescription,
             </if>
-            <if test="commentDate != null and commentDate != ''">
+            <if test="commentDate != null">
                 commentDate,
             </if>
             <if test="likeCount != null and likeCount != ''">
@@ -95,7 +95,7 @@
             <if test="commentDescription != null and commentDescription != ''">
                 #{commentDescription},
             </if>
-            <if test="commentDate != null and commentDate != ''">
+            <if test="commentDate != null">
                 #{commentDate},
             </if>
             <if test="likeCount != null and likeCount != ''">

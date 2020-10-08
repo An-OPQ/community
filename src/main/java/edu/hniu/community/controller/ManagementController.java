@@ -169,4 +169,26 @@ public class ManagementController {
         List<userAndRoleListVo> userAndRoleListVoList = managementService.searchUser(searchUserVo);
         return new PageInfo<>(userAndRoleListVoList);
     }
+
+    @GetMapping("/getAllComment")
+    public Object getAllComment(@RequestParam Integer pageNo) {
+        PageHelper.startPage(pageNo,questionPageSize);
+        List<AllCommentVo> allCommentVoList=managementService.getAllComment();
+        return new PageInfo<>(allCommentVoList);
+    }
+
+    @DeleteMapping("/deleteComment")
+    public Object deleteComment(@RequestBody AllCommentVo allCommentVo) {
+        return managementService.deleteComment(allCommentVo);
+    }
+
+    /**
+     * 置顶精华帖
+     * @param id
+     * @return
+     */
+    @GetMapping("/topPost")
+    public Object topPost(@RequestParam long id) {
+        return managementService.topPost(id);
+    }
 }

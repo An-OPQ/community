@@ -303,13 +303,11 @@
         var questionId = $("#question_id").val();
         var commentDescription = $("#comment_content").val();
         var date = new Date();
-        var Month = date.getMonth() + 1;
-        var commentDate = date.getFullYear() + "-" + Month + "-" + date.getDate();
         var json = {
             creatorId: creatorId,
             questionId: questionId,
             commentDescription: commentDescription,
-            commentDate: commentDate
+            commentDate: date
         }
         var jsonStr = JSON.stringify(json)
         $.ajax({
@@ -351,6 +349,8 @@
                 $("#Reply span").text(response.length)
                 for (let i = 0; i < response.length; i++) {
                     var comment = response[i];
+                    var date=comment.comment.commentDate.toString()
+                    date=date.substring(0,date.indexOf("T"))
                     var bodyStr = "";
                     bodyStr += "<div id=\"commentDescription\">\n" +
                         "   <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 comments\">\n" +
@@ -384,7 +384,7 @@
                         "                       <span class=\"glyphicon glyphicon-comment\"></span>\n" +
                         "                       <span>" + comment.comment.commentCount + "</span>\n" +
                         "                   </span>\n" +
-                        "                   <span class=\"pull-right\">" + comment.comment.commentDate + "</span>\n" +
+                        "                   <span class=\"pull-right\">" + date+ "</span>\n" +
                         "               </div>\n" +
                         "               <div id='commtentLevel2'>" +
                         "                <hr class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp\">" +
@@ -637,29 +637,6 @@
     }
     editor.create();
 
-    $(".community-menu").click(function () {
-        $.ajax({
-            url: "management/getAllTagName",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            success: function (response) {
-                $("#edit_title").empty().val(titleVal);
-                editor.txt.html(descriptionVal);
-                var tabObj = $("#select_model");
-                tabObj.empty();
-                var tabStr = "";
-                for (let i = 0; i < response.length; i++) {
-                    var tag = response[i]
-                    tabStr += "<option value=" + tag.typeId + ">" + tag.typeName + "</option>"
-                }
-                tabObj.append(tabStr)
-                $("#select_model").find("option[value=" + ModelVal + "]").attr("selected", true)
-            },
-            error: function (response) {
-            }
-        })
-    })
-
     $("#btn_submit2").click(function () {
         var titleVal = $("#edit_title").val();
         var descriptionVal = editor.txt.html();
@@ -762,6 +739,26 @@
             "</a>"
         if ($("#user_id").val() === $("#author_id").val()) {
             $("#updateQuestion").append(objStr)
+            $.ajax({
+                url: "management/getAllTagName",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    $("#edit_title").empty().val(titleVal);
+                    editor.txt.html(descriptionVal);
+                    var tabObj = $("#select_model");
+                    tabObj.empty();
+                    var tabStr = "";
+                    for (let i = 0; i < response.length; i++) {
+                        var tag = response[i]
+                        tabStr += "<option value=" + tag.typeId + ">" + tag.typeName + "</option>"
+                    }
+                    tabObj.append(tabStr)
+                    $("#select_model").find("option[value=" + ModelVal + "]").attr("selected", true)
+                },
+                error: function (response) {
+                }
+            })
         }
     }
 </script>

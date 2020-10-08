@@ -154,7 +154,7 @@
                 "                 </button>\n" +
                 "                <ul class=\"dropdown-menu\">\n" +
                 "                       <li><a href=\"questionView.html?id=" + question.id + "\">查看</a></li>\n" +
-                "                       <li><a href=\"#\" >修改模块</a></li>\n" +
+                "                       <li><a href=\"#\" onclick=\'topPost(" + question.id + ")\'>置顶精华贴</a></li>\n" +
                 "                       <li><a href=\"#\" onclick=\'deleteQuestion(" + question.id + ",this)\' >删除</a></li>\n" +
                 "                     </ul>\n" +
                 "             </div>\n" +
@@ -384,6 +384,29 @@
                 console.log(response)
             }
         })
+    }
+
+    /**
+     * 置顶精华帖
+     */
+    function topPost(questionID){
+        $.ajax({
+            url: "management/topPost?id=" + questionID,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response){
+                    $.toastr.success("置顶成功", {
+                        position: 'top-center'
+                    })
+                }
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+
     }
 </script>
 </html>

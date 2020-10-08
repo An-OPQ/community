@@ -149,4 +149,23 @@ public interface ManagementService {
     boolean deleteBatch(int[] array);
 
 
+    /**
+     * 查询所有的评论
+     * @return
+     */
+    List<AllCommentVo> getAllComment();
+
+    /**
+     * 删除评论
+     * @param allCommentVo
+     * @return
+     */
+    boolean deleteComment(AllCommentVo allCommentVo);
+
+    /**
+     * 置顶精华帖
+     * @param id
+     * @return
+     */
+    boolean topPost(long id);
 }

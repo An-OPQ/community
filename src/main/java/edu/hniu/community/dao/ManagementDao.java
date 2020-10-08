@@ -145,4 +145,37 @@ public interface ManagementDao {
      * @return
      */
     int deleteBatch(int[] array);
+
+    /**
+     * 查询所有的评论
+     * @return
+     */
+    List<AllCommentVo> getAllComment();
+
+    /**
+     * 删除评论
+     * @param allCommentVo
+     * @return
+     */
+    int deleteComment(AllCommentVo allCommentVo);
+
+    /**
+     * 置顶功能-查询当前帖子的LikeCount
+     * @param id
+     * @return
+     */
+    Question getLikeCountByTopPost(long id);
+
+    /**
+     * 置顶功能-查询顶部帖子的LikeCount
+     * @return
+     */
+    Question getTopQuestion();
+
+    /**
+     * 置顶功能-交换帖子的LikeCount
+     * @param question
+     * @return
+     */
+    int updateQuestionByTopPost(Question question);
 }

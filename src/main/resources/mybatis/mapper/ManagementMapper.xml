@@ -104,13 +104,13 @@
             </if>
         </where>
         order by
-         <if test="sort==0">
-             q.createDate
-         </if>
-         <if test="sort==1">
-             q.id
-         </if>
-         asc
+        <if test="sort==0">
+            q.createDate
+        </if>
+        <if test="sort==1">
+            q.id
+        </if>
+        asc
     </select>
 
     <delete id="deleteQuestion" parameterType="int">
@@ -238,4 +238,31 @@
             #{array}
         </foreach>
     </delete>
+
+    <select id="getAllComment" resultType="edu.hniu.community.vo.AllCommentVo">
+        SELECT c.*,u.email ,'1' AS level FROM comment c left join userinfo u on c.creatorId =u.id union
+            select cm.*,u.email,'2' AS level FROM comment_multi cm  left join userinfo u on cm.com_multi_user_id =u.id
+    </select>
+
+    <delete id="deleteComment">
+        DELETE FROM
+        <if test="level==1">
+            comment where id =#{id}
+        </if>
+        <if test="level==2">
+            comment_multi where com_multi_id =#{id}
+        </if>
+    </delete>
+
+    <select id="getLikeCountByTopPost" parameterType="long" resultType="Question">
+       SELECT id,likeCount FROM question q where id =#{id}
+    </select>
+
+    <select id="getTopQuestion" parameterType="long" resultType="Question">
+       SELECT id,likeCount FROM question q order by likeCount  DESC  limit 1
+    </select>
+
+    <update id="updateQuestionByTopPost" parameterType="Question">
+        update question set likeCount=#{likeCount}  where id=#{id}
+    </update>
 </mapper>

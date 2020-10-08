@@ -44,23 +44,18 @@
                     <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 评论管理</h3>
                 </div>
                 <div class="panel-body">
-                    <button type="button" class="btn btn-primary" style="float:left;">
+                    <button type="button" class="btn btn-primary" style="float:left;" id="deleteBatchByComment">
                         <i class="glyphicon glyphicon-plus"></i> 批量删除
                     </button>
 
                     <form class="form-inline" role="form" style="float:right;">
                         <div class="form-group has-feedback">
                             <div class="input-group">
-                                <div class="input-group-addon">发布日期</div>
+                                <div class="input-group-addon">评论日期</div>
                                 <input class="form-control has-success" id="email" type="text">
-                                <div class="input-group-addon">所属板块</div>
-                                <select class="form-control" id="status">
-                                    <option value="">所有</option>
-                                    <option value="">科学技术</option>
-                                </select>
                             </div>
                         </div>
-                        <button type="button" onclick="searchUserInfo()" class="btn btn-warning"><i
+                        <button type="button"  class="btn btn-warning" id="searchByComment"><i
                                 class="glyphicon glyphicon-search"></i>查询
                         </button>
                     </form>
@@ -73,10 +68,10 @@
                                 <th width="30">#</th>
                                 <th width="30"><input type="checkbox" onclick="return false;" checked="checked"></th>
                                 <th align="center">ID</th>
-                                <th class="wrap" width="35%">文章标题</th>
+                                <th class="wrap" width="35%">评论内容</th>
                                 <th class="wrap" width="200">作者账号</th>
-                                <th width="150">发布时间</th>
-                                <th width="150">所属板块</th>
+                                <th width="150">评论时间</th>
+                                <th width="150">点赞数</th>
                                 <th width="180">操作</th>
                             </tr>
                             </thead>
@@ -110,7 +105,7 @@
 <script>
     $(function () {
         $(".contentManager").addClass("active");
-        getAllQuestion(1);
+        getAllComment(1);
         $.toastr.config({
             time: 2000,
             size: 'lg',
@@ -123,15 +118,17 @@
         tbodyObj.empty();
         var tbodyStr = "";
         for (let i = 0; i < response.length; i++) {
-            var question = response[i]
+            var comment = response[i]
+            var date=comment.commentDate.toString()
+            date=date.substring(0,date.indexOf("T"))
             tbodyStr += "<tr>\n" +
                 "         <td class=\"tbody_id\"></td>\n" +
-                "         <td><input type=\"checkbox\" value=" + question.id + "></td>\n" +
-                "         <td class=\"tbody_id\">" + question.id + "</td>\n" +
-                "         <td class=\"wrap\" title=\"" + question.title + "\">" + question.title + "</td>\n" +
-                "         <td class=\"wrap\" title=\"" + question.email + "\">" + question.email + "</td>\n" +
-                "         <td>" + question.createDate + "</td>\n" +
-                "         <td>" + question.typeName + "</td>\n" +
+                "         <td><input type=\"checkbox\" value=" + comment.id + "></td>\n" +
+                "         <td class=\"tbody_id\">" + comment.id + "</td>\n" +
+                "         <td class=\"wrap\" title=\"" + comment.commentDescription + "\">" + comment.commentDescription + "</td>\n" +
+                "         <td class=\"wrap\" title=\"" + comment.email + "\">" + comment.email + "</td>\n" +
+                "         <td>" + date + "</td>\n" +
+                "         <td>" + comment.likeCount + "</td>\n" +
                 "         <td>\n" +
                 "             <div class=\"btn-group\" role=\"group\">\n" +
                 "                 <button type=\"button\" class=\"btn btn-default dropdown-toggle\"\n" +
@@ -139,9 +136,8 @@
                 "                     操作 <span class=\"caret\"></span>\n" +
                 "                 </button>\n" +
                 "                <ul class=\"dropdown-menu\">\n" +
-                "                       <li><a href=\"questionView.html?id=" + question.id + "\">查看</a></li>\n" +
-                "                       <li><a href=\"#\" >修改模块</a></li>\n" +
-                "                       <li><a href=\"#\" onclick=\'deleteQuestion(" + question.id + ",this)\' >删除</a></li>\n" +
+                "                       <li><a href=\"questionView.html?id=" + comment.questionId + "\">查看</a></li>\n" +
+                "                       <li><a href=\"#\" onclick=\'deleteComment(" + comment.id + "," + comment.level + ",this)\' >删除</a></li>\n" +
                 "                     </ul>\n" +
                 "             </div>\n" +
                 "         </td>\n" +
@@ -150,13 +146,13 @@
         tbodyObj.append(tbodyStr);
     }
 
-    function getAllQuestion(pageNum) {
+    function getAllComment(pageNum) {
         var pageNo = 1;
-        if (pageNum != undefined) {
+        if (pageNum !== undefined) {
             pageNo = pageNum
         }
         $.ajax({
-            url: "management/getAllQusetion?pageNo=" + pageNo,
+            url: "management/getAllComment?pageNo=" + pageNo,
             type: "GET",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
@@ -173,7 +169,7 @@
                         "    </a>\n" +
                         "</li>";
                 } else {
-                    spliteStr += "<li onclick='getAllQuestion(" + (response.pageNum - 1) + ")'>\n" +
+                    spliteStr += "<li onclick='getAllComment(" + (response.pageNum - 1) + ")'>\n" +
                         "   <a href=\"#\" aria-label=\"Previous\">\n" +
                         "      <span aria-hidden=\"true\">&lt;</span>\n" +
                         "    </a>\n" +
@@ -187,7 +183,7 @@
                             " </li>";
 
                     } else {
-                        spliteStr += "<li onclick='getAllQuestion(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
+                        spliteStr += "<li onclick='getAllComment(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
                     }
                 }
                 if (response.isLastPage) {
@@ -197,7 +193,7 @@
                         "    </a>\n" +
                         "</li>";
                 } else {
-                    spliteStr += "<li onclick='getAllUserinfo(" + (response.pageNum + 1) + ")'>\n" +
+                    spliteStr += "<li onclick='getAllComment(" + (response.pageNum + 1) + ")'>\n" +
                         "   <a href=\"#\" aria-label=\"Previous\">\n" +
                         "      <span aria-hidden=\"true\">&gt;</span>\n" +
                         "    </a>\n" +
@@ -210,11 +206,16 @@
             }
         })
     }
-
-    function deleteQuestion(id, srcEle) {
+    function deleteComment(id,level, srcEle) {
+        var json={
+            id:id,
+            level:level
+        }
+        var jsonStr=JSON.stringify(json)
         $.ajax({
-            url: "management/deleteQuestion?id=" + id,
+            url: "management/deleteComment",
             type: "DELETE",
+            data:jsonStr,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
@@ -224,7 +225,7 @@
                         position: 'top-center'
                     })
                 } else {
-                    $.toastr.success("删除失败", {
+                    $.toastr.error("删除失败", {
                         position: 'top-center'
                     })
                 }
@@ -234,5 +235,11 @@
             }
         })
     }
+
+    $("#searchByComment,#deleteBatchByComment").click(function (){
+        $.toastr.warning("功能待开发", {
+            position: 'top-center'
+        })
+    })
 </script>
 </html>

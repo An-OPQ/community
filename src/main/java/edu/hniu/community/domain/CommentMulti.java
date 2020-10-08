@@ -1,6 +1,8 @@
 package edu.hniu.community.domain;
 
 
+import edu.hniu.community.vo.AllCommentVo;
+
 import java.sql.Timestamp;
 
 /**
@@ -15,7 +17,6 @@ public class CommentMulti {
   private java.sql.Timestamp  comMultiTime;
   private long likeCount;
   private long commentCount;
-
 
 
   private UserInfo userInfo;
