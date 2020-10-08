@@ -349,8 +349,8 @@
                 $("#Reply span").text(response.length)
                 for (let i = 0; i < response.length; i++) {
                     var comment = response[i];
-                    var date=comment.comment.commentDate.toString()
-                    date=date.substring(0,date.indexOf("T"))
+                    var date = comment.comment.commentDate.toString()
+                    date = date.substring(0, date.indexOf("T"))
                     var bodyStr = "";
                     bodyStr += "<div id=\"commentDescription\">\n" +
                         "   <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 comments\">\n" +
@@ -384,7 +384,7 @@
                         "                       <span class=\"glyphicon glyphicon-comment\"></span>\n" +
                         "                       <span>" + comment.comment.commentCount + "</span>\n" +
                         "                   </span>\n" +
-                        "                   <span class=\"pull-right\">" + date+ "</span>\n" +
+                        "                   <span class=\"pull-right\">" + date + "</span>\n" +
                         "               </div>\n" +
                         "               <div id='commtentLevel2'>" +
                         "                <hr class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp\">" +
@@ -481,7 +481,7 @@
 
     //查询所有的二级评论
     function secondaryComment(srcEle, ID, accountName) {
-        if (!$(srcEle).parent().parent().next().children().next().is("div")){
+        if (!$(srcEle).parent().parent().next().children().next().is("div")) {
             $.ajax({
                 url: "publish/secondaryComment?id=" + ID,
                 type: "GET",
@@ -491,11 +491,11 @@
                         var objStr = "";
                         for (let i = 0; i < response.length; i++) {
                             var commentObj = response[i];
-                            var date=commentObj.comMultiTime.toString()
-                            date=date.substring(0,date.indexOf("T"))
+                            var date = commentObj.comMultiTime.toString()
+                            date = date.substring(0, date.indexOf("T"))
                             objStr += "<div class=\"media-body\">\n" +
                                 "    <h5 class=\"media-heading\" style='display: inline'>\n" +
-                                "        <span class=\"label label-danger\" style='color: #5BBF5A;background-color: #F5F5F5'>" +commentObj.userInfo.accountName + "</span><span style='color: lightgray'> 回复@ <span style='color: #5BBF5A'>" + accountName + "</span> : </span>\n" +
+                                "        <span class=\"label label-danger\" style='color: #5BBF5A;background-color: #F5F5F5'>" + commentObj.userInfo.accountName + "</span><span style='color: lightgray'> 回复@ <span style='color: #5BBF5A'>" + accountName + "</span> : </span>\n" +
                                 "    </h5>\n" +
                                 "    <div class=\"commentDescriptionVal\" style='display: inline'>" + commentObj.comMultiContent + "</div>\n" +
                                 "    <div class=\"menuLevel2\">\n" +
@@ -503,7 +503,7 @@
                                 "            <input type=\"hidden\" class=\"commentId\" value=\"1\">\n" +
                                 "            <span class=\"label label-info\">\n" +
                                 "                <span class=\"glyphicon glyphicon-thumbs-up\"></span>\n" +
-                                "                <span id=\"cLikeCount\">"+commentObj.likeCount+"</span>\n" +
+                                "                <span id=\"cLikeCount\">" + commentObj.likeCount + "</span>\n" +
                                 "            </span>&nbsp;\n" +
                                 "            <span class=\"label label-default\" onclick=\"secondaryComment(this)\">\n" +
                                 "                <span class=\"glyphicon glyphicon-comment\"></span>\n" +
@@ -512,7 +512,7 @@
                                 "            <span class=\"pull-right\" style='color: #999'>" + date + "</span>\n" +
                                 "        </span>\n" +
                                 "    </div>\n" +
-                                "</div>\n"+
+                                "</div>\n" +
                                 "<hr class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">"
                         }
                         $(srcEle).parent().parent().next().append(objStr);
@@ -554,6 +554,7 @@
 
         }
     }
+
     //发布二级评论
     function secondarySubmit(commentID, name) {
         var userID = $("#user_id").val()
@@ -561,7 +562,7 @@
         var date = new Date();
         var Month = date.getMonth() + 1;
         var commentDate = date.getFullYear() + "-" + Month + "-" + date.getDate();
-        var loginName=$("#UserInfo_accountName").text();
+        var loginName = $("#UserInfo_accountName").text();
         var json = {
             comMultiUserId: userID,
             comId: commentID,
@@ -579,7 +580,7 @@
                     var objStr = "";
                     objStr += "<div class=\"media-body\">\n" +
                         "    <h5 class=\"media-heading\" style='display: inline'>\n" +
-                        "        <span class=\"label label-danger\" style='color: #5BBF5A;background-color: #F5F5F5'>" +loginName + "</span><span style='color: lightgray'> 回复@ <span style='color: #5BBF5A'>" + name + "</span> : </span>\n" +
+                        "        <span class=\"label label-danger\" style='color: #5BBF5A;background-color: #F5F5F5'>" + loginName + "</span><span style='color: lightgray'> 回复@ <span style='color: #5BBF5A'>" + name + "</span> : </span>\n" +
                         "    </h5>\n" +
                         "    <div class=\"commentDescriptionVal\" style='display: inline'>" + commentVal + "</div>\n" +
                         "    <div class=\"menuLevel2\">\n" +
@@ -596,7 +597,7 @@
                         "            <span class=\"pull-right\">" + commentDate + "</span>\n" +
                         "        </span>\n" +
                         "    </div>\n" +
-                        "</div>\n"+
+                        "</div>\n" +
                         "<hr class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">"
                     $("#commtentLevel2").append(objStr);
                 }
@@ -738,8 +739,11 @@
             "    <span class=\" glyphicon glyphicon-pencil\" aria-hidden=\"true\"> 编辑 </span>\n" +
             "</a>"
         if ($("#user_id").val() === $("#author_id").val()) {
-            $("#updateQuestion").append(objStr)
+            if (!$("#updateQuestion").children().is(".community-menu")) {
+                $("#updateQuestion").append(objStr)
+            }
             $.ajax({
+                async: false,
                 url: "management/getAllTagName",
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
