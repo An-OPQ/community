@@ -285,7 +285,6 @@
                 titleVal = response[0].question.title
                 descriptionVal = response[0].question.description
                 ModelVal = response[0].question.typeid
-                accountName = response[0].accountName
                 getAllCommentByQuestion();
                 updateViewCount();
                 updateQuestion()
@@ -562,6 +561,7 @@
         var date = new Date();
         var Month = date.getMonth() + 1;
         var commentDate = date.getFullYear() + "-" + Month + "-" + date.getDate();
+        var loginName=$("#UserInfo_accountName").text();
         var json = {
             comMultiUserId: userID,
             comId: commentID,
@@ -579,7 +579,7 @@
                     var objStr = "";
                     objStr += "<div class=\"media-body\">\n" +
                         "    <h5 class=\"media-heading\" style='display: inline'>\n" +
-                        "        <span class=\"label label-danger\">" + accountName + "</span><span style='color: lightgray'> 回复@ " + name + " : </span>\n" +
+                        "        <span class=\"label label-danger\" style='color: #5BBF5A;background-color: #F5F5F5'>" +loginName + "</span><span style='color: lightgray'> 回复@ <span style='color: #5BBF5A'>" + name + "</span> : </span>\n" +
                         "    </h5>\n" +
                         "    <div class=\"commentDescriptionVal\" style='display: inline'>" + commentVal + "</div>\n" +
                         "    <div class=\"menuLevel2\">\n" +
