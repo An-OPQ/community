@@ -45,7 +45,7 @@ public interface UserInfoService {
      * @param email
      * @return
      */
-    String getAccountName(String email);
+    UserInfo getAccountName(String email);
 
     /**
      * 重置密码

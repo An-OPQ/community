@@ -19,7 +19,17 @@ public class UserInfo {
   private String microblog;
   private Comment comment;
 
+  private RoleInfo roleInfo;
+
   private  Question question;
+
+  public RoleInfo getRoleInfo() {
+    return roleInfo;
+  }
+
+  public void setRoleInfo(RoleInfo roleInfo) {
+    this.roleInfo = roleInfo;
+  }
 
   public Question getQuestion() {
     return question;

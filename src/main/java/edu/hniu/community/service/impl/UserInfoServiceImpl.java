@@ -58,7 +58,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @return
      */
     @Override
-    public String getAccountName(String email) {
+    public UserInfo getAccountName(String email) {
         return userInfoDao.getAccountName(email);
     }
 

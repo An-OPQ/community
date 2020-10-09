@@ -51,13 +51,21 @@ document.writeln("			</div>");
 document.writeln("		</div>");
 document.writeln("	</nav>");
 
+var bodyStr="<li class='adminManger'>\n" +
+    "<a href='adminManger.html'>\n" +
+    "<span class='glyphicon glyphicon-user'></span>&nbsp;&nbsp;管理员管理</a>\n" +
+    "</li>"
+
 $(function () {
     $.ajax({
         url: 'user/getAccountName',
         type: 'GET',
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
-            $("#dLabel").html(response + '<span class=\'caret\'></span>');
+            $("#dLabel").html(response.accountName + '<span class=\'caret\'></span>');
+            if (response.roleInfo.roleid===1){
+                $(".userManger").after(bodyStr)
+            }
         },
         error: function (response) {
         }

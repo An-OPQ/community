@@ -55,6 +55,16 @@
         </collection>
     </resultMap>
 
+    <!--多对一-->
+    <resultMap id="getAccountNameMap" type="UserInfo">
+        <id property="id" column="id"/>
+        <result property="accountName" column="accountName"/>
+        <association property="roleInfo" javaType="RoleInfo">
+            <id property="roleid" column="roleid"/>
+            <result property="rolename" column="rolename"/>
+        </association>
+    </resultMap>
+
 
     <select id="loginCheck" resultType="int">
         select count(1) from userinfo
@@ -117,8 +127,8 @@
         select email from userinfo where token=#{token}
      </select>
 
-    <select id="getAccountName" parameterType="String" resultType="String">
-        select accountName from userinfo where email=#{email}
+    <select id="getAccountName" parameterType="String" resultMap="getAccountNameMap">
+        select u.accountName,r.roleid from userinfo u left join roleinfo r ON u.roleid =r.roleid where email=#{email}
     </select>
 
     <update id="resetPassword" parameterType="UserInfo">
