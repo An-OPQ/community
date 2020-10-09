@@ -43,17 +43,17 @@ public class UserController {
     @PostMapping("/login")
     public Object loginController(@RequestBody UserInfo userInfo, HttpServletResponse response, HttpServletRequest request) {
         userInfo = MD5.encode(userInfo);
-        boolean falg = userInfoService.loginCheck(userInfo);
-        updateTokenByCookie.updateTokenByCookie(falg, userInfo, response, request);
-        return falg;
+        boolean flag = userInfoService.loginCheck(userInfo);
+        updateTokenByCookie.updateTokenByCookie(flag, userInfo, response, request);
+        return flag;
     }
 
     @PostMapping("/register")
     public Object register(@RequestBody UserInfo userInfo, HttpServletResponse response, HttpServletRequest request) {
         userInfo = MD5.encode(userInfo);
-        boolean falg = userInfoService.register(userInfo);
-        updateTokenByCookie.updateTokenByCookie(falg, userInfo, response, request);
-        return falg;
+        boolean flag = userInfoService.register(userInfo);
+        updateTokenByCookie.updateTokenByCookie(flag, userInfo, response, request);
+        return flag;
     }
 
     @PostMapping("/mailVerify")
@@ -89,13 +89,33 @@ public class UserController {
 
     @GetMapping("/findUserByEmail/{email}")
     public void findUserByEmail(@PathVariable String email, HttpServletResponse response) throws IOException {
-        boolean falg = userInfoService.findUserByEmail(email);
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html");
-        if (falg) {
-            response.getWriter().print("<font color='red' fontsize='80%'>这个邮箱已经被注册了，请勿重复注册！</font>");
+        if (!"null".equals(email)) {
+            boolean flag = userInfoService.findUserByEmail(email);
+            if (flag) {
+                response.getWriter().print("<font color='red' fontsize='80%'>该邮箱已经被注册,请勿重复注册!</font>");
+            } else {
+                response.getWriter().print("<font color='green' fontsize='80%'>您可以使用该邮箱注册!</font>");
+            }
         } else {
-            response.getWriter().print("<font color='green' fontsize='80%'>您可以使用该邮箱注册</font>");
+            response.getWriter().print("<font color='red' fontsize='80%'>邮箱不能为空!</font>");
+        }
+    }
+
+    @GetMapping("/findUserByName/{addName}")
+    public void findUserByName(@PathVariable String addName, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html");
+        if (!"null".equals(addName)) {
+            boolean flag = userInfoService.findUserByName(addName);
+            if (flag) {
+                response.getWriter().print("<font color='red' fontsize='80%'>该用户名已经被使用!</font>");
+            } else {
+                response.getWriter().print("<font color='green' fontsize='80%'>该用户名可使用!</font>");
+            }
+        } else {
+            response.getWriter().print("<font color='red' fontsize='80%'>用户名不能为空!</font>");
         }
     }
 

@@ -30,7 +30,7 @@ public class ManagementServiceImpl implements ManagementService {
     public boolean loginCheck(UserInfo userInfo) {
         RoleInfo roleinfo = managementDao.loginCheck(userInfo);
         boolean flag = false;
-        if (roleinfo != null) {
+        if (roleinfo.getRoleid()==1||roleinfo.getRoleid()==2) {
             flag = true;
         }
         return flag;

@@ -3,8 +3,6 @@ package edu.hniu.community.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.hniu.community.domain.Advert;
-import edu.hniu.community.domain.Notice;
-import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
 import edu.hniu.community.service.ManagementService;
 import edu.hniu.community.toolkit.MD5;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,9 +38,9 @@ public class ManagementController {
     @PostMapping("/loginCheck")
     public Object loginCheck(@RequestBody UserInfo userInfo, HttpServletResponse response, HttpServletRequest request) {
         userInfo = MD5.encode(userInfo);
-        boolean falg = managementService.loginCheck(userInfo);
-        updateTokenByCookie.updateTokenByCookie(falg, userInfo, response, request);
-        return falg;
+        boolean flag = managementService.loginCheck(userInfo);
+        updateTokenByCookie.updateTokenByCookie(flag, userInfo, response, request);
+        return flag;
     }
 
     /**
@@ -55,7 +52,7 @@ public class ManagementController {
     public Object getAllUserinfo(@RequestParam Integer pageNo) {
         PageHelper.startPage(pageNo, usermangerPageSize);
         List<userAndRoleListVo> userAndRoleListVoList = managementService.getAllUserinfo();
-        PageInfo<userAndRoleListVo> userAndRoleListVoPageInfo = new PageInfo<userAndRoleListVo>(userAndRoleListVoList);
+        PageInfo<userAndRoleListVo> userAndRoleListVoPageInfo = new PageInfo<>(userAndRoleListVoList);
         return userAndRoleListVoPageInfo;
     }
 
@@ -68,7 +65,6 @@ public class ManagementController {
      * 管理员权限下修改用户密码
      *
      * @param userInfo
-     * @return
      */
     @PutMapping("/resetPassword")
     public Object resetPassword(@RequestBody UserInfo userInfo) {

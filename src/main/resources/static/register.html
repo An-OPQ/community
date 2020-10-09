@@ -32,18 +32,18 @@
                         <form method="POST" class="my-login-validation" novalidate="">
                             <div class="form-group">
                                 <label for="accountName">账户名</label>
-                                <input id="accountName" type="text" class="form-control" name="accountName" required
+                                <input id="accountName" type="text" class="form-control" name="accountName" required onblur="checkAccountName()"
                                        autofocus>
                                 <div class="invalid-feedback">
                                     请输入你的账户名
                                 </div>
-
+                                <span class="pull-right" id="checkResult2" style="margin-right: 20px">&nbsp;&nbsp;</span>
                             </div>
 
                             <div class="form-group">
                                 <label for="email">邮箱</label>
                                 <input id="email" type="email" class="form-control" name="email" required
-                                       onkeyup="check()">
+                                       onblur="check()">
                                 <div class="invalid-feedback">
                                     你的邮箱无效
                                 </div>
@@ -107,17 +107,37 @@
 <script>
     var xmlhttp; //定义xmlhttp
     function check() {
-        var mail = document.getElementById("email").value;
-        var url = "/community/user/findUserByEmail/" + mail; //创建访问检查用户名是否存在的url
+        var email = document.getElementById("email").value;
+        if (email === "") {
+            email = null
+        }
+        var url = "/community/user/findUserByEmail/" + email; //创建访问检查用户名是否存在的url
         xmlhttp = new XMLHttpRequest(); //初始化xmlhttp为XMLHttpRequest对象
         xmlhttp.onreadystatechange = checkResult; //设置响应函数
         xmlhttp.open("GET", url, true);   //设置访问的页面
         xmlhttp.send(null);  //执行访问
     }
-
     function checkResult() { //在这个函数里处理响应
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
             document.getElementById('checkResult').innerHTML = xmlhttp.responseText;
+        }
+    }
+
+    function checkAccountName() {
+        var accountName = document.getElementById("accountName").value;
+        if (accountName === "") {
+            accountName = null
+        }
+        var url = "/community/user/findUserByName/" + accountName; //创建访问检查用户名是否存在的url
+        xmlhttp = new XMLHttpRequest(); //初始化xmlhttp为XMLHttpRequest对象
+        xmlhttp.onreadystatechange = checkResult2; //设置响应函数
+        xmlhttp.open("GET", url, true);   //设置访问的页面
+        xmlhttp.send(null);  //执行访问
+    }
+    function checkResult2() { //在这个函数里处理响应
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            document.getElementById('checkResult2').innerHTML = xmlhttp.responseText;
+        }
     }
 
     function register() {

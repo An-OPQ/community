@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author jerry
+ */
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
@@ -82,14 +85,27 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     /**
-     * 异步查询
-     *
+     * 异步查询邮箱
      * @param email
      * @return
      */
     @Override
     public boolean findUserByEmail(String email) {
-        return userInfoDao.findUserByEmail(email) > 0;
+        UserInfo userInfo=new UserInfo();
+        userInfo.setEmail(email);
+        return userInfoDao.findUser(userInfo) > 0;
+    }
+
+    /**
+     * 异步查询邮箱
+     * @param accountName
+     * @return
+     */
+    @Override
+    public boolean findUserByName(String accountName) {
+        UserInfo userInfo=new UserInfo();
+        userInfo.setAccountName(accountName);
+        return userInfoDao.findUser(userInfo) > 0;
     }
 
     /**

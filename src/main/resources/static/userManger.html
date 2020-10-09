@@ -50,6 +50,7 @@
                         <th>ID</th>
                         <th>用户名</th>
                         <th>邮箱</th>
+                        <th>角色</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -108,6 +109,8 @@
 <script src="./js/addUserModer.js" type="application/javascript"></script>
 <!--用户查询弹出框-->
 <script src="./js/searchUser.js" type="application/javascript"></script>
+<!--添加修改密码弹出框-->
+<script src="./js/editPasswordModel.js" type="application/javascript"></script>
 <!-- footer -->
 <section id="footer">
     <div class="row  text-center">
@@ -137,6 +140,7 @@
                 "  <th>" + userinfo.id + "</th>\n" +
                 "  <td>" + userinfo.accountName + "</td>\n" +
                 "  <td>" + userinfo.email + "</td>\n" +
+                "  <td>" + userinfo.rolename + "</td>\n" +
                 "  <td>\n" +
                 "      <div class=\"btn-group\" role=\"group\">\n" +
                 "          <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\"\n" +
@@ -144,7 +148,6 @@
                 "              操作 <span class=\"caret\"></span>\n" +
                 "          </button>\n" +
                 "          <ul class=\"dropdown-menu\">\n" +
-                "              <li><a href=\"userEdite.html?email=" + userinfo.email + "\">编辑</a></li>\n" +
                 "              <li><a href=\"#\" onclick=\'deleteUser(" + userinfo.id + ",this)\'>删除</a></li>\n" +
                 "              <li><a href=\"#\" onclick='edit(\"" + userinfo.accountName + "\")'>修改密码</a></li>\n" +
                 "          </ul>\n" +
@@ -152,12 +155,19 @@
                 "  </td>\n" +
                 "</tr>"
         }
+        if (response.length===0){
+            getAllUserinfo(1);
+            $.toastr.warning("没有查询到该用户!", {
+                position: 'top-center',
+                time: 3000
+            })
+        }
         tbodyObj.append(dataStr);
     }
 
     function getAllUserinfo(pageNum) {
         var pageNo = 1;
-        if (pageNum != undefined) {
+        if (pageNum !== undefined) {
             pageNo = pageNum
         }
         $.ajax({

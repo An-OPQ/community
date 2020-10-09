@@ -35,7 +35,6 @@ public class SessionInterceptor implements HandlerInterceptor {
                 }
             }
         }
-        System.out.println(flag);
         if (!flag){
             response.sendRedirect(request.getContextPath() + "/login.html");
         }

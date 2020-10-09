@@ -10,12 +10,14 @@ document.writeln("            <div class=\"modal-body\">");
 document.writeln("                <form>");
 document.writeln("                    <input type=\"hidden\" id=\'userId\' name=\"id\" value=\'\'>");
 document.writeln("                    <div class=\"form-group\">");
-document.writeln("                        <label for=\"addname\">用户名</label>");
-document.writeln("                        <input type=\"text\" name='addname' id=\"addname\" class=\"form-control\" placeholder=\"请输入用户名\" value=\"\"/>");
+document.writeln("                        <label for=\"addName\">用户名</label>");
+document.writeln("                        <input type=\"text\" name='addName' id=\"addName\" class=\"form-control\" onblur='checkAccountName()' placeholder=\"请输入用户名\" value=\"\"/>");
+document.writeln("                         <span class=\"pull-right\" id=\"checkResult2\" style=\"margin-right: 20px\">&nbsp;&nbsp;</span>");
 document.writeln("                    </div>");
 document.writeln("                    <div class=\"form-group\">");
 document.writeln("                        <label for=\"email\">邮箱</label>");
-document.writeln("                        <input type=\"text\" name='email' id=\"email\" class=\"form-control\" placeholder=\"请输入密码\" value=\"\"/>");
+document.writeln("                        <input type=\"text\" name='email' id=\"email\" class=\"form-control\" onblur='check()' placeholder=\"请输入密码\" value=\"\"  />");
+document.writeln("                         <span class=\"pull-right\" id=\"checkResult\" style=\"margin-right: 20px\">&nbsp;&nbsp;</span>");
 document.writeln("                    </div>");
 document.writeln("                    <div class=\"form-group\">");
 document.writeln("                        <label for=\"addpsw\">密码</label>");
@@ -26,9 +28,9 @@ document.writeln("                        <label for=\"addmobile\">电话号码<
 document.writeln("                        <input type=\"text\" name='addmobile' id=\"addmobile\" class=\"form-control\" placeholder=\"请输入邮箱\" value=\"\"/>");
 document.writeln("                    </div>");
 document.writeln("                    <div class=\"form-group\">");
-document.writeln("                        <label for=\"addzu\">管理权限</label>");
+document.writeln("                        <label for=\"addzu\">角色</label>");
 document.writeln("                        <select id=\"addzu\" name='addzu' class=\"form-control\">");
-document.writeln("                            <option value=\"普通用户\">普通用户</option>");
+document.writeln("                            <option value=\"3\">普通用户</option>");
 document.writeln("                        </select>");
 document.writeln("                    </div>");
 document.writeln("                </form>");
@@ -50,7 +52,6 @@ $(function () {
         size: 'lg',
         position: 'top-center',
     });
-    getAddzuId();
 })
 $("#btn_submit1").click(function () {
     var addname = $("#addname").val()
@@ -74,6 +75,11 @@ $("#btn_submit1").click(function () {
         success: function (response) {
             if (response) {
                 $.toastr.success('添加成功');
+                $("#addname").val("")
+                $("#email").val("")
+                $("#addpsw").val("")
+                $("#addmobile").val("")
+                $("#addzu option:selected").val("")
             } else {
                 $.toastr.warning("添加失败！")
             }
@@ -84,25 +90,63 @@ $("#btn_submit1").click(function () {
     })
 })
 
-/**
- * 因为数据的数据顺序不友好，所以采用倒顺输出。
- */
-function getAddzuId() {
-    $.ajax({
-        url: "management/getAddzuId",
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        success: function (response) {
-            var addzuObj = $("#addzu");
-            addzuObj.empty();
-            var optionStr = "";
-            for (let i = response.length-1; i >= 0; i--) {
-                var optionVal = response[i];
-                optionStr += "<option value=\"" + optionVal.roleid + "\">" + optionVal.rolename + "</option>";
-            }
-            addzuObj.append(optionStr);
-        },
-        error: function () {
-        }
-    })
+// /**
+//  * 因为数据的数据顺序不友好，所以采用倒顺输出。
+//  */
+// function getAddzuId() {
+//     $.ajax({
+//         url: "management/getAddzuId",
+//         type: "GET",
+//         contentType: "application/json;charset=utf-8",
+//         success: function (response) {
+//             var addzuObj = $("#addzu");
+//             addzuObj.empty();
+//             var optionStr = "";
+//             for (let i = response.length-1; i >= 0; i--) {
+//                 var optionVal = response[i];
+//                 optionStr += "<option value=\"" + optionVal.roleid + "\">" + optionVal.rolename + "</option>";
+//             }
+//             addzuObj.append(optionStr);
+//         },
+//         error: function () {
+//         }
+//     })
+// }
+
+
+var xmlhttp; //定义xmlhttp
+function check() {
+    var email = document.getElementById("email").value;
+    if (email === "") {
+        email = null
+    }
+    var url = "/community/user/findUserByEmail/" + email; //创建访问检查用户名是否存在的url
+    xmlhttp = new XMLHttpRequest(); //初始化xmlhttp为XMLHttpRequest对象
+    xmlhttp.onreadystatechange = checkResult; //设置响应函数
+    xmlhttp.open("GET", url, true);   //设置访问的页面
+    xmlhttp.send(null);  //执行访问
+}
+
+function checkResult() { //在这个函数里处理响应
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        document.getElementById('checkResult').innerHTML = xmlhttp.responseText;
+    }
+}
+
+function checkAccountName() {
+    var addName = document.getElementById("addName").value;
+    if (addName === "") {
+        addName = null
+    }
+    var url = "/community/user/findUserByName/" + addName; //创建访问检查用户名是否存在的url
+    xmlhttp = new XMLHttpRequest(); //初始化xmlhttp为XMLHttpRequest对象
+    xmlhttp.onreadystatechange = checkResult2; //设置响应函数
+    xmlhttp.open("GET", url, true);   //设置访问的页面
+    xmlhttp.send(null);  //执行访问
+}
+
+function checkResult2() { //在这个函数里处理响应
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        document.getElementById('checkResult2').innerHTML = xmlhttp.responseText;
+    }
 }

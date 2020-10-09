@@ -24,8 +24,8 @@ document.writeln("                            <input type=\"text\" class=\"form-
 document.writeln("                        </div>");
 document.writeln("                        <div class=\"form-group\">");
 document.writeln("                            <label for=\"userRole\">用户角色</label>");
-document.writeln("                            <select id=\"userRole\" class=\"form-control\">");
-document.writeln("                                <option value=\"-1\">全部</option>");
+document.writeln("                            <select id=\"userRole\" class=\"form-control\" disabled>");
+document.writeln("                                <option value=\"3\">用户</option>");
 document.writeln("                            </select>");
 document.writeln("                        </div>");
 document.writeln("                    </div>");
@@ -50,7 +50,7 @@ $("#search").click(function () {
 
 function searchUser(pageNum) {
     var pageNo = 1;
-    if (pageNum != undefined) {
+    if (pageNum !== undefined) {
         pageNo = pageNum
     }
     var username = $("#usernameBySearch").val();
@@ -119,29 +119,3 @@ function searchUser(pageNum) {
         }
     })
 }
-
-/**
- * 查询所有模块
- */
-$(function () {
-        $.ajax({
-            url: "management/getAllTagName",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            success: function (response) {
-                var userRoleObj = $("#userRole");
-                userRoleObj.empty();
-                var tabStr = "";
-                tabStr += "<option value=\"-1\">所有</option>"
-                for (let i = 0; i < response.length; i++) {
-                    var tag = response[i]
-                    tabStr += "<option value=" + tag.typeId + ">" + tag.typeName + "</option>"
-                }
-                userRoleObj.append(tabStr)
-            },
-            error: function (response) {
-                console.log(response)
-            }
-        })
-    }
-)

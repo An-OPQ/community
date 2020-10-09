@@ -131,8 +131,16 @@
         where email=#{email}
     </update>
 
-    <select id="findUserByEmail" parameterType="String" resultType="int">
-        select count(*) from userinfo where email=#{email}
+    <select id="findUser" parameterType="UserInfo" resultType="int">
+        select count(*) from userinfo
+        <where>
+            <if test="email!=null and email!=''">
+                and email=#{email}
+            </if>
+            <if test="accountName!=null and accountName!=''">
+                and accountName=#{accountName}
+            </if>
+        </where>
     </select>
 
 

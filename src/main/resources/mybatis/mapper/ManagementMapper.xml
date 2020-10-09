@@ -9,23 +9,21 @@
     </select>
 
     <select id="getAllUserinfo" resultType="edu.hniu.community.vo.userAndRoleListVo">
-    select  u.id,u.email,u.password,u.accountName,r.*  from  roleinfo r right join userinfo u on r.roleid=u.roleid order by u.id asc
+        select  u.id,u.email,u.password,u.accountName,r.*  from  roleinfo r
+         right join userinfo u on r.roleid=u.roleid WHERE r.roleid=3 order by u.id asc
     </select>
 
     <select id="searchUser" resultType="edu.hniu.community.vo.userAndRoleListVo">
         select u.id,u.email,u.password,u.accountName,r.* from roleinfo r right join userinfo u on r.roleid=u.roleid
         <where>
             <if test="accountName !=null and accountName!=''">
-                and accountName like concat('%',#{accountName},'%')
+                and u.accountName like concat('%',#{accountName},'%')
             </if>
             <if test="email !=null and email!=''">
-                and email like concat('%',#{email},'%')
-            </if>
-            <if test="roleid !=-1">
-                and roleid=#{roleid}
+                and u.email like concat('%',#{email},'%')
             </if>
         </where>
-        order by u.id asc
+        and r.roleid=#{roleid} order by u.id asc
     </select>
 
     <delete id="deleteUser" parameterType="int">

@@ -56,12 +56,20 @@ public interface UserInfoService {
     boolean resetPassword(UserInfo userInfo);
 
     /**
-     * 异步查询
+     * 异步查询-查询邮箱
      *
      * @param email
      * @return
      */
     boolean findUserByEmail(String email);
+
+    /**
+     * 异步查询-查询用户名
+     *
+     * @param addName
+     * @return
+     */
+    boolean findUserByName(String addName);
 
 
     /**

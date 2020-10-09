@@ -60,11 +60,10 @@ public interface UserInfoDao {
 
     /**
      * 异步查询
-     *
-     * @param email
+     * @param userInfo
      * @return
      */
-    int findUserByEmail(String email);
+    int findUser(UserInfo userInfo);
 
     /**
      * 修改个人信息
