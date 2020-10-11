@@ -53,6 +53,22 @@ $(function () {
         position: 'top-center',
     });
 })
+
+$(function () {
+    $.ajax({
+        url: 'user/getAccountName',
+        type: 'GET',
+        contentType: 'application/json;charset=utf-8',
+        success: function (response) {
+            if (response.roleInfo.roleid=="1"){
+                $("#addzu").append("<option value=\"2\">管理员</option>")
+            }
+        },
+        error: function (response) {
+        }
+    })
+})
+
 $("#btn_submit1").click(function () {
     var addname = $("#addname").val()
     var email = $("#email").val()
@@ -89,29 +105,6 @@ $("#btn_submit1").click(function () {
         }
     })
 })
-
-// /**
-//  * 因为数据的数据顺序不友好，所以采用倒顺输出。
-//  */
-// function getAddzuId() {
-//     $.ajax({
-//         url: "management/getAddzuId",
-//         type: "GET",
-//         contentType: "application/json;charset=utf-8",
-//         success: function (response) {
-//             var addzuObj = $("#addzu");
-//             addzuObj.empty();
-//             var optionStr = "";
-//             for (let i = response.length-1; i >= 0; i--) {
-//                 var optionVal = response[i];
-//                 optionStr += "<option value=\"" + optionVal.roleid + "\">" + optionVal.rolename + "</option>";
-//             }
-//             addzuObj.append(optionStr);
-//         },
-//         error: function () {
-//         }
-//     })
-// }
 
 
 var xmlhttp; //定义xmlhttp

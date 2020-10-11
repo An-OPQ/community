@@ -20,10 +20,12 @@ public interface ManagementDao {
 
     /**
      * 查询所有的用户
-     *
+     * @param array
      * @return
      */
-    List<userAndRoleListVo> getAllUserinfo();
+    List<userAndRoleListVo> getAllUserinfo(int[] array);
+
+
 
     /**
      * 模糊查询用户

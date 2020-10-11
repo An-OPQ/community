@@ -42,9 +42,10 @@ public class ManagementServiceImpl implements ManagementService {
      * @return
      */
     @Override
-    public List<userAndRoleListVo> getAllUserinfo() {
-        return managementDao.getAllUserinfo();
+    public List<userAndRoleListVo> getAllUserinfo(int [] array) {
+        return managementDao.getAllUserinfo(array);
     }
+
 
     /**
      * 模糊查询用户

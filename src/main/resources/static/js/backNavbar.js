@@ -17,14 +17,14 @@ document.writeln("						<a href=\'contentManager.html\'>");
 document.writeln("							<span class=\'glyphicon glyphicon-folder-open\'></span>&nbsp;&nbsp;内容管理</a>");
 document.writeln("					</li>");
 document.writeln("					<li class=\'userManger\'>");
-document.writeln("						<a href=\'userManger.html\'>");
+document.writeln("						<a>");
 document.writeln("							<span class=\'glyphicon glyphicon-user\'></span>&nbsp;&nbsp;用户管理</a>");
 document.writeln("					</li>");
 document.writeln("					<li class=\'tagManager\'>");
 document.writeln("						<a href=\'tagManager.html\'>");
 document.writeln("							<span class=\'glyphicon glyphicon-tag\'></span>&nbsp;&nbsp;板块管理</a>");
 document.writeln("					</li>");
-document.writeln("					<li class=\'advertmanager\'>");
+document.writeln("					<li class=\'advertManager\'>");
 document.writeln("						<a>");
 document.writeln("							<span class=\'glyphicon glyphicon glyphicon-bullhorn\'></span>&nbsp;&nbsp;公告管理</a>");
 document.writeln("					</li>");
@@ -50,12 +50,7 @@ document.writeln("				</ul>");
 document.writeln("			</div>");
 document.writeln("		</div>");
 document.writeln("	</nav>");
-
-var bodyStr="<li class='adminManger'>\n" +
-    "<a href='adminManger.html'>\n" +
-    "<span class='glyphicon glyphicon-user'></span>&nbsp;&nbsp;管理员管理</a>\n" +
-    "</li>"
-
+var userID;
 $(function () {
     $.ajax({
         url: 'user/getAccountName',
@@ -63,9 +58,7 @@ $(function () {
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
             $("#dLabel").html(response.accountName + '<span class=\'caret\'></span>');
-            if (response.roleInfo.roleid===1){
-                $(".userManger").after(bodyStr)
-            }
+            userID=response.roleInfo.roleid
         },
         error: function (response) {
         }
@@ -94,7 +87,7 @@ function getSession() {
         contentType: "application/json;charset=utf-8",
         success: function (response) {
             email = response;
-            jumpToAdvertmanager(email)
+            jumpToAdvertManager(email)
         }
     })
 }
@@ -103,7 +96,7 @@ getSession()
 
 var id
 
-function jumpToAdvertmanager(email) {
+function jumpToAdvertManager(email) {
     $.ajax({
         async: false,//设置同步：代码没有执行完就 不执行下面的代码
         url: "user/getIdByEmail?email=" + email,
@@ -115,6 +108,10 @@ function jumpToAdvertmanager(email) {
     })
 }
 
-$(".advertmanager").click(function () {
+$(".advertManager").click(function () {
     window.location.href = "advertmanager.html?id=" + id
 })
+$(".userManger").click(function () {
+    window.location.href = "userManger.html?id=" + userID
+})
+

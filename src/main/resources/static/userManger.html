@@ -67,9 +67,6 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">编辑</a></li>
-                                    <li><a href="#">删除</a></li>
-                                    <li><a href="#">锁定</a></li>
-                                    <li><a href="#">修改密码</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -120,6 +117,9 @@
     </div>
 </section>
 <script type="text/javascript">
+    var params = window.location.search;
+    var userID=params.substring(params.indexOf("=") + 1)
+
     $(function () {
         $(".userManger").addClass("active");
         getAllUserinfo(1);
@@ -129,7 +129,12 @@
             position: 'top-center',
         });
     })
-
+    var array = new Array();
+    if (userID==="1"){
+        array.push(2,3)
+    }else {
+        array.push(3)
+    }
     function initTable(response) {
         var dataStr = "";
         var tbodyObj = $(".table tbody");
@@ -155,7 +160,7 @@
                 "  </td>\n" +
                 "</tr>"
         }
-        if (response.length===0){
+        if (response.length === 0) {
             getAllUserinfo(1);
             $.toastr.warning("没有查询到该用户!", {
                 position: 'top-center',
@@ -170,9 +175,15 @@
         if (pageNum !== undefined) {
             pageNo = pageNum
         }
+        var json = {
+            pageNo: pageNo,
+            array: array
+        }
+        var jsonStr = JSON.stringify(json)
         $.ajax({
-            url: "management/getAllUserinfo?pageNo=" + pageNo,
-            type: "GET",
+            url: "management/getAllUserinfo",
+            type: "POST",
+            data: jsonStr,
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (response) {
@@ -254,6 +265,7 @@
         })
     }
 
+    //修改密码弹出框
     function edit(accountName) {
         $('#myEditModal').modal();
         var $accountName = $("#accountName");
@@ -261,6 +273,9 @@
         $accountName.attr("disabled", true)
     }
 
+    /**
+     * 修改密码提交按钮
+     */
     $("#btn_submit2").click(function () {
         var accountName = $("#accountName").val()
         var password1 = $("#password1").val();

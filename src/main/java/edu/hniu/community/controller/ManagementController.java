@@ -45,15 +45,13 @@ public class ManagementController {
 
     /**
      * 涉及多个用户的权限，service层统一查询所有。controller分类
-     *
      * @return
      */
-    @GetMapping("getAllUserinfo")
-    public Object getAllUserinfo(@RequestParam Integer pageNo) {
-        PageHelper.startPage(pageNo, usermangerPageSize);
-        List<userAndRoleListVo> userAndRoleListVoList = managementService.getAllUserinfo();
-        PageInfo<userAndRoleListVo> userAndRoleListVoPageInfo = new PageInfo<>(userAndRoleListVoList);
-        return userAndRoleListVoPageInfo;
+    @PostMapping("getAllUserinfo")
+    public Object getAllUserinfo(@RequestBody AuthoritySearchVo authoritySearchVo) {
+        PageHelper.startPage(authoritySearchVo.getPageNo(), usermangerPageSize);
+        List<userAndRoleListVo> userAndRoleListVoList = managementService.getAllUserinfo(authoritySearchVo.getArray());
+        return new PageInfo<>(userAndRoleListVoList);
     }
 
     @DeleteMapping("/deleteUser")
@@ -168,8 +166,8 @@ public class ManagementController {
 
     @GetMapping("/getAllComment")
     public Object getAllComment(@RequestParam Integer pageNo) {
-        PageHelper.startPage(pageNo,questionPageSize);
-        List<AllCommentVo> allCommentVoList=managementService.getAllComment();
+        PageHelper.startPage(pageNo, questionPageSize);
+        List<AllCommentVo> allCommentVoList = managementService.getAllComment();
         return new PageInfo<>(allCommentVoList);
     }
 
@@ -180,6 +178,7 @@ public class ManagementController {
 
     /**
      * 置顶精华帖
+     *
      * @param id
      * @return
      */

@@ -8,9 +8,13 @@
     select  r.*  from userinfo u left join roleinfo r on u.roleid=r.roleid  WHERE email=#{email} and password=#{password}
     </select>
 
-    <select id="getAllUserinfo" resultType="edu.hniu.community.vo.userAndRoleListVo">
+    <select id="getAllUserinfo" resultType="edu.hniu.community.vo.userAndRoleListVo" parameterType="int[]">
         select  u.id,u.email,u.password,u.accountName,r.*  from  roleinfo r
-         right join userinfo u on r.roleid=u.roleid WHERE r.roleid=3 order by u.id asc
+         right join userinfo u on r.roleid=u.roleid WHERE r.roleid in
+        <foreach collection="array" item="array" open="(" index="index" separator="," close=")">
+            #{array}
+        </foreach>
+        order by u.id asc
     </select>
 
     <select id="searchUser" resultType="edu.hniu.community.vo.userAndRoleListVo">

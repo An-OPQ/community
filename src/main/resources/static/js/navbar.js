@@ -54,7 +54,7 @@ $(function () {
         type: 'GET',
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
-            $("#dLabel").html(response + '<span class=\'caret\'></span>');
+            $("#dLabel").html(response.accountName + '<span class=\'caret\'></span>');
         },
         error: function (response) {
         }

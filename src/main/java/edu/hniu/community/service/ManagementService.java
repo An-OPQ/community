@@ -23,7 +23,9 @@ public interface ManagementService {
      *
      * @return
      */
-    List<userAndRoleListVo> getAllUserinfo();
+    List<userAndRoleListVo> getAllUserinfo(int [] array);
+
+
 
     /**
      * 模糊查询用户

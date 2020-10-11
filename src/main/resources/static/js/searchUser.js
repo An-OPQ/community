@@ -47,6 +47,20 @@ $("#search").click(function () {
     searchUser(1)
 })
 
+$(function () {
+    $.ajax({
+        url: 'user/getAccountName',
+        type: 'GET',
+        contentType: 'application/json;charset=utf-8',
+        success: function (response) {
+            if (response.roleInfo.roleid=="1"){
+                $("#userRole").attr("disabled",false).append("<option value=\"2\">管理员</option>")
+            }
+        },
+        error: function (response) {
+        }
+    })
+})
 
 function searchUser(pageNum) {
     var pageNo = 1;
