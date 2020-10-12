@@ -24,3 +24,5 @@
 3. 使用idea的Terminal运行命令
 ``mvn flyway:migrate
 ``
+
+
