@@ -1,7 +1,8 @@
 # Community
 > 这是一个基于Springboot的BBS项目
 > 这是一个个人用于毕业设计所开发的系统，技术尚不成熟。仅供学习，大佬请绕道。
-> 如需帮助 邮箱 liuxian0728@foxmail.com
+
+``如需帮助 邮箱 liuxian0728@foxmail.com``
 
 ### 使用的技术
 1. flyway（数据库版本控制）
