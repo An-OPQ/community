@@ -29,6 +29,10 @@
 1. showImage 文件夹为图片展示（项目无用）可删除
 > yml中的配置图片访问的虚拟路径，需要自行修改。个人电脑为DeepinV20（linux）系统，所以
 >修改为你电脑的本地文件夹。
-
-
+##### login.html
+![image](https://github.com/An-OPQ/community/blob/master/showImage/login.png)
+##### main.html
+![image](https://github.com/An-OPQ/community/blob/master/showImage/main.png)
+##### contentManager.html
+![image](https://github.com/An-OPQ/community/blob/master/showImage/manager.png)
 
