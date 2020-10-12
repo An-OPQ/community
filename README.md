@@ -20,6 +20,7 @@
 （运行sql脚本也行）
 ``CREATE DATABASE `community` CHARACTER SET 'utf8mb4';
 ``
-3.使用idea的Terminal运行命令
+
+3. 使用idea的Terminal运行命令
 ``mvn flyway:migrate
 ``
