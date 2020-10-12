@@ -3,15 +3,15 @@
 
  Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 50731
+ Source Server Version : 80018
  Source Host           : localhost:3306
  Source Schema         : community
 
  Target Server Type    : MySQL
- Target Server Version : 50731
+ Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 11/10/2020 10:58:01
+ Date: 12/10/2020 09:48:36
 */
 
 SET NAMES utf8mb4;
@@ -23,11 +23,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `advert`;
 CREATE TABLE `advert`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `createId` bigint(20) NULL DEFAULT NULL,
-  `pictureAddress` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `advertURL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `createId` bigint(20) DEFAULT NULL,
+  `pictureAddress` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `advertURL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `advertName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `createTime` datetime(0) NULL DEFAULT NULL,
+  `createTime` datetime(0) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `advert_userinfo_id_fk`(`createId`) USING BTREE,
   CONSTRAINT `advert_userinfo_id_fk` FOREIGN KEY (`createId`) REFERENCES `userinfo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -46,14 +46,14 @@ CREATE TABLE `comment`  (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `creatorId` bigint(11) NOT NULL,
   `questionId` bigint(11) NOT NULL,
-  `commentDescription` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `commentDate` datetime(0) NULL DEFAULT NULL,
-  `likeCount` int(11) NULL DEFAULT 0,
-  `commentCount` int(11) NULL DEFAULT 0,
+  `commentDescription` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `commentDate` datetime(0) DEFAULT NULL,
+  `likeCount` int(11) DEFAULT 0,
+  `commentCount` int(11) DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `creatorId`(`creatorId`) USING BTREE,
   INDEX `questionId`(`questionId`) USING BTREE,
-  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`creatorId`) REFERENCES `userinfo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`creatorId`) REFERENCES `userinfo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`questionId`) REFERENCES `question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
@@ -83,13 +83,13 @@ CREATE TABLE `comment_multi`  (
   `com_multi_user_id` bigint(20) NOT NULL,
   `com_id` bigint(11) NOT NULL,
   `com_multi_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `com_multi_time` datetime(0) NULL DEFAULT NULL,
-  `like_count` int(11) NULL DEFAULT NULL,
-  `comment_count` int(11) NULL DEFAULT NULL,
+  `com_multi_time` datetime(0) DEFAULT NULL,
+  `like_count` int(11) DEFAULT NULL,
+  `comment_count` int(11) DEFAULT NULL,
   PRIMARY KEY (`com_multi_id`) USING BTREE,
   INDEX `com_multi_user_id`(`com_multi_user_id`) USING BTREE,
   INDEX `com_id`(`com_id`) USING BTREE,
-  CONSTRAINT `comment_multi_ibfk_1` FOREIGN KEY (`com_multi_user_id`) REFERENCES `userinfo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `comment_multi_ibfk_1` FOREIGN KEY (`com_multi_user_id`) REFERENCES `userinfo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `comment_multi_ibfk_2` FOREIGN KEY (`com_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
@@ -102,53 +102,17 @@ INSERT INTO `comment_multi` VALUES (3, 29, 1, '附议', '2020-10-08 10:38:57', N
 INSERT INTO `comment_multi` VALUES (4, 39, 1, '附议', '2020-10-08 10:39:23', NULL, NULL);
 
 -- ----------------------------
--- Table structure for flyway_schema_history
--- ----------------------------
-DROP TABLE IF EXISTS `flyway_schema_history`;
-CREATE TABLE `flyway_schema_history`  (
-  `installed_rank` int(11) NOT NULL,
-  `version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `script` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `checksum` int(11) NULL DEFAULT NULL,
-  `installed_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `installed_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `execution_time` int(11) NOT NULL,
-  `success` tinyint(1) NOT NULL,
-  PRIMARY KEY (`installed_rank`) USING BTREE,
-  INDEX `flyway_schema_history_s_idx`(`success`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of flyway_schema_history
--- ----------------------------
-INSERT INTO `flyway_schema_history` VALUES (1, '1', 'Create roleinfo table', 'SQL', 'V1__Create_roleinfo_table.sql', 1372204188, 'root', '2020-09-06 09:58:25', 50, 1);
-INSERT INTO `flyway_schema_history` VALUES (2, '2', 'Create userinfo table', 'SQL', 'V2__Create_userinfo_table.sql', -1528989342, 'root', '2020-09-06 09:58:26', 44, 1);
-INSERT INTO `flyway_schema_history` VALUES (3, '3', 'Create question', 'SQL', 'V3__Create_question.sql', -972556875, 'root', '2020-09-06 09:58:26', 50, 1);
-INSERT INTO `flyway_schema_history` VALUES (4, '4', 'Create question type table', 'SQL', 'V4__Create_question_type_table.sql', 196700544, 'root', '2020-09-06 09:58:26', 40, 1);
-INSERT INTO `flyway_schema_history` VALUES (5, '5', 'Create comment', 'SQL', 'V5__Create_comment.sql', 959168874, 'root', '2020-09-06 09:58:26', 42, 1);
-INSERT INTO `flyway_schema_history` VALUES (6, '6', 'Create comment multi', 'SQL', 'V6__Create_comment_multi.sql', 1505265545, 'root', '2020-09-06 09:58:26', 40, 1);
-INSERT INTO `flyway_schema_history` VALUES (7, '7', 'Create notice', 'SQL', 'V7__Create_notice.sql', 967731021, 'root', '2020-09-06 09:58:26', 36, 1);
-INSERT INTO `flyway_schema_history` VALUES (8, '8', 'Update comment Pk', 'SQL', 'V8__Update_comment_Pk.sql', -2113213172, 'root', '2020-09-06 10:05:18', 39, 1);
-INSERT INTO `flyway_schema_history` VALUES (9, '9', 'Update uesrinfo roleid', 'SQL', 'V9__Update_uesrinfo_roleid.sql', -1725916381, 'root', '2020-09-06 13:39:58', 14, 1);
-INSERT INTO `flyway_schema_history` VALUES (10, '9.1', 'delete question tag', 'SQL', 'V9.1__delete_question_tag.sql', 1088485927, 'root', '2020-09-07 03:51:20', 54, 1);
-INSERT INTO `flyway_schema_history` VALUES (11, '9.2', 'Update notice pk', 'SQL', 'V9.2__Update_notice_pk.sql', -1192534334, 'root', '2020-09-15 10:37:56', 37, 1);
-INSERT INTO `flyway_schema_history` VALUES (12, '9.3', 'Update notice notice content', 'SQL', 'V9.3__Update_notice_notice_content.sql', -32124555, 'root', '2020-09-16 07:54:47', 38, 1);
-INSERT INTO `flyway_schema_history` VALUES (13, '10', 'Create advert table', 'SQL', 'V10__Create_advert_table.sql', -1397411715, 'root', '2020-09-22 02:48:31', 27, 1);
-
--- ----------------------------
 -- Table structure for notice
 -- ----------------------------
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `create_id` bigint(20) NULL DEFAULT NULL,
+  `create_id` bigint(20) DEFAULT NULL,
   `notice_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL,
+  `create_time` datetime(0) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `create_id`(`create_id`) USING BTREE,
-  CONSTRAINT `notice_ibfk_1` FOREIGN KEY (`create_id`) REFERENCES `userinfo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `notice_ibfk_1` FOREIGN KEY (`create_id`) REFERENCES `userinfo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -167,19 +131,19 @@ INSERT INTO `notice` VALUES (11, 29, '<p><span style=\"font-weight: bold;\">系�
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `title` varchar(75) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `title` varchar(75) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `creatorid` bigint(20) NOT NULL,
-  `typeid` int(11) NULL DEFAULT NULL,
-  `commentCount` int(11) NULL DEFAULT 0,
-  `viewCount` int(11) NULL DEFAULT 0,
-  `likeCount` int(11) NULL DEFAULT 0,
-  `createDate` date NULL DEFAULT NULL,
+  `typeid` int(11) DEFAULT NULL,
+  `commentCount` int(11) DEFAULT 0,
+  `viewCount` int(11) DEFAULT 0,
+  `likeCount` int(11) DEFAULT 0,
+  `createDate` date DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `question_userinfo_id_fk`(`creatorid`) USING BTREE,
   INDEX `typeid`(`typeid`) USING BTREE,
   CONSTRAINT `question_ibfk_1` FOREIGN KEY (`typeid`) REFERENCES `question_type` (`type_id`) ON DELETE SET NULL ON UPDATE SET NULL,
-  CONSTRAINT `question_userinfo_id_fk` FOREIGN KEY (`creatorid`) REFERENCES `userinfo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `question_userinfo_id_fk` FOREIGN KEY (`creatorid`) REFERENCES `userinfo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -213,7 +177,7 @@ DROP TABLE IF EXISTS `question_type`;
 CREATE TABLE `question_type`  (
   `type_id` int(11) NOT NULL AUTO_INCREMENT,
   `type_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `type_createTime` datetime(0) NULL DEFAULT NULL,
+  `type_createTime` datetime(0) DEFAULT NULL,
   PRIMARY KEY (`type_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
@@ -231,7 +195,7 @@ INSERT INTO `question_type` VALUES (12, '校园文化', '2020-09-13 16:55:41');
 DROP TABLE IF EXISTS `roleinfo`;
 CREATE TABLE `roleinfo`  (
   `roleid` int(11) NOT NULL AUTO_INCREMENT,
-  `rolename` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `rolename` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`roleid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色信息' ROW_FORMAT = Dynamic;
 
@@ -251,21 +215,21 @@ CREATE TABLE `userinfo`  (
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `accountName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `roleid` int(11) NULL DEFAULT 3,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `sex` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `sginName` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `qq` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `WeChat` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `mobile` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `github` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `microblog` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `roleid` int(11) DEFAULT 3,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `sex` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `sginName` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `qq` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `WeChat` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mobile` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `github` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `microblog` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `user_accountName_uindex`(`accountName`) USING BTREE,
   UNIQUE INDEX `user_email_uindex`(`email`) USING BTREE,
   INDEX `roleid`(`roleid`) USING BTREE,
-  CONSTRAINT `userinfo_ibfk_1` FOREIGN KEY (`roleid`) REFERENCES `roleinfo` (`roleid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `userinfo_ibfk_1` FOREIGN KEY (`roleid`) REFERENCES `roleinfo` (`roleid`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------

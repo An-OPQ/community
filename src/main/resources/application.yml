@@ -41,10 +41,6 @@ spring:
     table: flyway_schema_history
 
 
-#  batch:
-#    schema:
-#      - classpath: sql/department.sql
-#      - classpath: sql/employee.sql
 #mybatis
 mybatis:
   config-location: classpath:mybatis/Mybatis-Config.xml
