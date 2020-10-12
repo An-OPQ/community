@@ -15,7 +15,7 @@
 3. IDEA 
 
 ### 启动
-1. 首先修改yml文件中的数据库配置
+1. 首先修改yml文件中的数据库配置,以及pom.xml中的flyway的数据库配置
 2. 首先创建mysql 数据库。
 （运行sql脚本也行）
 ``CREATE DATABASE `community` CHARACTER SET 'utf8mb4';
