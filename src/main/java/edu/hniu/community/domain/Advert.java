@@ -1,10 +1,12 @@
 package edu.hniu.community.domain;
 
 
+import java.io.Serializable;
+
 /**
  * @author jerry
  */
-public class Advert {
+public class Advert implements Serializable {
 
   private long id;
   private long createId;

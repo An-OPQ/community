@@ -1,7 +1,9 @@
 package edu.hniu.community.domain;
 
 
-public class UserInfo {
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
 
   private long id;
   private String email;

@@ -1,7 +1,10 @@
 package edu.hniu.community.domain;
 
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
+
 
     private long id;
     private String title;

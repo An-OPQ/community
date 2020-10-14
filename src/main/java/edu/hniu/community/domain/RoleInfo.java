@@ -1,10 +1,12 @@
 package edu.hniu.community.domain;
 
 
+import java.io.Serializable;
+
 /**
  * @author jerry
  */
-public class RoleInfo {
+public class RoleInfo implements Serializable {
 
   private long roleid;
   private String rolename;

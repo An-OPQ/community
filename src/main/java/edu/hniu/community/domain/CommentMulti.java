@@ -1,14 +1,14 @@
 package edu.hniu.community.domain;
 
 
-import edu.hniu.community.vo.AllCommentVo;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * @author jerry
  */
-public class CommentMulti {
+public class CommentMulti implements Serializable {
 
   private long comMultiId;
   private long comId;

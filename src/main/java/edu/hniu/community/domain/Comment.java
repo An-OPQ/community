@@ -1,9 +1,10 @@
 package edu.hniu.community.domain;
 
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Comment {
+public class Comment implements Serializable {
 
   private long id;
   private long creatorId;
