@@ -60,8 +60,10 @@ $(function () {
         type: 'GET',
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
-            if (response.roleInfo.roleid=="1"){
+            if (response.roleInfo.roleid=="2"){
                 $("#addzu").append("<option value=\"2\">管理员</option>")
+            }else if (response.roleInfo.roleid=="1"){
+                $("#addzu") .append("<option value=\"2\">管理员</option>").append("<option value=\"1\">超级管理员</option>")
             }
         },
         error: function (response) {
@@ -70,13 +72,13 @@ $(function () {
 })
 
 $("#btn_submit1").click(function () {
-    var addname = $("#addname").val()
+    var addName = $("#addName").val()
     var email = $("#email").val()
     var addpsw = $("#addpsw").val()
     var addmobile = $("#addmobile").val()
     var addzu = $("#addzu option:selected").val()
     var json = {
-        accountName: addname,
+        accountName: addName,
         email: email,
         password: addpsw,
         mobile: addmobile,
@@ -91,11 +93,13 @@ $("#btn_submit1").click(function () {
         success: function (response) {
             if (response) {
                 $.toastr.success('添加成功');
-                $("#addname").val("")
+                $("#addName").val("")
                 $("#email").val("")
                 $("#addpsw").val("")
                 $("#addmobile").val("")
                 $("#addzu option:selected").val("")
+                $("#checkResult").html("")
+                $("#checkResult2").html("")
             } else {
                 $.toastr.warning("添加失败！")
             }

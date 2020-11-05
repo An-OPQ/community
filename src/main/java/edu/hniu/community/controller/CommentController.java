@@ -5,6 +5,9 @@ import edu.hniu.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author jerry
+ */
 @RestController
 @RequestMapping("/comment")
 public class CommentController {

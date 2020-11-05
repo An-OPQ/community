@@ -73,6 +73,7 @@
                                 <dd class="pull-left">
                                     <p>支持 jpg、gif、png、jpeg 等格式的图片</p>
                                     <p>不超过为3MB</p>
+                                    <p>上传成功后还需保存修改</p>
                                     <label for="id_avatar"><img src="./img/picture.png" alt="图像加载失败"></label>
                                     <input type="text" id="id_avatar" name="file" style="display:none">
                                 </dd>
@@ -212,7 +213,7 @@
         addRemoveLinks: false,
         parallelUploads: 1,// 一次上传的文件数量
         dictDefaultMessage: '拖动文件至此或者点击上传',
-        dictMaxFilesExceeded: "您最多只能上传1个文件！",
+        dictMaxFilesExceeded: '',
         dictResponseError: '文件上传失败!',
         dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg",
         dictFallbackMessage: "浏览器不受支持",
@@ -231,7 +232,9 @@
             });
             this.on("error", function (file, data) {
                 // 上传失败触发的事件
-                alert("请查看文件格式是否不支持！")
+                Swal.fire({
+                    text: data,
+                });
             });
             this.on("removedfile", function (file) {
                 // 删除文件时触发的方法

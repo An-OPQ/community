@@ -4,6 +4,7 @@ import edu.hniu.community.domain.Comment;
 import edu.hniu.community.domain.Question;
 import edu.hniu.community.domain.QuestionType;
 import edu.hniu.community.domain.UserInfo;
+import org.apache.ibatis.annotations.Insert;
 
 import java.util.List;
 

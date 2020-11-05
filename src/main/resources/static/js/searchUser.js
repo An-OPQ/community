@@ -54,6 +54,8 @@ $(function () {
         contentType: 'application/json;charset=utf-8',
         success: function (response) {
             if (response.roleInfo.roleid=="1"){
+                $("#userRole").attr("disabled",false).append("<option value=\"2\">管理员</option>").append("<option value=\"1\">超级管理员</option>")
+            } else if (response.roleInfo.roleid=="2"){
                 $("#userRole").attr("disabled",false).append("<option value=\"2\">管理员</option>")
             }
         },

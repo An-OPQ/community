@@ -60,7 +60,6 @@ public class FileUploeadController {
 
     @PutMapping("/updateIcon")
     public Object updateIcon(@RequestBody FileUploadVo fileUploadVo) {
-        System.out.println(fileUploadVo.toString());
         return fileUploadService.updateIcon(fileUploadVo);
     }
 }

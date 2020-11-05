@@ -35,6 +35,14 @@ public class ManagementController {
     @Autowired
     UpdateTokenByCookie updateTokenByCookie;
 
+    /**
+     * 对前端输入密码加密，再去验证。
+     * 同时更新Cookie中的Token（令牌）到数据库中
+     * @param userInfo
+     * @param response
+     * @param request
+     * @return
+     */
     @PostMapping("/loginCheck")
     public Object loginCheck(@RequestBody UserInfo userInfo, HttpServletResponse response, HttpServletRequest request) {
         userInfo = MD5.encode(userInfo);
@@ -44,7 +52,7 @@ public class ManagementController {
     }
 
     /**
-     * 涉及多个用户的权限，service层统一查询所有。controller分类
+     * 涉及多个用户的权限，service层统一查询所有。controller统一返回结果。前端控制权限发送不同的参数
      * @return
      */
     @PostMapping("getAllUserinfo")
@@ -67,13 +75,11 @@ public class ManagementController {
     @PutMapping("/resetPassword")
     public Object resetPassword(@RequestBody UserInfo userInfo) {
         userInfo = MD5.encode(userInfo);
-        System.out.println(userInfo.toString());
         return managementService.resetPassword(userInfo);
     }
 
     /**
-     * 管理员权限下添加账户
-     *
+     * 接受前端添加用户的参数，最后插入到数据库中
      * @param userInfo
      * @return
      */
@@ -85,7 +91,6 @@ public class ManagementController {
 
     /**
      * 查询所有的role表格
-     *
      * @return
      */
     @GetMapping("/getAddzuId")
@@ -94,8 +99,7 @@ public class ManagementController {
     }
 
     /**
-     * 查询所有的questione
-     *
+     * 查询所有的question，返回List结果集
      * @return
      */
     @GetMapping("/getAllQusetion")
@@ -105,16 +109,30 @@ public class ManagementController {
         return new PageInfo<QuestionListVo>(questionListVos);
     }
 
+    /**
+     * 获取前端传递的ID,再返回删除后TRUE or FALSE
+     * @param id
+     * @return
+     */
     @DeleteMapping("/deleteQuestion")
     public Object deleteQuestion(@RequestParam Integer id) {
         return managementService.deleteQuestion(id);
     }
 
+    /**
+     * 查询所有的板块
+     * @return
+     */
     @GetMapping("/getAllTagName")
     public Object getAllTagName() {
         return managementService.getAllTagName();
     }
 
+    /**
+     * 删除板块
+     * @param id
+     * @return
+     */
     @DeleteMapping("/deleteTagById/{id}")
     public Object deleteTagById(@PathVariable(name = "id") int id) {
         return managementService.deleteTagById(id);
@@ -135,11 +153,21 @@ public class ManagementController {
         return managementService.getNotice();
     }
 
+    /**
+     * 更新通知，返回TRUE orFALSE
+     * @param noticeVo
+     * @return
+     */
     @PutMapping("/updateNotice")
     public Object updateNotice(@RequestBody NoticeVo noticeVo) {
         return managementService.updateNotice(noticeVo);
     }
 
+    /**
+     * 发布广告，将前端传递的参数保存到数据库
+     * @param advert
+     * @return
+     */
     @PostMapping("/publishAdvert")
     public Object publishAdvert(@RequestBody Advert advert) {
         return managementService.publishAdvert(advert);
@@ -152,11 +180,21 @@ public class ManagementController {
         return new PageInfo<>(questionListVos);
     }
 
+    /**
+     * 批量删除，接受前端参数数组。
+     * @param array
+     * @return
+     */
     @DeleteMapping("/deleteBatch")
     public Object deleteBatch(@RequestBody int[] array) {
         return managementService.deleteBatch(array);
     }
 
+    /**
+     * 模糊查询，接收前端参数。并将查询的结果返回给前端
+     * @param searchUserVo
+     * @return
+     */
     @PostMapping("/searchUser")
     public Object searchUser(@RequestBody searchUserVo searchUserVo) {
         PageHelper.startPage(searchUserVo.getPageNo(), usermangerPageSize);

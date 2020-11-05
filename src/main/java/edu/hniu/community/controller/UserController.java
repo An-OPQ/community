@@ -71,6 +71,12 @@ public class UserController {
         return false;
     }
 
+    /**
+     *获取前端提交参数，MD5加密。更新到数据库中
+     * 返回 TRUE or FALSE
+     * @param userInfo
+     * @return
+     */
     @PutMapping("/resetPassword")
     public Object resetPassword(@RequestBody UserInfo userInfo) {
         userInfo = MD5.encode(userInfo);
@@ -87,6 +93,12 @@ public class UserController {
         return mailService.sendSimpleMail(mail, "欢饮加入后山论坛", "验证码为：" + code + "。有效期为5分钟");
     }
 
+    /**
+     * 处理异步验证邮箱是否被注册，并将警告信息返回
+     * @param email
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/findUserByEmail/{email}")
     public void findUserByEmail(@PathVariable String email, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("utf-8");
