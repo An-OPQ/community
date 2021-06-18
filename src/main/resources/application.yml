@@ -55,7 +55,7 @@ logging:
 
 #配置图片访问的虚拟路径
 preread:
-  uploadPath: file:/home/jerry/communityFileUploadPath/static/upload/
+  uploadPath: file:/home/liuxian/communityFileUploadPath/static/upload/
   mappingPath: /static/upload/**
 
 # 配置分页查询每页数量
