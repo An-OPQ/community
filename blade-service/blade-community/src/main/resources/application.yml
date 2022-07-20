@@ -1,0 +1,42 @@
+spring:
+  mvc:
+    static-path-pattern: /**
+  web:
+    resources:
+      static-locations: classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resources
+  application:
+    name: blade-core
+
+  mail:
+    host: smtp.qq.com
+    username: liuxian0728@foxmail.com
+    password: rbrxalgkjivpjijb
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+
+
+#mybatis
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: edu.hniu.community.domain
+
+#日志
+logging:
+  level:
+    edu.hniu.community.dao: info
+
+#配置图片访问的虚拟路径
+preread:
+  uploadPath: C:\Users\Administrator\Pictures
+  mappingPath: \**
+
+# 配置分页查询每页数量
+PageHelper:
+  questionPageSize: 10
+  usermangerPageSize: 5
+
+
+

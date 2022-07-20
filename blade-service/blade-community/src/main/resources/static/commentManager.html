@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 视窗配置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 开启ie8的标准渲染模式 -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>求知论坛管理</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="./img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="css/htgl.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <link rel="stylesheet" href="./toastr/toastr.min.css">
+    <script src="./toastr/toastr.min.js"></script>
+    <style>
+        table {
+            table-layout: fixed;
+        }
+        .wrap {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+<script src="./js/backNavbar.js"></script>
+<section id="Lr">
+    <div class="container-fluid">
+        <div class="col-lg-2">
+            <div class="list-group">
+                <a href="contentManager.html" class="list-group-item">帖子管理</a>
+                <a href="#" class="list-group-item active">评论管理</a>
+            </div>
+        </div>
+        <div class="col-lg-9  col-md-10 ">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 评论管理</h3>
+                </div>
+                <div class="panel-body">
+                    <button type="button" class="btn btn-primary" style="float:left;" id="deleteBatchByComment">
+                        <i class="glyphicon glyphicon-plus"></i> 批量删除
+                    </button>
+
+                    <form class="form-inline" role="form" style="float:right;">
+                        <div class="form-group has-feedback">
+                            <div class="input-group">
+                                <div class="input-group-addon">评论日期</div>
+                                <input class="form-control has-success" id="email" type="text">
+                            </div>
+                        </div>
+                        <button type="button"  class="btn btn-warning" id="searchByComment"><i
+                                class="glyphicon glyphicon-search"></i>查询
+                        </button>
+                    </form>
+                    <br>
+                    <hr style="clear:both;">
+                    <div class="table-responsive">
+                        <table class="table  table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="30">#</th>
+                                <th width="30"><input type="checkbox" onclick="return false;" checked="checked"></th>
+                                <th align="center">ID</th>
+                                <th class="wrap" width="35%">评论内容</th>
+                                <th class="wrap" width="200">作者账号</th>
+                                <th width="150">评论时间</th>
+                                <th width="150">点赞数</th>
+                                <th width="180">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="dataTable">
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="8" align="right">
+                                    <ul class="pagination">
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- footer -->
+<section id="footer">
+    <div class="row  text-center">
+        <div class="col-md-12">
+            <strong>Copyright &copy; 2020 ~ 2021 求知论坛管理</strong>
+        </div>
+    </div>
+</section>
+</body>
+
+<script>
+    $(function () {
+        $(".contentManager").addClass("active");
+        getAllComment(1);
+        $.toastr.config({
+            time: 2000,
+            size: 'lg',
+            position: 'top-center',
+        });
+    })
+
+    function initTable(response) {
+        var tbodyObj = $(".table tbody");
+        tbodyObj.empty();
+        var tbodyStr = "";
+        for (let i = 0; i < response.length; i++) {
+            var comment = response[i]
+            var date=comment.commentDate.toString()
+            date=date.substring(0,date.indexOf("T"))
+            tbodyStr += "<tr>\n" +
+                "         <td class=\"tbody_id\"></td>\n" +
+                "         <td><input type=\"checkbox\" value=" + comment.id + "></td>\n" +
+                "         <td class=\"tbody_id\">" + comment.id + "</td>\n" +
+                "         <td class=\"wrap\" title=\"" + comment.commentDescription + "\">" + comment.commentDescription + "</td>\n" +
+                "         <td class=\"wrap\" title=\"" + comment.email + "\">" + comment.email + "</td>\n" +
+                "         <td>" + date + "</td>\n" +
+                "         <td>" + comment.likeCount + "</td>\n" +
+                "         <td>\n" +
+                "             <div class=\"btn-group\" role=\"group\">\n" +
+                "                 <button type=\"button\" class=\"btn btn-default dropdown-toggle\"\n" +
+                "                         data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+                "                     操作 <span class=\"caret\"></span>\n" +
+                "                 </button>\n" +
+                "                <ul class=\"dropdown-menu\">\n" +
+                "                       <li><a href=\"questionView.html?id=" + comment.questionId + "\">查看</a></li>\n" +
+                "                       <li><a href=\"#\" onclick=\'deleteComment(" + comment.id + "," + comment.level + ",this)\' >删除</a></li>\n" +
+                "                     </ul>\n" +
+                "             </div>\n" +
+                "         </td>\n" +
+                "  </tr>"
+        }
+        tbodyObj.append(tbodyStr);
+    }
+
+    function getAllComment(pageNum) {
+        var pageNo = 1;
+        if (pageNum !== undefined) {
+            pageNo = pageNum
+        }
+        $.ajax({
+            url: "management/getAllComment?pageNo=" + pageNo,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                initTable(response.list)
+                var pageObj = $(".pagination");
+                pageObj.empty();
+                var spliteStr = "";
+                //判断是否为首页
+                if (response.isFirstPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='getAllComment(" + (response.pageNum - 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+
+                for (let i = 1; i <= response.pages; i++) {
+                    if (response.pageNum == i) {
+                        spliteStr += "<li class=\"active\">\n" +
+                            "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
+                            " </li>";
+
+                    } else {
+                        spliteStr += "<li onclick='getAllComment(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
+                    }
+                }
+                if (response.isLastPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='getAllComment(" + (response.pageNum + 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+                pageObj.append(spliteStr);
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+    }
+    function deleteComment(id,level, srcEle) {
+        var json={
+            id:id,
+            level:level
+        }
+        var jsonStr=JSON.stringify(json)
+        $.ajax({
+            url: "management/deleteComment",
+            type: "DELETE",
+            data:jsonStr,
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response) {
+                    $(srcEle).parent().parent().parent().parent().parent().remove()
+                    $.toastr.success("删除成功", {
+                        position: 'top-center'
+                    })
+                } else {
+                    $.toastr.error("删除失败", {
+                        position: 'top-center'
+                    })
+                }
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+    }
+
+    $("#searchByComment,#deleteBatchByComment").click(function (){
+        $.toastr.warning("功能待开发", {
+            position: 'top-center'
+        })
+    })
+</script>
+</html>

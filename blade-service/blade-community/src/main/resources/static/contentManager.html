@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 视窗配置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 开启ie8的标准渲染模式 -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>求知论坛管理</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="./img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="css/htgl.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <link rel="stylesheet" href="./toastr/toastr.min.css">
+    <script src="./toastr/toastr.min.js"></script>
+    <style>
+        table {
+            table-layout: fixed;
+        }
+        .wrap {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        #Lr {
+            min-height: 800px;
+        }
+        .alert {
+            margin-bottom: 0;
+            display: contents;
+        }
+    </style>
+</head>
+
+<body>
+<script src="./js/backNavbar.js"></script>
+<section id="Lr">
+    <div class="container-fluid">
+        <div class="col-lg-2">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">帖子管理</a>
+                <a href="commentManager.html" class="list-group-item">评论管理</a>
+            </div>
+        </div>
+        <div class="col-lg-9  col-md-10 ">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 帖子管理</h3>
+                </div>
+                <div class="panel-body">
+                    <button type="button" class="btn btn-primary" style="float:left;" onclick="deleteBatch()">
+                        <i class="glyphicon glyphicon-plus"></i> 批量删除
+                    </button>
+                    <form class="form-inline" role="form" style="float:right;">
+                        <div class="alert alert-info" role="alert">
+                            <strong>小提示：</strong>默认ID排序
+                        </div>&nbsp;&nbsp;
+                        <div class="form-group has-feedback">
+                            <div class="input-group">
+                                <div class="input-group-addon">帖子标题</div>
+                                <input class="form-control has-success" id="questionTitle" type="text">
+                                <div class="input-group-addon">所属板块</div>
+                                <select class="form-control" id="status">
+                                    <option value="">所有</option>
+                                    <option value="">科学技术</option>
+                                </select>
+                                <div class="input-group-addon">排序方式</div>
+                                <select class="form-control" id="sort">
+                                    <option value="0">时间</option>
+                                    <option value="1">ID</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" id="searchQuestion" class="btn btn-warning"><i
+                                class="glyphicon glyphicon-search"></i>查询
+                        </button>
+                    </form>
+                    <br>
+                    <hr style="clear:both;">
+                    <div class="table-responsive">
+                        <table class="table  table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="30">#</th>
+                                <th width="30"><input type="checkbox" checked="checked"/></th>
+                                <th align="center">ID</th>
+                                <th class="wrap" width="35%">文章标题</th>
+                                <th class="wrap" width="200">作者账号</th>
+                                <th width="150">发布时间</th>
+                                <th width="150">所属板块</th>
+                                <th width="180">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="dataTable">
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="8" align="right">
+                                    <ul class="pagination">
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- footer -->
+<section id="footer">
+    <div class="row  text-center">
+        <div class="col-md-12">
+            <strong>Copyright &copy; 2020 ~ 2021 求知论坛管理</strong>
+        </div>
+    </div>
+</section>
+</body>
+
+<script>
+    $(function () {
+        $(".contentManager").addClass("active");
+        getAllQuestion(1);
+        $.toastr.config({
+            time: 2000,
+            size: 'lg',
+            position: 'top-center',
+        });
+    })
+
+    function initTable(response) {
+        var tbodyObj = $(".table tbody");
+        tbodyObj.empty();
+        var tbodyStr = "";
+        for (let i = 0; i < response.length; i++) {
+            var question = response[i]
+            tbodyStr += "<tr>\n" +
+                "         <td class=\"tbody_id\"></td>\n" +
+                "         <td><input type=\"checkbox\" value=" + question.id + "></td>\n" +
+                "         <td class=\"tbody_id\">" + question.id + "</td>\n" +
+                "         <td class=\"wrap\" title=\"" + question.title + "\">" + question.title + "</td>\n" +
+                "         <td class=\"wrap\" title=\"" + question.email + "\">" + question.email + "</td>\n" +
+                "         <td>" + question.createDate + "</td>\n" +
+                "         <td>" + question.typeName + "</td>\n" +
+                "         <td>\n" +
+                "             <div class=\"btn-group\" role=\"group\">\n" +
+                "                 <button type=\"button\" class=\"btn btn-default dropdown-toggle\"\n" +
+                "                         data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+                "                     操作 <span class=\"caret\"></span>\n" +
+                "                 </button>\n" +
+                "                <ul class=\"dropdown-menu\">\n" +
+                "                       <li><a href=\"questionView.html?id=" + question.id + "\">查看</a></li>\n" +
+                "                       <li><a href=\"#\" onclick=\'topPost(" + question.id + ")\'>置顶精华贴</a></li>\n" +
+                "                       <li><a href=\"#\" onclick=\'deleteQuestion(" + question.id + ",this)\' >删除</a></li>\n" +
+                "                     </ul>\n" +
+                "             </div>\n" +
+                "         </td>\n" +
+                "  </tr>"
+        }
+        tbodyObj.append(tbodyStr);
+
+    }
+
+    function getAllQuestion(pageNum) {
+        var pageNo = 1;
+        if (pageNum != undefined) {
+            pageNo = pageNum
+        }
+        $.ajax({
+            url: "management/getAllQusetion?pageNo=" + pageNo,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                initTable(response.list)
+                initPagination(response)
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+    }
+
+    function initPagination(response) {
+        var pageObj = $(".pagination");
+        pageObj.empty();
+        var spliteStr = "";
+        //判断是否为首页
+        if (response.isFirstPage) {
+            spliteStr += "<li class=\'disabled\'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        } else {
+            spliteStr += "<li onclick='getAllQuestion(" + (response.pageNum - 1) + ")'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        }
+
+        for (let i = 1; i <= response.pages; i++) {
+            if (response.pageNum == i) {
+                spliteStr += "<li class=\"active\">\n" +
+                    "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
+                    " </li>";
+
+            } else {
+                spliteStr += "<li onclick='getAllQuestion(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
+            }
+        }
+        if (response.isLastPage) {
+            spliteStr += "<li class=\'disabled\'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        } else {
+            spliteStr += "<li onclick='getAllQuestion(" + (response.pageNum + 1) + ")'>\n" +
+                "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                "    </a>\n" +
+                "</li>";
+        }
+        pageObj.append(spliteStr);
+    }
+
+    function deleteQuestion(id, srcEle) {
+        $.ajax({
+            url: "management/deleteQuestion?id=" + id,
+            type: "DELETE",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response) {
+                    $(srcEle).parent().parent().parent().parent().parent().remove()
+                    $.toastr.success("删除成功", {
+                        position: 'top-center'
+                    })
+                } else {
+                    $.toastr.success("删除失败", {
+                        position: 'top-center'
+                    })
+                }
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+    }
+
+    $(function () {
+            $.ajax({
+                url: "management/getAllTagName",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    var statusObj = $("#status");
+                    statusObj.empty();
+                    var tabStr = "";
+                    tabStr += "<option value=\"-1\">所有</option>"
+                    for (let i = 0; i < response.length; i++) {
+                        var tag = response[i]
+                        tabStr += "<option value=" + tag.typeId + ">" + tag.typeName + "</option>"
+                    }
+                    statusObj.append(tabStr)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        }
+    )
+
+    /**
+     * 后台内容管理，帖子搜索功能
+     */
+    $("#searchQuestion").click(function () {
+        searchQuestion(1)
+    })
+
+    function searchQuestion(pageNum) {
+        var pageNo = 1;
+        if (undefined != pageNum) {
+            pageNo = pageNum;
+        }
+        var questionTitleVal = $("#questionTitle").val();
+        var statusVal = $("#status option:selected").val()
+        var sortVal =$("#sort option:selected").val()
+        var json = {
+            title: questionTitleVal,
+            typeid: statusVal,
+            sort:sortVal,
+            pageNo: pageNo
+        }
+        var jsonStr = JSON.stringify(json)
+        $.ajax({
+            url: "management/searchQuestion",
+            type: "POST",
+            data: jsonStr,
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                initTable(response.list)
+                var pageObj = $(".pagination");
+                pageObj.empty();
+                var spliteStr = "";
+                if (response.isFirstPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='searchQuestion(" + (response.pageNum - 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+
+                for (let i = 1; i <= response.pages; i++) {
+                    if (response.pageNum == i) {
+                        spliteStr += "<li class=\"active\">\n" +
+                            "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
+                            " </li>";
+
+                    } else {
+                        spliteStr += "<li onclick='searchQuestion(" + i + ")'><a href=\"#\">" + i + "</a></li>\n";
+                    }
+                }
+                if (response.isLastPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='searchQuestion(" + (response.pageNum + 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+                pageObj.append(spliteStr);
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    }
+
+    function deleteBatch() {
+        var nodeVal = new Array();
+        $("#dataTable input[type='checkbox']:checked").each(function () {
+            nodeVal.push($(this).val())
+        })
+        var jsonStr = JSON.stringify(nodeVal)
+        $.ajax({
+            url: "management/deleteBatch",
+            type: "DELETE",
+            data: jsonStr,
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                if (response) {
+                    $("#dataTable input[type='checkbox']:checked").each(function () {
+                        $(this).parent().parent().remove()
+                    })
+                    $.toastr.success("删除成功", {
+                        position: 'top-center'
+                    })
+                } else {
+                    $.toastr.success("删除失败", {
+                        position: 'top-center'
+                    })
+                }
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    }
+
+    /**
+     * 置顶精华帖
+     */
+    function topPost(questionID){
+        $.ajax({
+            url: "management/topPost?id=" + questionID,
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response){
+                    $.toastr.success("置顶成功", {
+                        position: 'top-center'
+                    })
+                }
+            },
+            error: function (response) {
+                console.error(response)
+            }
+        })
+
+    }
+</script>
+</html>

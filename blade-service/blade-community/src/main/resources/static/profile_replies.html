@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>求知论坛</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/community.css">
+    <link rel="stylesheet" href="./css/config.css">
+    <link href="./img/favicon.ico" rel="icon">
+
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="./js/community.js" type="application/javascript"></script>
+</head>
+<body>
+<script src="./js/navbar.js" type="text/javascript"></script>
+<div class="container-fluid main profile">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span>最新回复</span></h2>
+            <hr>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="medias">
+                <div class="media">
+                    <div class="media-body">
+                        <p class="media-heading">
+                            <span>小Y 回复了问题 </span>
+                            <a href="/notification/3206">哈哈，b站视频过来的</a>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="active">
+                            <a href="/profile/replies?page=1">1</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="list-group section">
+                <a href="profile_questions.html"
+                   class="list-group-item">我的问题</a>
+                <a href="profile_replies.html"
+                   class="active list-group-item">
+                    最新回复
+                    <span class="badge"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/footer.js" type="text/javascript"></script>
+</body>
+<script>
+    var email;
+    $(function () {
+        $.ajax({
+            url: "user/getSession",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                email = response;
+                refresh(1)
+            }
+        })
+    })
+
+    function initTable(response) {
+        var mediasObj = $("#medias");
+        mediasObj.empty();
+        for (let i = 0; i < response.length; i++) {
+            var mediaStr = "";
+            var media = response[i];
+            mediaStr = "<div class=\"media\">\n" +
+                "    <div class=\"media-body\">\n" +
+                "        <p class=\"media-heading\">\n" +
+                "            <span>" + media.accountName + " 回复了问题 </span>\n" +
+                "            <a  href=\"questionView.html?id=" + media.comment.questionId + "\">" + media.comment.commentDescription + "</a>\n" +
+                "        </p>\n" +
+                "    </div>\n" +
+                "</div>"
+            mediasObj.append(mediaStr);
+        }
+    }
+
+    function refresh(pageNum) {
+        var pageNo = 1;
+        if (pageNum !== undefined) {
+            pageNo = pageNum
+        }
+        $.ajax({
+            url: "user/getAllCommentByEmail/" + email + "/" + pageNo + "",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                initTable(response.list)
+                $(".badge").html(response.total)
+                $(".pagination").empty();
+                var spliteStr = "";
+                //判断是否为首页
+                if (response.isFirstPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='refresh(" + (response.pageNum - 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&lt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+                for (let i = 1; i <= response.pages; i++) {
+                    if (response.pageNum == i) {
+                        spliteStr += "<li class=\"active\">\n" +
+                            "<a>" + i + "<span class=\"sr-only\">(current)</span></a>" +
+                            " </li>";
+                    } else {
+                        spliteStr += "<li onclick='refresh(" + i + ")'><a>" + i + "</a></li>"
+                    }
+                }
+                if (response.isLastPage) {
+                    spliteStr += "<li class=\'disabled\'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                } else {
+                    spliteStr += "<li onclick='refresh(" + (response.pageNum + 1) + ")'>\n" +
+                        "   <a href=\"#\" aria-label=\"Previous\">\n" +
+                        "      <span aria-hidden=\"true\">&gt;</span>\n" +
+                        "    </a>\n" +
+                        "</li>";
+                }
+                $(".pagination").append(spliteStr);
+
+            }
+        })
+    }
+</script>
+</html>

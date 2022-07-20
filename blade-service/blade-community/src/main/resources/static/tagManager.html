@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 视窗配置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 开启ie8的标准渲染模式 -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>求知论坛管理</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/htgl.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <link href="./img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="./toastr/toastr.min.css">
+    <script src="./toastr/toastr.min.js"></script>
+</head>
+
+<body>
+<!-- header-->
+<script src="./js/backNavbar.js"></script>
+<!-- header-->
+<!-- content -->
+<section id="tm">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h4>板块管理</h4>
+                </div>
+                <form class="table">
+                    <div class="col-md-10">
+                        <input class="form-control" value="" id="tagName"/>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-default  pull-left">添加</button>
+                    </div>
+                </form>
+                <div class="tab-list">
+                    <div class="alert alert-info  pull-left ">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>美食</strong>
+                    </div>
+                    <div class="alert alert-info  pull-left">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>文学</strong>
+                    </div>
+                    <div class="alert alert-info  pull-left">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>旅行心得</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- content -->
+
+<!-- footer -->
+<section id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <strong>
+                    Copyright &copy; 2020 ~ 2021 求知论坛管理
+                </strong>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script>
+    $(function () {
+        $(".tagManager").addClass("active");
+        refresh();
+    })
+
+    function refresh() {
+        $.ajax({
+            url: "management/getAllTagName",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                var tabObj = $(".tab-list");
+                tabObj.empty();
+                var tabStr = "";
+                for (let i = 0; i < response.length; i++) {
+                    var tag = response[i]
+                    tabStr += " <div class=\"alert alert-info  pull-left \">\n" +
+                        "    <button type=\"button\" onclick='deleteTag(" + tag.typeId + ")' class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                        "        <span aria-hidden=\"true\">&times;</span>\n" +
+                        "    </button>\n" +
+                        "    <strong>" + tag.typeName + "</strong>\n" +
+                        "</div>"
+                }
+                tabObj.append(tabStr)
+            }
+        })
+    }
+
+    function deleteTag(id) {
+        $.ajax({
+            url: "management/deleteTagById/" + id + "",
+            type: "DELETE",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                if (response) {
+                    $.toastr.success("删除成功", {
+                        position: 'top-center'
+                    })
+                }
+            }
+        })
+    }
+
+    $(".table").submit(function () {
+        var typeName = $("#tagName").val();
+        var typeCreateTime = new Date();
+        var json = {
+            type_name: typeName,
+            type_createTime: typeCreateTime
+        }
+        var jsonStr = JSON.stringify(json);
+        $.ajax({
+            url: "management/addTag",
+            type: "POST",
+            data: jsonStr,
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+            }
+        })
+    })
+
+
+</script>
+</html>

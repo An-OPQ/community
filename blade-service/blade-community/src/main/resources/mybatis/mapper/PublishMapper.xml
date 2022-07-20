@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hniu.community.dao.PublishDao">
+
+    <!--一对多;以userinfo为主表-->
+    <resultMap id="questionList" type="UserInfo">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="accountName" column="accountName"/>
+        <result property="sex" column="sex"/>
+        <result property="icon" column="icon"/>
+        <result property="sginName" column="sginName"/>
+        <result property="qq" column="qq"/>
+        <result property="weChat" column="weChat"/>
+        <result property="mobile" column="mobile"/>
+        <result property="github" column="github"/>
+        <result property="microblog" column="microblog"/>
+        <collection property="question" ofType="Question">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="description" column="description"/>
+            <result property="creatorid" column="creatorid"/>
+            <result property="createDate" column="createDate"/>
+            <result property="commentCount" column="commentCount"/>
+            <result property="viewCount" column="viewCount"/>
+            <result property="likeCount" column="likeCount"/>
+            <result property="roleid" column="roleid"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="commentMultiList" type="CommentMulti">
+        <id property="comMultiId" column="com_multi_id"/>
+        <result property="comId" column="com_id"/>
+        <result property="comMultiContent" column="com_multi_content"/>
+        <result property="comMultiUserId" column="com_multi_user_id"/>
+        <result property="comMultiTime" column="com_multi_time"/>
+        <association property="userInfo" javaType="UserInfo">
+            <id property="id" column="uid"/>
+            <result property="password" column="password"/>
+            <result property="accountName" column="accountName"/>
+            <result property="roleid" column="roleid"/>
+            <result property="sex" column="sex"/>
+            <result property="icon" column="icon"/>
+            <result property="sginName" column="sginName"/>
+            <result property="qq" column="qq"/>
+            <result property="weChat" column="weChat"/>
+            <result property="mobile" column="mobile"/>
+            <result property="github" column="github"/>
+            <result property="microblog" column="microblog"/>
+        </association>
+    </resultMap>
+
+    <insert id="publishMessage" parameterType="Question">
+        insert into question(id,
+        <trim suffixOverrides=",">
+            <if test="title!='' and title!=null">
+                title,
+            </if>
+            <if test="description!='' and description!=null">
+                description,
+            </if>
+            <if test="creatorid!='' and creatorid!=null">
+                creatorid,
+            </if>
+            <if test="createDate!='' and createDate!=null">
+                createDate,
+            </if>
+            <if test="typeid!='' and typeid!=null">
+                typeid
+            </if>
+        </trim>
+        ) values (default ,
+        <trim suffixOverrides=",">
+            <if test="title!='' and title!=null">
+                #{title},
+            </if>
+            <if test="description!='' and description!=null">
+                #{description},
+            </if>
+            <if test="creatorid!='' and creatorid!=null">
+                #{creatorid},
+            </if>
+            <if test="createDate!='' and createDate!=null">
+                #{createDate},
+            </if>
+            <if test="typeid!='' and typeid!=null">
+                #{typeid}
+            </if>
+        </trim>
+        )
+        <selectKey keyColumn="id" keyProperty="id" resultType="long" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <select id="getPublishMessage" resultMap="questionList">
+        SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid order by q.likeCount DESC ,q.createDate DESC
+    </select>
+
+    <select id="searchQuestion" resultMap="questionList">
+        SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid
+        <where>
+            <if test="title !=''and title !=null">
+                and title like concat('%',#{title},'%')
+            </if>
+            <if test="typeid !=''and typeid !=null">
+                and typeid=#{typeid}
+            </if>
+            <if test="classify=='red'">
+                and q.commentCount=0
+            </if>
+            <if test="classify=='new'">
+                and DATE_SUB(curdate(),INTERVAL 7 DAY) &lt;=date
+                (q.createDate) order by q.createDate DESC
+            </if>
+            <if test="classify=='hot7'">
+                and DATE_SUB(curdate(),INTERVAL 7 DAY) &lt;=date
+                (q.createDate) order by q.viewCount DESC
+            </if>
+        </where>
+        <if test="classify==null">
+            order by q.createDate DESC
+        </if>
+        <if test="classify=='hot'">
+            order by q.viewCount DESC
+        </if>
+    </select>
+
+    <update id="updateViewCount" parameterType="Integer">
+        UPDATE question	set viewCount=viewCount+1 WHERE id=#{id}
+    </update>
+
+    <update id="updateCommentCount" parameterType="Integer">
+        UPDATE question	set commentCount=commentCount+1 WHERE id=#{id}
+    </update>
+
+    <update id="addLikeCount" parameterType="Integer">
+        UPDATE comment	set likeCount=likeCount+1 WHERE id=#{id}
+    </update>
+    <update id="lessLikeCount" parameterType="Integer">
+        UPDATE comment	set likeCount=likeCount-1 WHERE id=#{id}
+    </update>
+
+    <update id="updateQuestion" parameterType="Question">
+        update question
+        <set>
+            <if test="title!=null and title!=''">
+                title=#{title},
+            </if>
+            <if test="description!=null and description!=''">
+                description=#{description},
+            </if>
+            <if test="typeid!=null and typeid!=''">
+                typeid=#{typeid},
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                createDate=#{createDate},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <update id="addQuestionLikeCount" parameterType="Integer">
+        UPDATE question	set likeCount=likeCount+1 WHERE id=#{id}
+    </update>
+
+    <update id="lessQuestionLikeCount" parameterType="Integer">
+        UPDATE question	set likeCount=likeCount-1 WHERE id=#{id}
+    </update>
+
+    <insert id="secondarySubmit" parameterType="CommentMulti">
+        insert into comment_multi(com_multi_id,
+        <trim suffixOverrides=",">
+            <if test="comId!=null and comId!=''">
+                com_id,
+            </if>
+            <if test="comMultiContent!=null and comMultiContent!=''">
+                com_multi_content,
+            </if>
+            <if test="comMultiUserId!=null and comMultiUserId!=''">
+                com_multi_user_id,
+            </if>
+            <if test="comMultiTime!=null">
+                com_multi_time
+            </if>
+        </trim>
+        ) values(default ,
+        <trim suffixOverrides=",">
+            <if test="comId!=null and comId!=''">
+                #{comId},
+            </if>
+            <if test="comMultiContent!=null and comMultiContent!=''">
+                #{comMultiContent},
+            </if>
+            <if test="comMultiUserId!=null and comMultiUserId!=''">
+                #{comMultiUserId},
+            </if>
+            <if test="comMultiTime!=null">
+                #{comMultiTime}
+            </if>
+        </trim>
+        )
+    </insert>
+    
+    <update id="addCommentCount" parameterType="CommentMulti">
+        UPDATE comment set commentCount =commentCount +1 WHERE id=#{comId}
+    </update>
+
+    <select id="secondaryComment" parameterType="Integer" resultMap="commentMultiList">
+        SELECT  cm.*,u.id,u.accountName,u.roleid FROM comment_multi cm left join userinfo u on cm.com_multi_user_id =u.id WHERE cm.com_id =#{id}
+    </select>
+</mapper>

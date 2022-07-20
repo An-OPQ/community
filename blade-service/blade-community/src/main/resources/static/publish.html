@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>求知论坛</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link href="./img/favicon.ico" rel="icon">
+    <script src="./jquery/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="./wangEditor/wangEditor.min.css">
+    <script src="./wangEditor/wangEditor.min.js"></script>
+    <style>
+        body {
+            background-color: #EFEFEF;
+        }
+
+        .main {
+            background-color: white;
+            margin: 30px;
+        }
+
+        .btn-main {
+            float: right;
+            margin: 10px;
+        }
+
+        .row {
+            margin-bottom: 100px;
+        }
+    </style>
+</head>
+
+<body>
+<script src="./js/navbar.js" type="text/javascript"></script>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span>提问</h2>
+            <hr>
+            <form>
+                <input type="hidden" name="id">
+                <div class="form-group">
+                    <label for="title">问题标题（简单扼要）:</label>
+                    <input type="text" class="form-control" id="title" name="title" value="" placeholder="问题标题……"
+                           autocomplete="off">
+                </div>
+                <div class="form-group" id="question-editor">
+                    <label for="description">问题补充 (必填，请参照右侧提示):</label>
+                    <div name="description" id="description"></div>
+                </div>
+                <div class="form-group">
+                    <label for="tag">所属板块:</label>
+                    <select id="tag" class="form-control">
+                        <option value="0">科学技术</option>
+                    </select>
+                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                </div>
+
+                <div class="container-fluid main ">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" class="btn btn-success btn-lg btn-main" id="submit">
+                                发布
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>问题发起指南</h3>
+            • 问题标题: 请用精简的语言描述您发布的问题，不超过25字 <br>
+            • 问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料<br>
+            • 选择标签: 选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br>
+        </div>
+    </div>
+</div>
+<script src="./js/footer.js" type="text/javascript"></script>
+<script src="./bootstrap/js/bootstrap.min.js"></script>
+<script src="./js/sweetalert.min.js"></script>
+<script>
+    var params=window.location.search;
+    var id=params.substring(params.indexOf("=")+1)
+    getAllTag();
+    $("#submit").click(function () {
+        var titleVal = $("#title").val();
+        var descriptionVal = editor.txt.html();
+        var date = new Date();
+        var Month = date.getMonth() + 1;
+        var createDate = date.getFullYear() + "-" + Month + "-" + date.getDate();
+        var typeid = $("#tag option:selected").val()
+        var json = {
+            creatorid: id,
+            title: titleVal,
+            description: descriptionVal,
+            typeid: typeid,
+            createDate: createDate
+        }
+        var jsonStr = JSON.stringify(json)
+        $.ajax({
+            url: "publish/submit",
+            type: "POST",
+            data: jsonStr,
+            contentType: "application/json;charset=utf-8",
+            dataType:"json",
+            success: function (response) {
+                if(response.flag){
+                    swal({
+                        text: "发布成功",
+                        icon: "success",
+                    });
+                    setTimeout(function (){
+                        window.location.href="questionView.html?id="+response.questionId;
+                    },1000);
+                }
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    })
+
+    //富文本编辑器,稍后整合
+    var E = window.wangEditor;
+    var editor = new E("#description");
+    editor.customConfig.debug = true;
+    // 关闭粘贴内容中的样式
+    editor.customConfig.pasteFilterStyle = false;
+    // 忽略粘贴内容中的图片
+    editor.customConfig.pasteIgnoreImg = false;
+    // 使用 base64 保存图片
+    //editor.customConfig.uploadImgShowBase64 = true
+    // 上传图片到服务器
+    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+    //自定义上传图片事件
+    editor.customConfig.uploadImgHooks = {
+        before: function (xhr, editor, files) {
+        },
+        success: function (xhr, editor, result) {
+            console.log("上传成功");
+        },
+        fail: function (xhr, editor, result) {
+            console.log("上传失败,原因是" + result);
+        },
+        error: function (xhr, editor) {
+            console.log("上传出错");
+        },
+        timeout: function (xhr, editor) {
+            console.log("上传超时");
+        }
+    }
+    editor.create();
+
+
+    function getAllTag() {
+        $.ajax({
+            url: "management/getAllTagName",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                var tabObj = $("#tag");
+                tabObj.empty();
+                var tabStr = "";
+                for (let i = 0; i < response.length; i++) {
+                    var tag = response[i]
+                    tabStr += "<option value=" + tag.typeId + ">" + tag.typeName + "</option>"
+                }
+                tabObj.append(tabStr)
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        })
+    }
+</script>
+</body>
+
+</html>

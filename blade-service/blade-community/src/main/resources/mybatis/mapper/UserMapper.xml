@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hniu.community.dao.UserInfoDao">
+
+    <!--一对多;以userinfo为主表-->
+    <resultMap id="questionList" type="UserInfo">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="accountName" column="accountName"/>
+        <result property="sex" column="sex"/>
+        <result property="icon" column="icon"/>
+        <result property="sginName" column="sginName"/>
+        <result property="qq" column="qq"/>
+        <result property="weChat" column="weChat"/>
+        <result property="mobile" column="mobile"/>
+        <result property="github" column="github"/>
+        <result property="microblog" column="microblog"/>
+        <collection property="question" ofType="Question">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="description" column="description"/>
+            <result property="creatorid" column="creatorid"/>
+            <result property="createDate" column="createDate"/>
+            <result property="commentCount" column="commentCount"/>
+            <result property="viewCount" column="viewCount"/>
+            <result property="likeCount" column="likeCount"/>
+            <result property="roleid" column="roleid"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="commentList" type="UserInfo">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="accountName" column="accountName"/>
+        <result property="sex" column="sex"/>
+        <result property="icon" column="icon"/>
+        <result property="sginName" column="sginName"/>
+        <result property="qq" column="qq"/>
+        <result property="weChat" column="weChat"/>
+        <result property="mobile" column="mobile"/>
+        <result property="github" column="github"/>
+        <result property="microblog" column="microblog"/>
+        <collection property="comment" ofType="Comment">
+            <id property="id" column="id"/>
+            <result property="creatorId" column="creatorId"/>
+            <result property="questionId" column="questionId"/>
+            <result property="commentDescription" column="commentDescription"/>
+            <result property="commentDate" column="commentDate"/>
+            <result property="likeCount" column="likeCount"/>
+            <result property="commentCount" column="commentCount"/>
+        </collection>
+    </resultMap>
+
+    <!--多对一-->
+    <resultMap id="getAccountNameMap" type="UserInfo">
+        <id property="id" column="id"/>
+        <result property="accountName" column="accountName"/>
+        <association property="roleInfo" javaType="RoleInfo">
+            <id property="roleid" column="roleid"/>
+            <result property="rolename" column="rolename"/>
+        </association>
+    </resultMap>
+
+
+    <select id="loginCheck" resultType="int">
+        select count(1) from userinfo
+        <where>
+            <if test="email !=null and email !=''">
+                and email=#{email}
+            </if>
+            <if test="password !=null and password !=''">
+                and password=#{password}
+            </if>
+        </where>
+    </select>
+
+    <insert id="register" parameterType="UserInfo">
+        insert userinfo(id,
+        <trim suffixOverrides=",">
+            <if test="accountName !=null and accountName !=''">
+                accountName,
+            </if>
+            <if test="email !=null and email !=''">
+                email,
+            </if>
+            <if test="password !=null and password !=''">
+                password,
+            </if>
+            <if test="mobile !=null and mobile !=''">
+                mobile
+            </if>
+        </trim>
+        ) values (default ,
+        <trim suffixOverrides=",">
+            <if test="accountName !=null and accountName !=''">
+                #{accountName},
+            </if>
+            <if test="email !=null and email !=''">
+                #{email},
+            </if>
+            <if test="password !=null and password !=''">
+                #{password},
+            </if>
+            <if test="mobile !=null and mobile !=''">
+                #{mobile}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <update id="updateToken">
+        update userinfo
+        <set>
+            <if test="token !=null and token !=''">
+                token=#{token}
+            </if>
+        </set>
+        where email=#{email}
+
+    </update>
+
+    <select id="getToken" parameterType="String" resultType="String">
+        select email from userinfo where token=#{token}
+     </select>
+
+    <select id="getAccountName" parameterType="String" resultMap="getAccountNameMap">
+        select u.accountName,r.roleid from userinfo u left join roleinfo r ON u.roleid =r.roleid where email=#{email}
+    </select>
+
+    <update id="resetPassword" parameterType="UserInfo">
+        update userinfo
+        <set>
+            <if test="password!='' and password!=null">
+                password=#{password}
+            </if>
+        </set>
+        where email=#{email}
+    </update>
+
+    <select id="findUser" parameterType="UserInfo" resultType="int">
+        select count(*) from userinfo
+        <where>
+            <if test="email!=null and email!=''">
+                and email=#{email}
+            </if>
+            <if test="accountName!=null and accountName!=''">
+                and accountName=#{accountName}
+            </if>
+        </where>
+    </select>
+
+
+    <update id="updateMassge" parameterType="UserInfo">
+        update userinfo
+        <set>
+            <if test="accountName!=null and accountName!=''">
+                accountName=#{accountName},
+            </if>
+            <if test="sex!=null and sex!=''">
+                sex=#{sex},
+            </if>
+            <if test="sginName!=null and sginName!=''">
+                sginName=#{sginName},
+            </if>
+            <if test="icon!=null and icon!=''">
+                icon=#{icon},
+            </if>
+            <if test="qq!=null and qq!=''">
+                qq=#{qq},
+            </if>
+            <if test="weChat!=null and weChat!=''">
+                weChat=#{weChat},
+            </if>
+            <if test="mobile!=null and mobile!=''">
+                mobile=#{mobile},
+            </if>
+            <if test="github!=null and github!=''">
+                github=#{github},
+            </if>
+            <if test="microblog!=null and microblog!=''">
+                microblog=#{microblog},
+            </if>
+        </set>
+        where email=#{email}
+    </update>
+
+    <select id="getUserConfig" parameterType="String" resultType="UserInfo">
+        SELECT  u.id,u.email,u.accountName,u.sex,u.icon,u.sginName,u.qq,u.WeChat,u.mobile,u.github,u.microblog FROM userinfo u WHERE email=#{email}
+    </select>
+
+    <select id="getIdByEmail" parameterType="String" resultType="long">
+        select id from userinfo where email=#{email}
+    </select>
+
+    <select id="getQuestionByEmail" parameterType="String" resultMap="questionList">
+        select  u.id as uid ,u.icon, q.* from userinfo u right join  question q  on u.id=q.creatorid   where email=#{email}
+    </select>
+
+    <select id="getAllCommentByEmail" parameterType="String" resultMap="commentList">
+       select c.*,u.accountName,u.icon from question q LEFT JOIN  comment c   on q.id=c.questionId  left join userinfo u on c.creatorId=u.id
+            where questionId=ANY(select  q.id from userinfo u right join  question q  on u.id=q.creatorid   where email=#{email})
+    </select>
+
+    <select id="initModel" resultType="QuestionType">
+        SELECT  * FROM question_type
+    </select>
+
+    <select id="getNotice" resultType="Notice">
+        SELECT * FROM notice ORDER BY create_time DESC LIMIT 1
+    </select>
+
+    <select id="getAdvert" resultType="Advert">
+        select * from advert order by createTime desc  limit 1
+    </select>
+</mapper>

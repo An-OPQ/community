@@ -1,0 +1,95 @@
+body {
+    background-color: #EFEFEF;
+    font-family: "Helvetica Neue";
+    font-size: 14px;
+}
+a:hover{
+    text-decoration: none;
+}
+.main {
+    background-color: white;
+    margin: 30px;
+}
+
+.row {
+    margin-bottom: 100px;
+    min-height: 900px;
+}
+
+
+.main-header {
+    border-bottom: 1px solid #ddd;
+}
+
+.side {
+    margin: 5px 0;
+}
+
+.community-tag:hover {
+    background-color: #339dff;
+    color: #fff;
+    text-decoration-line: none;
+}
+
+.community-tag {
+    text-decoration-line: none;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    line-height: 16px;
+    padding: 2px 5px;
+    background-color: #99cfff;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 4px;
+    margin: 4px;
+}
+
+.question-wechat {
+    width: 95%;
+}
+
+#setting_form {
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+hr {
+    margin-bottom: 0px;
+}
+
+.side-bar {
+    font-size: 14px;
+    line-height: 160%;
+    color: #333;
+    box-sizing: border-box;
+    position: absolute;
+    right: 20px;
+    top: 200px;
+}
+
+#avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 25px;
+    background-image: url("../img/avatar-max-img.png");
+    background-size: cover;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+label {
+    font-size: 14px;
+}
+
+.row input {
+    margin-bottom: 30px;
+}
+
+.mod-contact {
+    margin-left: 13px;
+    padding: 7px;
+}

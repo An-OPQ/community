@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 视窗配置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 开启ie8的标准渲染模式 -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>求知论坛管理</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="./img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="css/htgl.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <link rel="stylesheet" href="./toastr/toastr.min.css">
+    <script src="./toastr/toastr.min.js"></script>
+    <link rel="stylesheet" href="dropzone/css/dropzone.min.css">
+    <script src="dropzone/js/dropzone.min.js"></script>
+    <style>
+        .form-group label {
+            font-size: 20px;
+        }
+
+        .showImg {
+            width: 450px;
+            height: 280px;
+            padding-left: 0;
+        }
+    </style>
+</head>
+
+<body>
+<script src="./js/backNavbar.js"></script>
+<section id="Lr">
+    <div class="container">
+        <div class="row">
+            <!--左列表 -->
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item advert">发布公告</a>
+                    <a href="#" class="list-group-item advertmanagerEdit">修改广告</a>
+                    <a href="#" class="list-group-item  active">发布广告</a>
+                </div>
+            </div>
+            <!-- 右列表 -->
+            <div class="col-md-9">
+                <div class="page-header">
+                    <h4>广告管理</h4>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="advert"><a href="#">发布公告</a></li>
+                    <li role="presentation" class="advertmanagerEdit"><a href="#">发布公告</a></li>
+                    <li role="presentation" class="active"><a href="#">发布广告</a></li>
+                </ul>
+                <div class="tab">
+                    <br>
+                    <div class="form-group">
+                        <label for="Sponsor_ADs">输入商家名</label>
+                        <br/>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">赞助商家</span>
+                            <input type="text" class="form-control" id="Sponsor_ADs" placeholder="添加赞助商家">
+                        </div>
+                        <br>
+                        <br>
+                        <label>输入商家网址</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">Https://</span>
+                            <input type="text" class="form-control" id="basic-url">
+                        </div>
+                        <br>
+                        <div class="checkbox">
+                            <button type="button" class="btn btn-lg btn-default  pull-right">添加</button>
+                        </div>
+                        <br>
+                        <br>
+                        <hr>
+                        <br>
+                        <div class="input-group input-group-lg">
+                            <label for="fileImg">
+                                <img src="./img/上传.png" class="img-thumbnail"/>
+                                <input type="text" id="fileImg" style="display: none">
+                            </label>
+
+                            <br>
+                            <hr class="col-lg-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 showImg">
+                                <label>展示</label>
+                                <img class="img-thumbnail question-wechat" alt="广告图片展示位置" src="./picture/uhost.png">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- footer -->
+<section id="footer">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <strong>Copyright &copy; 2020 ~ 2021 求知论坛管理</strong>
+        </div>
+    </div>
+</section>
+
+</body>
+<script>
+    $(".advertManager").addClass("active");
+    var params = window.location.search;
+    var id = params.substring(params.indexOf("=") + 1)
+
+    $(function () {
+        $.toastr.config({
+            time: 2000,
+            size: 'lg',
+            position: 'top-center',
+        });
+    })
+    $(".advertmanagerEdit").click(function () {
+        window.location.href = "advertmanagerEdit.html?id=" + id
+    })
+    $(".advert").click(function () {
+        window.location.href = "advertmanager.html?id=" + id;
+    })
+
+    var fileName;
+    var myDropzone = new Dropzone("#fileImg", {
+        url: "file/upload", // 文件提交地址
+        method: "PUT",  // 也可用put
+        paramName: "multipartFile", // 默认为file
+        maxFiles: 1,// 一次性上传的文件数量上限
+        maxFilesize: 3, // 文件大小，单位：MB
+        acceptedFiles: ".jpg,.gif,.png,.jpeg", // 上传的类型
+        addRemoveLinks: false,
+        parallelUploads: 1,// 一次上传的文件数量
+        dictDefaultMessage: '拖动文件至此或者点击上传',
+        dictMaxFilesExceeded: "您最多只能上传1个文件！",
+        dictResponseError: '文件上传失败!',
+        dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg",
+        dictFallbackMessage: "浏览器不受支持",
+        dictFileTooBig: "文件过大上传文件最大支持.",
+        dictRemoveLinks: "删除",
+        dictCancelUpload: "取消",
+        init: function () {
+            this.on("addedfile", function (file) {
+            });
+            this.on("success", function (file, data) {
+                fileName = data.filename;
+                $(".question-wechat").attr("src", "static/upload/" + fileName + "");
+            });
+            this.on("error", function (file, data) {
+                $.toastr.error("格式不支持或文件过大!", {
+                    position: 'top-center',
+                    time: 4000
+                })
+            });
+            this.on("removedfile", function (file) {
+            });
+        }
+    });
+    $(".tab button").click(function () {
+        var advertName = $("#Sponsor_ADs").val();
+        var advertURL = $("#basic-url").val();
+        var createTime = new Date();
+        var json = {
+            advertName: advertName,
+            advertURL: advertURL,
+            pictureAddress: fileName,
+            createId: id,
+            createTime: createTime
+        }
+        var jsonStr = JSON.stringify(json);
+        $.ajax({
+            url: "management/publishAdvert",
+            type: "POST",
+            data: jsonStr,
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                if (response) {
+                    $.toastr.success("发布成功", {
+                        position: 'top-center',
+                    })
+                } else {
+                    $.toastr.error("发布失败", {
+                        position: 'top-center'
+                    })
+                }
+                $("#Sponsor_ADs").val("")
+            }
+        })
+    })
+
+</script>
+</html>

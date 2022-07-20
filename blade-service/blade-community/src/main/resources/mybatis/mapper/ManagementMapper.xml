@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hniu.community.dao.ManagementDao">
+
+    <select id="loginCheck" resultType="Roleinfo">
+    select  r.*  from userinfo u left join roleinfo r on u.roleid=r.roleid  WHERE email=#{email} and password=#{password}
+    </select>
+
+    <select id="getAllUserinfo" resultType="edu.hniu.community.vo.userAndRoleListVo" parameterType="int[]">
+        select  u.id,u.email,u.password,u.accountName,r.*  from  roleinfo r
+         right join userinfo u on r.roleid=u.roleid WHERE r.roleid in
+        <foreach collection="array" item="array" open="(" index="index" separator="," close=")">
+            #{array}
+        </foreach>
+        order by u.id asc
+    </select>
+
+    <select id="searchUser" resultType="edu.hniu.community.vo.userAndRoleListVo">
+        select u.id,u.email,u.password,u.accountName,r.* from roleinfo r right join userinfo u on r.roleid=u.roleid
+        <where>
+            <if test="accountName !=null and accountName!=''">
+                and u.accountName like concat('%',#{accountName},'%')
+            </if>
+            <if test="email !=null and email!=''">
+                and u.email like concat('%',#{email},'%')
+            </if>
+        </where>
+        and r.roleid=#{roleid} order by u.id asc
+    </select>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from userinfo where  id=#{id}
+    </delete>
+
+    <update id="resetPassword" parameterType="UserInfo">
+        update userinfo
+        <set>
+            <if test="password!='' and password!=null">
+                password=#{password}
+            </if>
+        </set>
+        where accountName=#{accountName}
+    </update>
+
+    <select id="getAddzuId" resultType="Roleinfo">
+        select * from roleinfo
+    </select>
+
+    <insert id="addUserInfo" parameterType="UserInfo">
+        insert into userinfo(id,
+        <trim suffixOverrides=",">
+            <if test="accountName!=null and accountName!=''">
+                accountName,
+            </if>
+            <if test="password!=null and password!=''">
+                password,
+            </if>
+            <if test="email!=null and email!=''">
+                email,
+            </if>
+            <if test="roleid!=null and roleid!=''">
+                roleid,
+            </if>
+            <if test="mobile!=null and mobile!=''">
+                mobile
+            </if>
+        </trim>
+        ) VALUES (default,
+        <trim suffixOverrides=",">
+            <if test="accountName!=null and accountName!=''">
+                #{accountName},
+            </if>
+            <if test="password!=null and password!=''">
+                #{password},
+            </if>
+            <if test="email!=null and email!=''">
+                #{email},
+            </if>
+            <if test="roleid!=null and roleid!=''">
+                #{roleid},
+            </if>
+            <if test="mobile!=null and mobile!=''">
+                #{mobile}
+            </if>
+        </trim>
+        )
+    </insert>
+
+
+    <select id="getAllQusetion" resultType="edu.hniu.community.vo.QuestionListVo">
+        select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on
+        q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id order by q.id asc
+    </select>
+
+    <select id="searchQuestion" resultType="edu.hniu.community.vo.QuestionListVo">
+        select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on
+        q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
+        <where>
+            <if test="title !=''and title !=null">
+                and title like concat('%',#{title},'%')
+            </if>
+            <if test="typeid !=-1">
+                and typeid=#{typeid}
+            </if>
+        </where>
+        order by
+        <if test="sort==0">
+            q.createDate
+        </if>
+        <if test="sort==1">
+            q.id
+        </if>
+        asc
+    </select>
+
+    <delete id="deleteQuestion" parameterType="int">
+         DELETE FROM question WHERE id=#{id}
+    </delete>
+
+    <select id="getAllTagName" resultType="QuestionType">
+        select * from question_type
+    </select>
+
+    <delete id="deleteTagById" parameterType="int">
+        delete from question_type where type_id=#{type_id}
+    </delete>
+
+    <insert id="addTag" parameterType="edu.hniu.community.vo.QuestionTypeVo">
+        insert into question_type(type_id,
+        <trim suffixOverrides=",">
+            <if test="type_name!=null and type_name!=''">
+                type_name,
+            </if>
+            <if test="type_createTime!=null">
+                type_createTime
+            </if>
+        </trim>
+        )values(default ,
+        <trim suffixOverrides=",">
+            <if test="type_name!=null and type_name!=''">
+                #{type_name},
+            </if>
+            <if test="type_createTime!=null">
+                #{type_createTime}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <insert id="publishNotice" parameterType="edu.hniu.community.vo.NoticeVo">
+        insert into notice(id,
+        <trim suffixOverrides=",">
+            <if test="create_id!=null and create_id!=''">
+                create_id,
+            </if>
+            <if test="notice_content!=null and notice_content!=''">
+                notice_content,
+            </if>
+            <if test="create_time!=null">
+                create_time
+            </if>
+        </trim>
+        )values(default ,
+        <trim suffixOverrides=",">
+            <if test="create_id!=null and create_id!=''">
+                #{create_id},
+            </if>
+            <if test="notice_content!=null and notice_content!=''">
+                #{notice_content},
+            </if>
+            <if test="create_time!=null">
+                #{create_time}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <select id="getNotice" resultType="Notice">
+        select * from notice order by create_time DESC  limit 1
+    </select>
+
+    <update id="updateNotice" parameterType="edu.hniu.community.vo.NoticeVo">
+        update notice
+        <set>
+            <if test="notice_content!=null and notice_content!=''">
+                notice_content=#{notice_content},
+            </if>
+            <if test="create_time!=null">
+                create_time=#{create_time}
+            </if>
+        </set>
+        where create_id=#{create_id}
+    </update>
+
+    <insert id="publishAdvert" parameterType="Advert">
+        insert into advert(id,
+        <trim suffixOverrides=",">
+            <if test="createId!=''and createId!=null">
+                createId,
+            </if>
+            <if test="pictureAddress!=''and pictureAddress!=null">
+                pictureAddress,
+            </if>
+            <if test="advertURL!=''and advertURL!=null">
+                advertURL,
+            </if>
+            <if test="advertName!=''and advertName!=null">
+                advertName,
+            </if>
+            <if test="createTime!=null">
+                createTime
+            </if>
+        </trim>
+        )values(default,
+        <trim suffixOverrides=",">
+            <if test="createId!=''and createId!=null">
+                #{createId},
+            </if>
+            <if test="pictureAddress!=''and pictureAddress!=null">
+                #{pictureAddress},
+            </if>
+            <if test="advertURL!=''and advertURL!=null">
+                #{advertURL},
+            </if>
+            <if test="advertName!=''and advertName!=null">
+                #{advertName},
+            </if>
+            <if test="createTime!=null">
+                #{createTime}
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <delete id="deleteBatch">
+        delete from question where id in
+        <foreach collection="array" item="array" open="(" index="index" separator="," close=")">
+            #{array}
+        </foreach>
+    </delete>
+
+    <select id="getAllComment" resultType="edu.hniu.community.vo.AllCommentVo">
+        SELECT c.*,u.email ,'1' AS level FROM comment c left join userinfo u on c.creatorId =u.id union
+            select cm.*,u.email,'2' AS level FROM comment_multi cm  left join userinfo u on cm.com_multi_user_id =u.id
+    </select>
+
+    <delete id="deleteComment">
+        DELETE FROM
+        <if test="level==1">
+            comment where id =#{id}
+        </if>
+        <if test="level==2">
+            comment_multi where com_multi_id =#{id}
+        </if>
+    </delete>
+
+    <select id="getLikeCountByTopPost" parameterType="long" resultType="Question">
+       SELECT id,likeCount FROM question q where id =#{id}
+    </select>
+
+    <select id="getTopQuestion" parameterType="long" resultType="Question">
+       SELECT id,likeCount FROM question q order by likeCount  DESC  limit 1
+    </select>
+
+    <update id="updateQuestionByTopPost" parameterType="Question">
+        update question set likeCount=#{likeCount}  where id=#{id}
+    </update>
+</mapper>
