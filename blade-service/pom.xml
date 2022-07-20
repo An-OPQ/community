@@ -21,7 +21,6 @@
         <module>blade-log</module>
         <module>blade-system</module>
         <module>blade-user</module>
-        <module>blade-demo</module>
         <module>blade-community</module>
     </modules>
 
