@@ -18,16 +18,16 @@ public class CourseEntity {
 	/**
 	 * 课程名称
 	 */
-	@Excel(name = "课程名称",orderNum = "1",width = 15)
+	@Excel(name = "课程名称", orderNum = "1", width = 15)
 	private String name;
 	/**
 	 * 教师实体
 	 */
 	@ExcelEntity(id = "absent")
 	private TeacherEntity teacherEntity;
+
 	/**
-	 * 学生集合List
+	 * 学生集合
 	 */
-	@ExcelCollection(name = "学生",orderNum = "3")
-	private List<StudentEntity> students;
+	private List<StudentEntity> studentEntities;
 }

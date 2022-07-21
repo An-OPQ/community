@@ -1,9 +1,11 @@
 package org.springblade.easypoi.annotation.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import lombok.Data;
 
 import java.util.Date;
 
+@Data
 public class StudentEntity implements java.io.Serializable {
 	/**
 	 * id

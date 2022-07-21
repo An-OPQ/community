@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * 本项目主要是EasyPoi的练习
+ * @author jerry
  */
 @MapperScan("org.springblade.easypoi.dao")
 @SpringBootApplication

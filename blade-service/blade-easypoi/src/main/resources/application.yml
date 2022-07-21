@@ -4,10 +4,22 @@ server:
 # DataSource Config
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.15.120.226:3307/community?serverTimezone=GMT%2B8&characterEncoding=UTF-8&allowMultiQueries=true
     username: root
     password: 123456
+    url: jdbc:mysql://106.15.120.226:3307/dome?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size: 1
+    min-idle: 1
+    max-active: 20
+    test-on-borrow: true
+  redis:
+    ##redis 单机环境配置
+    host: 106.15.120.226
+    port: 6379
+    password:
+    database: 1
+    ssl: false
 # mybatis
 mybatis-plus:
   mapper-locations: classpath:org/springblade/**/mapper/*Mapper.xml
@@ -30,5 +42,5 @@ mybatis-plus:
       logic-not-delete-value: 0
   configuration:
     #驼峰下划线转化
-    map-underscore-to-camel-case: false
+    map-underscore-to-camel-case: true
     cache-enabled: false

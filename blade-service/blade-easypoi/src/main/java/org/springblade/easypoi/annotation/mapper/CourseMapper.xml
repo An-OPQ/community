@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.easypoi.annotation.mapper.CourseMapper">
+
+    <resultMap id="courseStudent" type="CourseEntity">
+        <id column="id" property="id"/>
+        <id column="name" property="name"/>
+        <association property="teacherEntity" javaType="org.springblade.easypoi.annotation.entity.TeacherEntity">
+            <id column="id" property="id"/>
+            <id column="name" property="name"/>
+        </association>
+        <collection property="studentEntities" ofType="org.springblade.easypoi.annotation.entity.StudentEntity">
+            <id column="id" property="id"/>
+            <id column="name" property="name"/>
+            <id column="sex" property="sex"/>
+            <id column="birthday" property="birthday"/>
+            <id column="registrationDate" property="registrationDate"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="courseStudent">
+        SELECT *
+         FROM dome.course_entity c
+                  LEFT JOIN dome.course_student cst on cst.course_id = c.teacher_id
+                  LEFT JOIN dome.student_entity s on cst.student_id = s.id
+    </select>
+</mapper>
