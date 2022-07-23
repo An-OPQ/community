@@ -1,5 +1,6 @@
 package org.springblade.easypoi.annotation.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springblade.easypoi.annotation.entity.Question;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author jerry
  */
 @Service
+@DS("community")
 public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> implements QuestionService {
 
 

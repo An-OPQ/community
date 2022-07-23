@@ -1,46 +1,4 @@
 server:
   port: 8802
 
-# DataSource Config
-spring:
-  datasource:
-    username: root
-    password: 123456
-    url: jdbc:mysql://localhost:3307/dome?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    initial-size: 1
-    min-idle: 1
-    max-active: 20
-    test-on-borrow: true
-  redis:
-    ##redis 单机环境配置
-    host: 106.15.120.226
-    port: 6379
-    password:
-    database: 1
-    ssl: false
-# mybatis
-mybatis-plus:
-  mapper-locations: classpath:org/springblade/**/mapper/*Mapper.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: org.springblade.**.entity
-  #typeEnumsPackage: org.springblade.dashboard.entity.enums
-  global-config:
-    # 关闭MP3.0自带的banner
-    banner: false
-    db-config:
-      #字段策略
-      insert-strategy: not_null
-      update-strategy: not_null
-      #驼峰下划线转换
-      table-underline: true
-      # 逻辑删除配置
-      # 逻辑删除全局值（1表示已删除，这也是Mybatis Plus的默认配置）
-      logic-delete-value: 1
-      # 逻辑未删除全局值（0表示未删除，这也是Mybatis Plus的默认配置）
-      logic-not-delete-value: 0
-  configuration:
-    #驼峰下划线转化
-    map-underscore-to-camel-case: true
-    cache-enabled: false
+

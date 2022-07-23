@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.springblade.easypoi.annotation.mapper.TeacherMapper">
 
-    <select id="findById" resultType="org.springblade.easypoi.annotation.entity.TeacherEntity" parameterType="String">
+    <select id="findById" resultType="org.springblade.easypoi.annotation.entity.Teacher" parameterType="String">
         select * from teacher_entity wher id =#{id}
     </select>
 </mapper>

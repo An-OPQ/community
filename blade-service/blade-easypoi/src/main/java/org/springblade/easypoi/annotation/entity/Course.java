@@ -1,16 +1,17 @@
 package org.springblade.easypoi.annotation.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
-import cn.afterturn.easypoi.excel.annotation.ExcelCollection;
-import cn.afterturn.easypoi.excel.annotation.ExcelEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
-
+/**
+ * @author jerry
+ */
 @Data
 @AllArgsConstructor
-public class CourseEntity {
+@TableName("course")
+public class Course {
 	/**
 	 * 主键
 	 */
@@ -23,11 +24,6 @@ public class CourseEntity {
 	/**
 	 * 教师实体
 	 */
-	@ExcelEntity(id = "absent")
-	private TeacherEntity teacherEntity;
+	private String teacher_id;
 
-	/**
-	 * 学生集合
-	 */
-	private List<StudentEntity> studentEntities;
 }

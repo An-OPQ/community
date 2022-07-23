@@ -34,8 +34,11 @@ public class LauncherServiceImpl implements LauncherService {
 		Properties props = System.getProperties();
 		PropsUtil.setProperty(props, "spring.cloud.nacos.discovery.server-addr", LauncherConstant.nacosAddr(profile));
 		PropsUtil.setProperty(props, "spring.cloud.nacos.config.server-addr", LauncherConstant.nacosAddr(profile));
-		PropsUtil.setProperty(props, "spring.cloud.sentinel.transport.dashboard", LauncherConstant.sentinelAddr(profile));
-		PropsUtil.setProperty(props, "spring.zipkin.base-url", LauncherConstant.zipkinAddr(profile));
+		PropsUtil.setProperty(props, "spring.cloud.nacos.config.namespace",LauncherConstant.NACOS_NAMESPACE);
+		//命令空间> 分组。也就是说:先有命令空间，再有分组。eg：现在-->DEV命令空间-DEFAULT_GROUP分组
+//		PropsUtil.setProperty(props, "spring.cloud.nacos.config.group","DEV_GROUP");
+//		PropsUtil.setProperty(props, "spring.cloud.sentinel.transport.dashboard", LauncherConstant.sentinelAddr(profile));
+//		PropsUtil.setProperty(props, "spring.zipkin.base-url", LauncherConstant.zipkinAddr(profile));
 	}
 
 }

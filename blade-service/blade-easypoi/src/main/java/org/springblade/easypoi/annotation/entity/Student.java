@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class StudentEntity implements java.io.Serializable {
+public class Student implements java.io.Serializable {
 	/**
 	 * id
 	 */

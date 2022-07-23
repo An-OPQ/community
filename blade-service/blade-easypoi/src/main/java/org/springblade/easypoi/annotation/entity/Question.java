@@ -3,6 +3,7 @@ package org.springblade.easypoi.annotation.entity;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.annotation.ExcelIgnore;
 import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,9 +11,11 @@ import java.time.LocalDateTime;
 
 /**
  * Community-帖子问题表
+ * @author jerry
  */
 @Data
 @ExcelTarget("question")
+@TableName("question")
 public class Question implements Serializable {
 	/**
 	 * id

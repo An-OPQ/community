@@ -6,9 +6,12 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author jerry
+ */
 @Data
 @AllArgsConstructor
-public class TeacherEntity  implements Serializable {
+public class Teacher implements Serializable {
 	/**
 	 * 主键
 	 */

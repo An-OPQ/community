@@ -3,10 +3,7 @@ package org.springblade.easypoi.annotation.controller;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springblade.easypoi.annotation.entity.CourseEntity;
-import org.springblade.easypoi.annotation.entity.Question;
-import org.springblade.easypoi.annotation.entity.StudentEntity;
-import org.springblade.easypoi.annotation.entity.TeacherEntity;
+import org.springblade.easypoi.annotation.entity.Course;
 import org.springblade.easypoi.annotation.service.CourseService;
 import org.springblade.easypoi.annotation.service.QuestionService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 注解导出 Excel
+ * @author jerry
  */
 @RestController
 @RequestMapping("/annotationExcel")
@@ -48,8 +44,8 @@ public class AnnotationExcel {
 	 */
 	@GetMapping("/collectionExport")
 	public void collectionExport() throws Exception {
-		List<CourseEntity> all = courseService.findAll();
-		Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("课程信息", "课程信息"), CourseEntity.class, all);
+		List<Course> all = courseService.findAll();
+		Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("课程信息", "课程信息"), Course.class, all);
 		FileOutputStream fos = new FileOutputStream("C:\\Users\\admin\\Downloads\\collectExport1.xls");
 		workbook.write(fos);
 		fos.close();

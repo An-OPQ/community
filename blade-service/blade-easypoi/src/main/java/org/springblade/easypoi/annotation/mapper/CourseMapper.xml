@@ -4,26 +4,18 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.springblade.easypoi.annotation.mapper.CourseMapper">
 
-    <resultMap id="courseStudent" type="CourseEntity">
-        <id column="id" property="id"/>
-        <id column="name" property="name"/>
-        <association property="teacherEntity" javaType="org.springblade.easypoi.annotation.entity.TeacherEntity">
-            <id column="id" property="id"/>
-            <id column="name" property="name"/>
-        </association>
-        <collection property="studentEntities" ofType="org.springblade.easypoi.annotation.entity.StudentEntity">
-            <id column="id" property="id"/>
-            <id column="name" property="name"/>
-            <id column="sex" property="sex"/>
-            <id column="birthday" property="birthday"/>
-            <id column="registrationDate" property="registrationDate"/>
-        </collection>
-    </resultMap>
+<!--    <resultMap id="courseStudent" type="Course">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <id column="name" property="name"/>-->
+<!--    </resultMap>-->
 
-    <select id="findAll" resultMap="courseStudent">
-        SELECT *
-         FROM dome.course_entity c
-                  LEFT JOIN dome.course_student cst on cst.course_id = c.teacher_id
-                  LEFT JOIN dome.student_entity s on cst.student_id = s.id
+<!--    <select id="findAll" resultMap="courseStudent">-->
+<!--        SELECT *-->
+<!--         FROM dome.course_entity c-->
+<!--                  LEFT JOIN dome.course_student cst on cst.course_id = c.teacher_id-->
+<!--                  LEFT JOIN dome.student_entity s on cst.student_id = s.id-->
+<!--    </select>-->
+    <select id="findAll" resultType="org.springblade.easypoi.annotation.entity.Course">
+        select  * from course
     </select>
 </mapper>
