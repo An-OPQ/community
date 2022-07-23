@@ -18,4 +18,5 @@ public interface CourseMapper extends BaseMapper<Course> {
 	 * @return
 	 */
 	List<Course> findAll();
+
 }

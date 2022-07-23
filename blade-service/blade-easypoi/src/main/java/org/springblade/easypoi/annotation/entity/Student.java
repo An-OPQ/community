@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @author jerry
+ */
 @Data
 public class Student implements java.io.Serializable {
 	/**
@@ -22,10 +25,10 @@ public class Student implements java.io.Serializable {
 	@Excel(name = "学生性别", replace = {"男_1", "女_2"}, suffix = "生", isImportField = "true_st")
 	private int sex;
 
-	@Excel(name = "出生日期", databaseFormat = "yyyyMMddHHmmss", format = "yyyy-MM-dd", isImportField = "true_st", width = 20)
+	@Excel(name = "出生日期", format = "yyyy-MM-dd", isImportField = "true_st", width = 20)
 	private Date birthday;
 
-	@Excel(name = "进校日期", databaseFormat = "yyyyMMddHHmmss", format = "yyyy-MM-dd")
+	@Excel(name = "进校日期", format = "yyyy-MM-dd")
 	private Date registrationDate;
 
 }

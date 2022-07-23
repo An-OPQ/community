@@ -3,6 +3,7 @@ package org.springblade.easypoi.annotation.entity;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -10,7 +11,6 @@ import java.io.Serializable;
  * @author jerry
  */
 @Data
-@AllArgsConstructor
 public class Teacher implements Serializable {
 	/**
 	 * 主键

@@ -4,18 +4,41 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.springblade.easypoi.annotation.mapper.CourseMapper">
 
-<!--    <resultMap id="courseStudent" type="Course">-->
-<!--        <id column="id" property="id"/>-->
-<!--        <id column="name" property="name"/>-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="courseStudent" type="Course">-->
+    <!--        <id column="id" property="id"/>-->
+    <!--        <id column="name" property="name"/>-->
+    <!--    </resultMap>-->
 
-<!--    <select id="findAll" resultMap="courseStudent">-->
-<!--        SELECT *-->
-<!--         FROM dome.course_entity c-->
-<!--                  LEFT JOIN dome.course_student cst on cst.course_id = c.teacher_id-->
-<!--                  LEFT JOIN dome.student_entity s on cst.student_id = s.id-->
-<!--    </select>-->
-    <select id="findAll" resultType="org.springblade.easypoi.annotation.entity.Course">
-        select  * from course
+    <!--    <select id="findAll" resultMap="courseStudent">-->
+    <!--        SELECT *-->
+    <!--         FROM dome.course_entity c-->
+    <!--                  LEFT JOIN dome.course_student cst on cst.course_id = c.teacher_id-->
+    <!--                  LEFT JOIN dome.student_entity s on cst.student_id = s.id-->
+    <!--    </select>-->
+    <!--多对一 级联属性 对象.属性-->
+    <!--    <resultMap id="CourseAndTeacherResultMap" type="org.springblade.easypoi.annotation.entity.Course">-->
+    <!--        <id property="id" column="id"/>-->
+    <!--        <id property="name" column="name"/>-->
+    <!--        <id property="teacher.name" column="t_name"/>-->
+    <!--    </resultMap>-->
+    <resultMap id="CourseAndTeacherResultMap" type="org.springblade.easypoi.annotation.entity.Course">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <!--多对一 association  注意是:javaType-->
+        <association property="teacher" javaType="org.springblade.easypoi.annotation.entity.Teacher">
+            <id property="id" column="t_id"/>
+            <result property="name" column="t_name"/>
+        </association>
+        <!-- 一对多 collection 注意是:ofType-->
+        <collection property="students" ofType="org.springblade.easypoi.annotation.entity.Student">
+            <id property="id" column="s_id"/>
+            <result property="name" column="s_name"/>
+            <result property="sex" column="sex"/>
+            <result property="birthday" column="birthday"/>
+            <result property="registrationDate" column="registrationDate"/>
+        </collection>
+    </resultMap>
+    <select id="findAll" resultMap="CourseAndTeacherResultMap">
+        select c.id,c.name,t.id as t_id ,t.name as t_name,s.name as s_name, s.sex ,s.birthday,s.registrationDate  from course c left join teacher t on c.teacher_id =t.id LEFT JOIN course_student cst  on cst.course_id = c.id LEFT JOIN student s on cst.student_id = s.id
     </select>
 </mapper>

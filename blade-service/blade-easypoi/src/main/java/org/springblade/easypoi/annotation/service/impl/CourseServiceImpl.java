@@ -8,6 +8,7 @@ import org.springblade.easypoi.annotation.mapper.CourseMapper;
 import org.springblade.easypoi.annotation.service.CourseService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,10 +18,12 @@ import java.util.List;
 @DS("easypoi")
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> implements CourseService {
 
+	@Resource
+	private CourseMapper courseMapper;
 
 	@Override
 	public List<Course> findAll() {
-		LambdaQueryWrapper<Course> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-		return baseMapper.selectList(lambdaQueryWrapper);
+		return courseMapper.findAll();
 	}
+
 }

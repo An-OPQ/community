@@ -33,4 +33,17 @@ class BladeEasypoiApplicationTests {
 		System.out.println(questionAll.size());
 		System.out.println(courseAll.size());
 	}
+
+	/**
+	 * courseAndTeacherResultMap
+	 * 测试多对一
+	 */
+	@Test
+	void contextLoads2() {
+		List<Course> courseList = courseService.findAll();
+		courseList.forEach(b->{
+			System.out.println(b.toString());
+		});
+
+	}
 }

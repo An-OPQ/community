@@ -24,9 +24,9 @@
             <result property="description" column="description"/>
             <result property="creatorid" column="creatorid"/>
             <result property="createDate" column="createDate"/>
-            <result property="commentCount" column="commentCount"/>
-            <result property="viewCount" column="viewCount"/>
-            <result property="likeCount" column="likeCount"/>
+            <result property="commentCount" column="comment_count"/>
+            <result property="viewCount" column="view_count"/>
+            <result property="likeCount" column="like_count"/>
             <result property="typeid" column="typeid"/>
         </collection>
     </resultMap>

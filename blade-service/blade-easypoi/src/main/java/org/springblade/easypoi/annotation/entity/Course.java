@@ -1,15 +1,20 @@
 package org.springblade.easypoi.annotation.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelCollection;
+import cn.afterturn.easypoi.excel.annotation.ExcelEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.List;
 
 /**
  * @author jerry
  */
 @Data
-@AllArgsConstructor
 @TableName("course")
 public class Course {
 	/**
@@ -24,6 +29,12 @@ public class Course {
 	/**
 	 * 教师实体
 	 */
-	private String teacher_id;
+	@ExcelEntity(id = "absent")
+	private Teacher teacher;
+	/**
+	 * 学生实体
+	 */
+	@ExcelCollection(name = "学生")
+	private List<Student> students;
 
 }
