@@ -4,10 +4,7 @@ import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.annotation.ExcelCollection;
 import cn.afterturn.easypoi.excel.annotation.ExcelEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class Course {
 	/**
 	 * 课程名称
 	 */
-	@Excel(name = "课程名称", orderNum = "1", width = 15)
+	@Excel(name = "课程名称", orderNum = "1", width = 15,needMerge = true)
 	private String name;
 	/**
 	 * 教师实体
@@ -34,7 +31,7 @@ public class Course {
 	/**
 	 * 学生实体
 	 */
-	@ExcelCollection(name = "学生")
+	@ExcelCollection(name = "学生",orderNum = "2")
 	private List<Student> students;
 
 }
