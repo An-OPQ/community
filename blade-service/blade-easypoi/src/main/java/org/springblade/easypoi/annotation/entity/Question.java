@@ -4,7 +4,9 @@ import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.annotation.ExcelIgnore;
 import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -14,12 +16,15 @@ import java.time.LocalDateTime;
  * @author jerry
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @ExcelTarget("question")
 @TableName("question")
 public class Question implements Serializable {
 	/**
 	 * id
 	 */
+	@ExcelIgnore
 	private Long id;
 	/**
 	 * 文章标题

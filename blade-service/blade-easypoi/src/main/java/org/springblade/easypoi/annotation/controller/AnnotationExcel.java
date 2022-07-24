@@ -1,11 +1,20 @@
 package org.springblade.easypoi.annotation.controller;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
+import cn.afterturn.easypoi.excel.entity.params.ExcelExportEntity;
+import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.junit.jupiter.api.Test;
+import org.springblade.core.tool.api.R;
+import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.easypoi.annotation.entity.Course;
 import org.springblade.easypoi.annotation.entity.Images;
 import org.springblade.easypoi.annotation.entity.Question;
+import org.springblade.easypoi.annotation.entity.User;
 import org.springblade.easypoi.annotation.service.CourseService;
 import org.springblade.easypoi.annotation.service.QuestionService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 注解导出 Excel
@@ -69,5 +82,68 @@ public class AnnotationExcel {
 		workbook.write(fileOutputStream);
 		fileOutputStream.close();
 	}
+	@GetMapping("/excelExportByTemplate")
+	public void excelExportByTemplate() throws IOException {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", "liuxian");
+		map.put("date", String.valueOf(LocalDateTime.now()));
+		List<Map<String, String>> maps = new ArrayList<>();
+		for (int i = 0; i < 100; i++) {
+			Map<String, String> lm = new HashMap<>();
+			lm.put("id", i + 1 + "");
+			lm.put("title", i * 10000 + "");
+			lm.put("description", "A001");
+			lm.put("creatorid","");
+			lm.put("typeid", "EasyPoi " + i + "期");
+			lm.put("commentCount", "开源项目");
+			lm.put("viewCount", i * 10000 + "");
+			lm.put("likeCount", i * 10000 + "");
+			lm.put("createDate", i * 10000 + "");
+			maps.add(lm);
+		}
+		map.put("mapList",maps);
+		TemplateExportParams params = new TemplateExportParams("/home/jerry/Software/javaWorks/community/blade-service/blade-easypoi/src/test/resources/WEB-INF/doc/test2.xls");
+		Workbook workbook = ExcelExportUtil.exportExcel(params, map);
+		FileOutputStream fileOutputStream = new FileOutputStream(this.getClass().getResource("/").getPath()+"/test.xls");
+		workbook.write(fileOutputStream);
+		fileOutputStream.close();
+	}
 
+//	@Test
+//	public void fe_map() throws Exception {
+//		TemplateExportParams params = new TemplateExportParams(
+//			"WEB-INF/doc/专项支出用款申请书_map.xls");
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("date", "2014-12-25");
+//		map.put("money", 2000000.00);
+//		map.put("upperMoney", "贰佰万");
+//		map.put("company", "执笔潜行科技有限公司");
+//		map.put("bureau", "财政局");
+//		map.put("person", "JueYue");
+//		map.put("phone", "1879740****");
+//		List<Map<String, String>> listMap = new ArrayList<Map<String, String>>();
+//		for (int i = 0; i < 4; i++) {
+//			Map<String, String> lm = new HashMap<String, String>();
+//			lm.put("id", i + 1 + "");
+//			lm.put("zijin", i * 10000 + "");
+//			lm.put("bianma", "A001");
+//			lm.put("mingcheng", "设计");
+//			lm.put("xiangmumingcheng", "EasyPoi " + i + "期");
+//			lm.put("quancheng", "开源项目");
+//			lm.put("sqje", i * 10000 + "");
+//			lm.put("hdje", i * 10000 + "");
+//
+//			listMap.add(lm);
+//		}
+//		map.put("maplist", listMap);
+//
+//		Workbook workbook = ExcelExportUtil.exportExcel(params, map);
+//		File savefile = new File("/home/jerry/excel/");
+//		if (!savefile.exists()) {
+//			savefile.mkdirs();
+//		}
+//		FileOutputStream fos = new FileOutputStream("/home/jerry/excel/专项支出用款申请书_map.xls");
+//		workbook.write(fos);
+//		fos.close();
+//	}
 }
