@@ -14,3 +14,6 @@ knife4j:
       - name: 系统模块
         uri: 127.0.0.1
         location: /blade-system/v2/api-docs
+      - name: easypoi模块
+        uri: 127.0.0.1
+        location: /blade-easypoi/v2/api-docs

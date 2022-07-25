@@ -11,4 +11,9 @@ spring:
       retry:
         enabled: true
 
-
+# 聚合文档配置
+blade:
+  document:
+    resources:
+      - name: EasyPoi模块
+        location: /blade-easypoi

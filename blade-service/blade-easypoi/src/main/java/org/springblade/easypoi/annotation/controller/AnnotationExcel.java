@@ -1,53 +1,73 @@
 package org.springblade.easypoi.annotation.controller;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
-import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
-import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
-import cn.afterturn.easypoi.excel.entity.params.ExcelExportEntity;
-import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.junit.jupiter.api.Test;
+import org.springblade.core.log.annotation.ApiLog;
+import org.springblade.core.log.logger.BladeLogger;
 import org.springblade.core.tool.api.R;
-import org.springblade.core.tool.utils.BeanUtil;
+import org.springblade.core.tool.jackson.JsonUtil;
 import org.springblade.easypoi.annotation.entity.Course;
 import org.springblade.easypoi.annotation.entity.Images;
 import org.springblade.easypoi.annotation.entity.Question;
-import org.springblade.easypoi.annotation.entity.User;
 import org.springblade.easypoi.annotation.service.CourseService;
 import org.springblade.easypoi.annotation.service.QuestionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 注解导出 Excel
  *
  * @author jerry
  */
+@Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping("/annotationExcel")
+@Api(value = "演示接口", tags = "演示接口")
 public class AnnotationExcel {
 
-	@Resource
 	private QuestionService questionService;
-	@Resource
 	private CourseService courseService;
+	private BladeLogger logger;
+
+	/**
+	 * 详情
+	 */
+	@ApiLog("Blog详情")
+	@GetMapping("/detail")
+	@ApiOperation(value = "查看详情", notes = "传入主键", position = 1)
+	public R<Question> detail(@ApiParam(value = "主键值") @RequestParam Integer id) {
+		Question detail = questionService.getById(id);
+		logger.info("detail_test", JsonUtil.toJson(detail));
+		return R.data(detail);
+	}
+
 
 	/**
 	 * 对象定义导出
 	 */
+	@ApiLog("对象定义导出")
 	@GetMapping("/objectExport")
+	@ApiOperation(value = "对象定义导出")
+	@ApiOperationSupport(order = 1)
 	public void objectExport1() throws Exception {
 		List<Question> list = questionService.findAll();
 		Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("帖子列表", "帖子详情"), Question.class, list);
@@ -59,11 +79,14 @@ public class AnnotationExcel {
 	/**
 	 * 集合类型的导出
 	 */
+	@ApiLog("集合类型的导出")
 	@GetMapping("/collectionExport")
+	@ApiOperation(value = "集合类型的导出")
+	@ApiOperationSupport(order = 2)
 	public void collectionExport() throws Exception {
 		List<Course> all = courseService.findAll();
 		Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("课程信息", "课程信息"), Course.class, all);
-		FileOutputStream fos = new FileOutputStream(this.getClass().getResource("/").getPath() + "/collectionExport.xlsx");
+		FileOutputStream fos = new FileOutputStream(this.getClass().getResource("/").getPath() + "/collectionExport.xls");
 		workbook.write(fos);
 		fos.close();
 	}

@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BladeEasyPoiApplication {
 
 	public static void main(String[] args) {
-		BladeApplication.run("blade-EasyPoi",BladeEasyPoiApplication.class,args);
+		BladeApplication.run("blade-easypoi",BladeEasyPoiApplication.class,args);
 	}
 
 }
