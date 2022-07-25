@@ -3,7 +3,7 @@ spring:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   datasource:
     dynamic:
-      primary: easypoi
+      primary: community
       datasource:
         easypoi:
           username: ${blade.datasource.easypoi.username}
