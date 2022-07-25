@@ -55,7 +55,7 @@
     </resultMap>
 
     <insert id="publishMessage" parameterType="Question">
-        insert into question(id,
+        insert into tb_question(id,
         <trim suffixOverrides=",">
             <if test="title!='' and title!=null">
                 title,
@@ -98,11 +98,11 @@
     </insert>
 
     <select id="getPublishMessage" resultMap="questionList">
-        SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid order by q.likeCount DESC ,q.createDate DESC
+        SELECT u.icon,q.* FROM userinfo u right join tb_question q on u.id=q.creatorid order by q.likeCount DESC ,q.createDate DESC
     </select>
 
     <select id="searchQuestion" resultMap="questionList">
-        SELECT u.icon,q.* FROM userinfo u right join question q on u.id=q.creatorid
+        SELECT u.icon,q.* FROM userinfo u right join tb_question q on u.id=q.creatorid
         <where>
             <if test="title !=''and title !=null">
                 and title like concat('%',#{title},'%')
@@ -131,11 +131,11 @@
     </select>
 
     <update id="updateViewCount" parameterType="Integer">
-        UPDATE question	set viewCount=viewCount+1 WHERE id=#{id}
+        UPDATE tb_question	set viewCount=viewCount+1 WHERE id=#{id}
     </update>
 
     <update id="updateCommentCount" parameterType="Integer">
-        UPDATE question	set commentCount=commentCount+1 WHERE id=#{id}
+        UPDATE tb_question	set commentCount=commentCount+1 WHERE id=#{id}
     </update>
 
     <update id="addLikeCount" parameterType="Integer">
@@ -146,7 +146,7 @@
     </update>
 
     <update id="updateQuestion" parameterType="Question">
-        update question
+        update tb_question
         <set>
             <if test="title!=null and title!=''">
                 title=#{title},
@@ -165,11 +165,11 @@
     </update>
 
     <update id="addQuestionLikeCount" parameterType="Integer">
-        UPDATE question	set likeCount=likeCount+1 WHERE id=#{id}
+        UPDATE tb_question	set likeCount=likeCount+1 WHERE id=#{id}
     </update>
 
     <update id="lessQuestionLikeCount" parameterType="Integer">
-        UPDATE question	set likeCount=likeCount-1 WHERE id=#{id}
+        UPDATE tb_question	set likeCount=likeCount-1 WHERE id=#{id}
     </update>
 
     <insert id="secondarySubmit" parameterType="CommentMulti">
@@ -205,7 +205,7 @@
         </trim>
         )
     </insert>
-    
+
     <update id="addCommentCount" parameterType="CommentMulti">
         UPDATE comment set commentCount =commentCount +1 WHERE id=#{comId}
     </update>

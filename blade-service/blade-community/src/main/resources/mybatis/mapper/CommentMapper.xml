@@ -58,7 +58,7 @@
         </collection>
     </resultMap>
     <select id="getAllComment" resultMap="questionList" parameterType="long">
-        select q.*,u.id uid,u.accountName,u.icon from question q left join userinfo u  on q.creatorid=u.id  where q.id=#{id}
+        select q.*,u.id uid,u.accountName,u.icon from tb_question q left join userinfo u  on q.creatorid=u.id  where q.id=#{id}
     </select>
 
 

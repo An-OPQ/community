@@ -22,6 +22,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import lombok.AllArgsConstructor;
 import javax.validation.Valid;
 
+import org.springblade.blog.utils.HTMLSpirit;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.tool.api.R;
@@ -33,6 +34,8 @@ import org.springblade.blog.entity.Question;
 import org.springblade.blog.vo.QuestionVO;
 import org.springblade.blog.service.IQuestionService;
 import org.springblade.core.boot.ctrl.BladeController;
+
+import java.util.List;
 
 /**
  *  控制器
@@ -60,18 +63,22 @@ public class QuestionController extends BladeController {
 	}
 
 	/**
-	 * 分页 
+	 * 分页
 	 */
 	@GetMapping("/list")
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "分页", notes = "传入question")
 	public R<IPage<Question>> list(Question question, Query query) {
 		IPage<Question> pages = questionService.page(Condition.getPage(query), Condition.getQueryWrapper(question));
+		List<Question> records = pages.getRecords();
+		records.forEach(b->{
+			b.setDescription(HTMLSpirit.delHTMLTag(b.getDescription()));
+		});
 		return R.data(pages);
 	}
 
 	/**
-	 * 自定义分页 
+	 * 自定义分页
 	 */
 	@GetMapping("/page")
 	@ApiOperationSupport(order = 3)
@@ -82,7 +89,7 @@ public class QuestionController extends BladeController {
 	}
 
 	/**
-	 * 新增 
+	 * 新增
 	 */
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 4)
@@ -92,7 +99,7 @@ public class QuestionController extends BladeController {
 	}
 
 	/**
-	 * 修改 
+	 * 修改
 	 */
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 5)
@@ -102,7 +109,7 @@ public class QuestionController extends BladeController {
 	}
 
 	/**
-	 * 新增或修改 
+	 * 新增或修改
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 6)
@@ -111,9 +118,9 @@ public class QuestionController extends BladeController {
 		return R.status(questionService.saveOrUpdate(question));
 	}
 
-	
+
 	/**
-	 * 删除 
+	 * 删除
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 7)
@@ -122,5 +129,5 @@ public class QuestionController extends BladeController {
 		return R.status(questionService.deleteLogic(Func.toLongList(ids)));
 	}
 
-	
+
 }

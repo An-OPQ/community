@@ -90,12 +90,12 @@
 
 
     <select id="getAllQusetion" resultType="edu.hniu.community.vo.QuestionListVo">
-        select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on
+        select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from tb_question q left join userinfo u on
         q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id order by q.id asc
     </select>
 
     <select id="searchQuestion" resultType="edu.hniu.community.vo.QuestionListVo">
-        select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from question q left join userinfo u on
+        select q.id,q.title,q.creatorid,q.createDate,qt.*,u.email from tb_question q left join userinfo u on
         q.creatorid=u.id left join question_type qt on q.typeid=qt.type_id
         <where>
             <if test="title !=''and title !=null">
@@ -116,7 +116,7 @@
     </select>
 
     <delete id="deleteQuestion" parameterType="int">
-         DELETE FROM question WHERE id=#{id}
+         DELETE FROM tb_question WHERE id=#{id}
     </delete>
 
     <select id="getAllTagName" resultType="QuestionType">
@@ -235,7 +235,7 @@
     </insert>
 
     <delete id="deleteBatch">
-        delete from question where id in
+        delete from tb_question where id in
         <foreach collection="array" item="array" open="(" index="index" separator="," close=")">
             #{array}
         </foreach>
@@ -257,14 +257,14 @@
     </delete>
 
     <select id="getLikeCountByTopPost" parameterType="long" resultType="Question">
-       SELECT id,likeCount FROM question q where id =#{id}
+       SELECT id,likeCount FROM tb_question q where id =#{id}
     </select>
 
     <select id="getTopQuestion" parameterType="long" resultType="Question">
-       SELECT id,likeCount FROM question q order by likeCount  DESC  limit 1
+       SELECT id,likeCount FROM tb_question q order by likeCount  DESC  limit 1
     </select>
 
     <update id="updateQuestionByTopPost" parameterType="Question">
-        update question set likeCount=#{likeCount}  where id=#{id}
+        update tb_question set likeCount=#{likeCount}  where id=#{id}
     </update>
 </mapper>

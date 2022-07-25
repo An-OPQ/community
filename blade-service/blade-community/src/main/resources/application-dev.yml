@@ -5,26 +5,11 @@ server:
 #数据源配置
 spring:
   datasource:
-    username: root
-    password: 123456
-    url: jdbc:mysql://localhost:3307/community?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${blade.datasource.community.username}
+    password: ${blade.datasource.community.password}
+    url: ${blade.datasource.community.url}
+    driver-class-name: ${blade.datasource.community.driver-class-name}
     type: com.alibaba.druid.pool.DruidDataSource
-    initial-size: 1
-    min-idle: 1
-    max-active: 20
-    test-on-borrow: true
-  redis:
-    ##redis 单机环境配置
-    host: localhost
-    port: 6379
-    password:
-    database: 1
-    ssl: false
-    ##redis 集群环境配置
-    #cluster:
-    #  nodes: 127.0.0.1:7001,127.0.0.1:7002,127.0.0.1:7003
-    #  commandTimeout: 5000
 
 #spring:
 #  #排除DruidDataSourceAutoConfigure
