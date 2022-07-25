@@ -2,59 +2,47 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.springblade</groupId>
         <artifactId>blade-service</artifactId>
+        <groupId>org.springblade</groupId>
         <version>3.4.0</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>blade-easypoi</artifactId>
+
+    <artifactId>blade-blog</artifactId>
     <name>${project.artifactId}</name>
     <version>${blade.project.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
+        <!--Blade-->
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-boot</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springblade</groupId>
-            <artifactId>blade-core-swagger</artifactId>
-            <version>${blade.tool.version}</version>
-        </dependency>
-        <!--测试模块-->
+        <!--Test-->
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-test</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
-        <!--EasyPoi-->
+        <!--swagger-->
         <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-base</artifactId>
-            <version>${easypoi.version}</version>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-core-swagger</artifactId>
+            <version>${blade.tool.version}</version>
         </dependency>
+        <!--blog-api-->
         <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-web</artifactId>
-            <version>${easypoi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-annotation</artifactId>
-            <version>${easypoi.version}</version>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-blog-api</artifactId>
+            <version>${blade.tool.version}</version>
         </dependency>
         <!--多数据源配置-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
             <version>${dynamic.datasource.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
 
@@ -81,7 +69,7 @@
                 </executions>
             </plugin>
         </plugins>
-
     </build>
+
 
 </project>

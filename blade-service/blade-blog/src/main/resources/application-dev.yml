@@ -1,0 +1,19 @@
+spring:
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  datasource:
+    dynamic:
+      primary: easypoi
+      datasource:
+        easypoi:
+          username: ${blade.datasource.easypoi.username}
+          password: ${blade.datasource.easypoi.password}
+          url: ${blade.datasource.easypoi.url}
+          driver-class-name: ${blade.datasource.easypoi.driver-class-name}
+        community:
+          username: ${blade.datasource.community.username}
+          password: ${blade.datasource.community.password}
+          url: ${blade.datasource.community.url}
+          driver-class-name: ${blade.datasource.community.driver-class-name}
+
+

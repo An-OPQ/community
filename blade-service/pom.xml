@@ -23,6 +23,7 @@
         <module>blade-user</module>
         <module>blade-community</module>
         <module>blade-easypoi</module>
+        <module>blade-blog</module>
     </modules>
 
     <dependencies>

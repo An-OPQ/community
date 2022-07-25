@@ -21,7 +21,7 @@
         <module>blade-system-api</module>
         <module>blade-user-api</module>
         <module>blade-scope-api</module>
-        <module>blade-demo-api</module>
+        <module>blade-blog-api</module>
     </modules>
 
     <dependencies>
