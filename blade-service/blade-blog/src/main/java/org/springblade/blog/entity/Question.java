@@ -18,8 +18,11 @@ package org.springblade.blog.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import io.swagger.annotations.ApiModelProperty;
 import org.springblade.core.mp.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,18 +38,40 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Question extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  @TableId(value = "id", type = IdType.AUTO)
-  private Long id;
-  private String title;
-  private String description;
-  private Long creatorid;
-  private Integer typeid;
-  private Integer commentCount;
-  private Integer viewCount;
-  private Integer likeCount;
-  private LocalDate createDate;
+	@TableId(value = "id", type = IdType.AUTO)
+	private Long id;
+	/**
+	 * 文章的标题
+	 */
+	@ApiModelProperty(value = "文章标题")
+	private String title;
+	/**
+	 * 文章的详情
+	 */
+	@ApiModelProperty(value = "文章详情")
+	private String description;
+	/**
+	 * 文章类型ID
+	 */
+	@ApiModelProperty(value = "文章类型ID")
+	private Integer typeId;
+	/**
+	 * 评论数据量
+	 */
+	@ApiModelProperty(value = "评论数据量")
+	private Integer commentCount;
+	/**
+	 * 阅读数量
+	 */
+	@ApiModelProperty(value = "阅读数量")
+	private Integer viewCount;
+	/**
+	 * 点赞数量
+	 */
+	@ApiModelProperty(value = "点赞数量")
+	private Integer likeCount;
 
 
 }

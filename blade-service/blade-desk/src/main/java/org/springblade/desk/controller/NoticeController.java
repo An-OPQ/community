@@ -63,6 +63,17 @@ public class NoticeController extends BladeController implements CacheNames {
 	}
 
 	/**
+	 * 自定义分页
+	 */
+	@GetMapping("/page")
+	@ApiOperationSupport(order = 3)
+	@ApiOperation(value = "分页", notes = "传入question")
+	public R<IPage<Notice>> page(Notice notice, Query query) {
+		IPage<Notice> pages = noticeService.selectNoticePage(Condition.getPage(query), notice);
+		return R.data(pages);
+	}
+
+	/**
 	 * 分页
 	 */
 	@GetMapping("/list")

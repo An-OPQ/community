@@ -16,6 +16,8 @@
 package org.springblade.desk.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springblade.core.datascope.annotation.DataAuth;
+import org.springblade.core.datascope.enums.DataScopeEnum;
 import org.springblade.core.mp.base.BaseService;
 import org.springblade.desk.entity.Notice;
 
