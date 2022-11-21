@@ -1,0 +1,19 @@
+#服务器端口
+server:
+  port: 8805
+
+#数据源配置
+spring:
+  datasource:
+    url: ${blade.datasource.dev.url}
+    username: ${blade.datasource.dev.username}
+    password: ${blade.datasource.dev.password}
+
+#activemq
+  activemq:
+    broker-url: tcp://127.0.0.1:8161 #连接地址
+    user: admin
+    password: admin
+  jms: # 指定发送模式
+    pub-sub-domain: false
+

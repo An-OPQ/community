@@ -22,6 +22,7 @@
         <module>blade-user-api</module>
         <module>blade-scope-api</module>
         <module>blade-blog-api</module>
+        <module>blade-activemq-api</module>
     </modules>
 
     <dependencies>

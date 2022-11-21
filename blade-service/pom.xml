@@ -24,6 +24,7 @@
         <module>blade-community</module>
         <module>blade-easypoi</module>
         <module>blade-blog</module>
+        <module>blade-activemq</module>
     </modules>
 
     <dependencies>
