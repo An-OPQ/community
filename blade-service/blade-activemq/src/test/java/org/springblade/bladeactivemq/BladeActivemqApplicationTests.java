@@ -1,18 +1,22 @@
 package org.springblade.bladeactivemq;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springblade.core.test.BladeBootTest;
-import org.springblade.core.test.BladeSpringExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jms.core.JmsMessagingTemplate;
 
-@ExtendWith(BladeSpringExtension.class)
+import javax.annotation.Resource;
+
 @SpringBootTest(classes = BladeActivemqApplication.class)
-@BladeBootTest(appName = "blade-activemq", profile = "test", enableLoader = true)
+@BladeBootTest(appName = "blade-activemq")
 class BladeActivemqApplicationTests {
+
+	@Resource
+	private JmsMessagingTemplate jmsMessagingTemplate;
 
 	@Test
 	void contextLoads() {
+		jmsMessagingTemplate.convertAndSend("SpringBoot_Queue","SpringBootMessage");
 	}
 
 }

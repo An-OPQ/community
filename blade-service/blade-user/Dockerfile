@@ -1,6 +1,6 @@
 FROM anapsix/alpine-java:8_server-jre_unlimited
 
-MAINTAINER smallchill@163.com
+MAINTAINER liuxian0728@foxmail.com
 
 RUN mkdir -p /blade/user
 

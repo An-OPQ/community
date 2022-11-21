@@ -16,3 +16,4 @@ spring:
     password: admin
   jms: # 指定发送模式
     pub-sub-domain: false
+
